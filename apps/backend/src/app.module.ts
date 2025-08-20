@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { GroupsModule } from './groups/groups.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { GroupsModule } from './groups/groups.module';
     AuthModule,
     PrismaModule,
     GroupsModule,
+    ShoppingListModule,
   ],
   controllers: [AppController],
   providers: [AppService],
