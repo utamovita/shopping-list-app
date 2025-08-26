@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     name: z.string().optional(),
-    email: z.string().email({ message: "Niepoprawny adres email." }),
+    email: z.email({ message: "Niepoprawny adres email." }),
     password: z.string().min(8, {
         message: "Hasło musi mieć co najmniej 8 znaków.",
     }),
