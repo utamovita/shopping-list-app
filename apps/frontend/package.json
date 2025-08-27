@@ -6,7 +6,7 @@
     "dev": "next dev -p 3001",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint && tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
@@ -16,6 +16,7 @@
     "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "eslint-plugin-boundaries": "^5.0.1",
     "lucide-react": "^0.539.0",
     "next": "15.4.6",
     "react": "19.1.0",

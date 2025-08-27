@@ -1,11 +1,6 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { registerSchema } from '../schemas/auth.schema';
-import { useAuth } from '../hooks/use-auth.hook';
-
+import { useAuthForm } from '../hooks/use-auth-form.hook';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -22,41 +17,24 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from '@/components/ui/card';
 import Link from 'next/link';
 
 export default function RegisterForm() {
-  const { isPending, mutate } = useAuth('register');
-
-  const form = useForm<z.infer<typeof registerSchema>>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      name: '',
-      email: '',
-      password: '',
-    },
-  });
+  const { formRegister, onSubmit, isPending } = useAuthForm('register');
 
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle>Zarejestruj się</CardTitle>
-        <CardDescription>
-          Masz już konto?{' '}
-          <Link href="/login" className="text-primary hover:underline">
-            Zaloguj się
-          </Link>
-        </CardDescription>
+        <CardTitle className={"text-center"}>Zarejestruj się</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(mutate)}
-            className="space-y-4"
-          >
+        <Form {...formRegister}>
+          <form onSubmit={formRegister.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
-              control={form.control}
-              name="name"
+              control={formRegister.control}
+              name="username"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Nazwa</FormLabel>
@@ -68,7 +46,7 @@ export default function RegisterForm() {
               )}
             />
             <FormField
-              control={form.control}
+              control={formRegister.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -81,7 +59,7 @@ export default function RegisterForm() {
               )}
             />
             <FormField
-              control={form.control}
+              control={formRegister.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -99,6 +77,14 @@ export default function RegisterForm() {
           </form>
         </Form>
       </CardContent>
+      <CardFooter>
+        <CardDescription className={"text-center w-full"}>
+          Masz już konto?{' '}
+          <Link href="/login" className="text-primary hover:underline">
+            Zaloguj się
+          </Link>
+        </CardDescription>
+      </CardFooter>
     </Card>
   );
 }
