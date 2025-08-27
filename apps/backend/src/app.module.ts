@@ -6,10 +6,14 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { GroupsModule } from './groups/groups.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
+import { envSchema } from "./config/env.schema";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validate: (env) => envSchema.parse(env),
+    }),
     AuthModule,
     PrismaModule,
     GroupsModule,

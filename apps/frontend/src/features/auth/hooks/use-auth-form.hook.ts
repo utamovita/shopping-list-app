@@ -8,11 +8,9 @@ import * as z from 'zod';
 import { loginSchema, registerSchema } from '../schemas/auth.schema';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { env } from "@/lib/env";
 
 type AuthType = 'login' | 'register';
-
-
-
 
 export function useAuthForm(type: AuthType) {
   const setToken = useAuthStore((state) => state.setToken);
@@ -39,9 +37,8 @@ export function useAuthForm(type: AuthType) {
 
   const { mutate, isPending } = useMutation({
     mutationFn: (values: z.infer<typeof schema>) => {
-      const url = isLoginForm
-        ? 'http://localhost:3000/auth/login'
-        : 'http://localhost:3000/auth/register';
+      const endpoint = isLoginForm ? '/auth/login' : '/auth/register';
+      const url = `${env.NEXT_PUBLIC_API_URL}${endpoint}`;
       return axios.post(url, values);
     },
     onSuccess: (response) => {
