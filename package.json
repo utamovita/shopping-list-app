@@ -9,6 +9,11 @@
     "check-types": "turbo run check-types",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md}": "prettier --write",
+    "apps/backend/src/**/*.{ts,tsx}": "pnpm --filter backend run lint",
+    "apps/frontend/src/**/*.{ts,tsx}": "pnpm --filter frontend run lint"
+  },
   "devDependencies": {
     "husky": "^9.1.7",
     "prettier": "^3.6.2",

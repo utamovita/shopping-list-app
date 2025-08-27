@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from './prisma/prisma.module';
 import { GroupsModule } from './groups/groups.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
-import { envSchema } from "./config/env.schema";
+import { envSchema } from './config/env.schema';
 
 @Module({
   imports: [
