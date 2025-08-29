@@ -13,8 +13,8 @@ i18next
     ),
   )
   .init({
-    lng: "pl",
-    fallbackLng: "pl",
+    lng: "en",
+    fallbackLng: "en",
     defaultNS: "common",
     ns: ["common", "validation"],
   });

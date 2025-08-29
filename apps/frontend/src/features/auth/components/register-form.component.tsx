@@ -20,14 +20,16 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterForm() {
   const { formRegister, onSubmit, isPending } = useAuthForm("register");
+  const { t } = useTranslation("common");
 
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>Zarejestruj się</CardTitle>
+        <CardTitle className={"text-center"}>{t("register_title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...formRegister}>

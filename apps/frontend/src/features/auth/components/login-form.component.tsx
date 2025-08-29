@@ -71,7 +71,7 @@ export default function LoginForm() {
       </CardContent>
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
-          Nie masz konta?{" "}
+          {t("no_account_prompt")}{" "}
           <Link href="/register" className="text-primary hover:underline">
             Zarejestruj się
           </Link>
