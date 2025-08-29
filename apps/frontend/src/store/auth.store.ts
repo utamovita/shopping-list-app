@@ -2,21 +2,21 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 type AuthState = {
-    token: string | null;
-    setToken: (token: string) => void;
-    logout: () => void;
+  token: string | null;
+  setToken: (token: string) => void;
+  logout: () => void;
 };
 
 export const useAuthStore = create<AuthState>()(
-    persist(
-        (set) => ({
-            token: null,
-            setToken: (token) => set({ token }),
-            logout: () => set({ token: null }),
-        }),
-        {
-            name: "auth-storage",
-            storage: createJSONStorage(() => localStorage),
-        }
-    )
+  persist(
+    (set) => ({
+      token: null,
+      setToken: (token) => set({ token }),
+      logout: () => set({ token: null }),
+    }),
+    {
+      name: "auth-storage",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
 );

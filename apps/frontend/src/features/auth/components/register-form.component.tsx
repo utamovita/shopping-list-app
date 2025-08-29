@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useAuthForm } from '../hooks/use-auth-form.hook';
-import { Button } from '@/components/ui/button';
+import { useAuthForm } from "../hooks/use-auth-form.hook";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -9,8 +9,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
@@ -18,11 +18,11 @@ import {
   CardHeader,
   CardTitle,
   CardFooter,
-} from '@/components/ui/card';
-import Link from 'next/link';
+} from "@/components/ui/card";
+import Link from "next/link";
 
 export default function RegisterForm() {
-  const { formRegister, onSubmit, isPending } = useAuthForm('register');
+  const { formRegister, onSubmit, isPending } = useAuthForm("register");
 
   return (
     <Card className="w-[400px]">
@@ -31,7 +31,10 @@ export default function RegisterForm() {
       </CardHeader>
       <CardContent>
         <Form {...formRegister}>
-          <form onSubmit={formRegister.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={formRegister.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={formRegister.control}
               name="username"
@@ -72,14 +75,14 @@ export default function RegisterForm() {
               )}
             />
             <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? 'Tworzenie konta...' : 'Zarejestruj się'}
+              {isPending ? "Tworzenie konta..." : "Zarejestruj się"}
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
-          Masz już konto?{' '}
+          Masz już konto?{" "}
           <Link href="/login" className="text-primary hover:underline">
             Zaloguj się
           </Link>
