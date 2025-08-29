@@ -5,14 +5,11 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
+    "lint:backend": "pnpm --filter backend run lint",
+    "lint:frontend": "pnpm --filter frontend run lint",
+    "check-types:frontend": "pnpm --filter frontend run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
     "prepare": "husky"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,md}": "prettier --write",
-    "apps/backend/src/**/*.{ts,tsx}": "pnpm --filter backend run lint",
-    "apps/frontend/src/**/*.{ts,tsx}": "pnpm --filter frontend run lint"
   },
   "devDependencies": {
     "husky": "^9.1.7",

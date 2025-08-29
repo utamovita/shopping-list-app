@@ -1,0 +1,12 @@
+{
+  "email": {
+    "invalid": "Proszę podać poprawny adres email."
+  },
+  "password": {
+    "required": "Hasło jest wymagane.",
+    "minLength": "Hasło musi mieć co najmniej {{count}} znaków."
+  },
+  "name": {
+    "minLength": "Nazwa musi mieć co najmniej {{count}} znaków."
+  }
+}

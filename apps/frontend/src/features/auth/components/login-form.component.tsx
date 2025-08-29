@@ -8,29 +8,35 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import {
   Card,
   CardContent,
-  CardDescription, CardFooter,
+  CardDescription,
+  CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 export default function LoginForm() {
   const { formLogin, onSubmit, isPending } = useAuthForm("login");
+  const { t } = useTranslation("common");
 
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>Zaloguj się</CardTitle>
+        <CardTitle className={"text-center"}>{t("login_title")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...formLogin}>
-          <form onSubmit={formLogin.handleSubmit(onSubmit)} className="space-y-4">
+          <form
+            onSubmit={formLogin.handleSubmit(onSubmit)}
+            className="space-y-4"
+          >
             <FormField
               control={formLogin.control}
               name="email"
