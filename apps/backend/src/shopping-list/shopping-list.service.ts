@@ -43,7 +43,7 @@ export class ShoppingListService {
     });
 
     if (!membership) {
-      throw new ForbiddenException('You are not a member of this group.');
+      throw new ForbiddenException('validation.group.notAMember');
     }
   }
 }

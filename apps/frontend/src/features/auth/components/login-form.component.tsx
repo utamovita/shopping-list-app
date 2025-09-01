@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuthForm } from "../hooks/use-auth-form.hook";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,9 +20,10 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { useLoginForm } from "@/features/auth/hooks/use-login-form.hook";
 
 export default function LoginForm() {
-  const { formLogin, onSubmit, isPending } = useAuthForm("login");
+  const { form, onSubmit, isPending } = useLoginForm();
   const { t } = useTranslation("common");
 
   return (
@@ -32,13 +32,10 @@ export default function LoginForm() {
         <CardTitle className={"text-center"}>{t("login_title")}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...formLogin}>
-          <form
-            onSubmit={formLogin.handleSubmit(onSubmit)}
-            className="space-y-4"
-          >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
-              control={formLogin.control}
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -51,7 +48,7 @@ export default function LoginForm() {
               )}
             />
             <FormField
-              control={formLogin.control}
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -63,8 +60,8 @@ export default function LoginForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? "Logowanie..." : "Zaloguj się"}
+            <Button type="submit" className="w-full" isLoading={isPending}>
+              {t("login_title")}
             </Button>
           </form>
         </Form>
@@ -73,7 +70,7 @@ export default function LoginForm() {
         <CardDescription className={"text-center w-full"}>
           {t("no_account_prompt")}{" "}
           <Link href="/register" className="text-primary hover:underline">
-            Zarejestruj się
+            {t("register_title")}
           </Link>
         </CardDescription>
       </CardFooter>

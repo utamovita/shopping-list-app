@@ -1,12 +1,25 @@
 {
   "email": {
-    "invalid": "Proszę podać poprawny adres email."
+    "invalid": "EN Proszę podać poprawny adres email."
   },
   "password": {
-    "required": "Hasło jest wymagane.",
-    "minLength": "Hasło musi mieć co najmniej {{count}} znaków."
+    "required": "EN Hasło jest wymagane.",
+    "minLength": "EN Hasło musi mieć co najmniej {{count}} znaków."
   },
   "name": {
-    "minLength": "Nazwa musi mieć co najmniej {{count}} znaków."
+    "minLength": "EN Nazwa musi mieć co najmniej {{count}} znaków."
+  },
+  "user": {
+    "alreadyExists": "EN Użytkownik o tym adresie email już istnieje."
+  },
+  "credentials": {
+    "invalid": "EN Nieprawidłowe dane logowania."
+  },
+  "group": {
+    "notAMember": "EN Nie jesteś członkiem tej grupy."
+  },
+  "success": {
+    "login": "EN Pomyślnie zalogowano.",
+    "register": "EN Pomyślnie zarejestrowano. Teraz możesz się zalogować."
   }
 }

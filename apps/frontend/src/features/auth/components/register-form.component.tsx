@@ -1,6 +1,5 @@
 "use client";
 
-import { useAuthForm } from "../hooks/use-auth-form.hook";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,9 +20,10 @@ import {
 } from "@/components/ui/card";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { useRegisterForm } from "@/features/auth/hooks/use-register-form.hook";
 
 export default function RegisterForm() {
-  const { formRegister, onSubmit, isPending } = useAuthForm("register");
+  const { form, onSubmit, isPending } = useRegisterForm();
   const { t } = useTranslation("common");
 
   return (
@@ -32,13 +32,10 @@ export default function RegisterForm() {
         <CardTitle className={"text-center"}>{t("register_title")}</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form {...formRegister}>
-          <form
-            onSubmit={formRegister.handleSubmit(onSubmit)}
-            className="space-y-4"
-          >
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
-              control={formRegister.control}
+              control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
@@ -51,7 +48,7 @@ export default function RegisterForm() {
               )}
             />
             <FormField
-              control={formRegister.control}
+              control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
@@ -64,7 +61,7 @@ export default function RegisterForm() {
               )}
             />
             <FormField
-              control={formRegister.control}
+              control={form.control}
               name="password"
               render={({ field }) => (
                 <FormItem>
@@ -76,17 +73,17 @@ export default function RegisterForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full" disabled={isPending}>
-              {isPending ? "Tworzenie konta..." : "Zarejestruj się"}
+            <Button type="submit" className="w-full" isLoading={isPending}>
+              {t("register_title")}
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
-          Masz już konto?{" "}
+          {t("have_account_prompt")}{" "}
           <Link href="/login" className="text-primary hover:underline">
-            Zaloguj się
+            {t("login_title")}
           </Link>
         </CardDescription>
       </CardFooter>

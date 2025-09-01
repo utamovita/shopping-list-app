@@ -13,20 +13,28 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { User } from '@prisma/client';
+import { SuccessResponse } from '@repo/types/api';
+import { AuthResponseType } from '@repo/validation-schemas/auth.schema';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
-  register(@Body() registerUserDto: RegisterUserDto) {
-    return this.authService.register(registerUserDto);
+  async register(
+    @Body() registerUserDto: RegisterUserDto,
+  ): Promise<SuccessResponse<AuthResponseType>> {
+    const user = await this.authService.register(registerUserDto);
+    return { success: true, data: user, message: 'success.register' };
   }
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  login(@Body() loginUserDto: LoginUserDto) {
-    return this.authService.login(loginUserDto);
+  async login(
+    @Body() loginUserDto: LoginUserDto,
+  ): Promise<SuccessResponse<AuthResponseType>> {
+    const token = await this.authService.login(loginUserDto);
+    return { success: true, data: token, message: 'success.login' };
   }
 
   @UseGuards(JwtAuthGuard)

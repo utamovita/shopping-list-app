@@ -6,7 +6,7 @@ export class RegisterUserDto {
 
   @IsString()
   @MinLength(3, { message: 'Name must be at least 3 characters long.' })
-  name: string;
+  username: string;
 
   @IsString()
   @MinLength(8, { message: 'Password must be at least 8 characters long.' })
