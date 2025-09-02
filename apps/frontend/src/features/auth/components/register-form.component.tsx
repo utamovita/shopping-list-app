@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useRegisterForm } from "@/features/auth/hooks/use-register-form.hook";
+import { APP_PATHS } from "@repo/config/paths";
 
 export default function RegisterForm() {
   const { form, onSubmit, isPending } = useRegisterForm();
@@ -87,7 +88,7 @@ export default function RegisterForm() {
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
           {t("auth.haveAccountPrompt")}{" "}
-          <Link href="/login" className="text-primary hover:underline">
+          <Link href={APP_PATHS.login} className="text-primary hover:underline">
             {t("auth.loginTitle")}
           </Link>
         </CardDescription>

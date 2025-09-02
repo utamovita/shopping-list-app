@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { AuthResponseType } from "@repo/validation-schemas/auth.schema";
 import { SuccessResponse } from "@repo/types/api";
+import { APP_PATHS } from "@repo/config/paths";
 
 type AuthType = "login" | "register";
 type FormSchema = z.infer<typeof loginSchema | typeof registerSchema>;
@@ -31,7 +32,7 @@ export function useAuthMutation(type: AuthType) {
         if (response.message) {
           toast.success(t(response.message));
         }
-        router.push("/");
+        router.push(APP_PATHS.dashboard);
       }
     },
     onError: (error) => {

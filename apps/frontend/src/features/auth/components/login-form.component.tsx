@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useLoginForm } from "@/features/auth/hooks/use-login-form.hook";
+import { APP_PATHS } from "@repo/config/paths";
 
 export default function LoginForm() {
   const { form, onSubmit, isPending } = useLoginForm();
@@ -69,7 +70,10 @@ export default function LoginForm() {
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
           {t("auth.noAccountPrompt")}{" "}
-          <Link href="/register" className="text-primary hover:underline">
+          <Link
+            href={APP_PATHS.register}
+            className="text-primary hover:underline"
+          >
             {t("auth.registerTitle")}
           </Link>
         </CardDescription>
