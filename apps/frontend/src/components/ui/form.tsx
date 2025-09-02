@@ -140,7 +140,17 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
 function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
   const { error, formMessageId } = useFormField();
   const { t } = useTranslation("validation");
-  const body = error ? t(String(error?.message ?? "")) : props.children;
+
+  let body = props.children;
+
+  if (error?.message) {
+    try {
+      const parsed = JSON.parse(error.message);
+      body = t(parsed.key, parsed.values) as string;
+    } catch (e) {
+      body = t(String(error.message)) as string;
+    }
+  }
 
   if (!body) {
     return null;

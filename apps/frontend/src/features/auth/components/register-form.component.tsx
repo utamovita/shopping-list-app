@@ -29,7 +29,9 @@ export default function RegisterForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>{t("register_title")}</CardTitle>
+        <CardTitle className={"text-center"}>
+          {t("auth.registerTitle")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -39,9 +41,12 @@ export default function RegisterForm() {
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Nazwa użytkownika</FormLabel>
+                  <FormLabel>{t("formFields.username")}</FormLabel>
                   <FormControl>
-                    <Input placeholder="Jan Kowalski" {...field} />
+                    <Input
+                      placeholder={t("formFields.usernamePlaceholder")}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -52,7 +57,7 @@ export default function RegisterForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("formFields.email")}</FormLabel>
                   <FormControl>
                     <Input placeholder="email@example.com" {...field} />
                   </FormControl>
@@ -65,7 +70,7 @@ export default function RegisterForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Hasło</FormLabel>
+                  <FormLabel>{t("formFields.password")}</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
@@ -74,16 +79,16 @@ export default function RegisterForm() {
               )}
             />
             <Button type="submit" className="w-full" isLoading={isPending}>
-              {t("register_title")}
+              {t("auth.registerTitle")}
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
-          {t("have_account_prompt")}{" "}
+          {t("auth.haveAccountPrompt")}{" "}
           <Link href="/login" className="text-primary hover:underline">
-            {t("login_title")}
+            {t("auth.loginTitle")}
           </Link>
         </CardDescription>
       </CardFooter>

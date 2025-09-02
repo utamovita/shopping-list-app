@@ -1,8 +1,16 @@
 {
-  "login_title": "Zaloguj się en",
-  "register_title": "Zarejestruj się en",
-  "welcome_back": "Witaj z powrotem! Podaj swoje dane. en",
-  "create_account_prompt": "Stwórz konto, aby zacząć. en",
-  "have_account_prompt": "Masz już konto? en",
-  "no_account_prompt": "Nie masz konta? en"
+  "auth": {
+    "loginTitle": "Log in",
+    "registerTitle": "Sign up",
+    "welcomeBack": "Welcome back! Please enter your details.",
+    "createAccountPrompt": "Create an account to get started.",
+    "haveAccountPrompt": "Already have an account?",
+    "noAccountPrompt": "Don't have an account?"
+  },
+  "formFields": {
+    "email": "Email",
+    "password": "Password",
+    "username": "Username",
+    "usernamePlaceholder": "John Doe"
+  }
 }

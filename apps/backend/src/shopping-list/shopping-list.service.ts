@@ -43,7 +43,7 @@ export class ShoppingListService {
     });
 
     if (!membership) {
-      throw new ForbiddenException('validation.group.notAMember');
+      throw new ForbiddenException('group.notAMember');
     }
   }
 }

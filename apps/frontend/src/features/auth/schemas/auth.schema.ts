@@ -6,6 +6,16 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = loginSchema.extend({
-  username: z.string().min(3, { message: "validation:name.minLength" }),
-  password: z.string().min(8, { message: "validation:password.minLength" }),
+  username: z.string().min(3, {
+    message: JSON.stringify({
+      key: "validation:name.minLength",
+      values: { count: 3 },
+    }),
+  }),
+  password: z.string().min(8, {
+    message: JSON.stringify({
+      key: "validation:password.minLength",
+      values: { count: 8 },
+    }),
+  }),
 });

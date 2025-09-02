@@ -16,7 +16,7 @@ axiosInstance.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response) {
       const errorResponse = error.response.data as ErrorResponse;
-      const message = errorResponse.error.message || "error.unknown";
+      const message = errorResponse.error.message || "error.generic";
 
       return Promise.reject(new Error(message));
     }

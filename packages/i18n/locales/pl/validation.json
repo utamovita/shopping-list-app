@@ -21,5 +21,8 @@
   "success": {
     "login": "Pomyślnie zalogowano.",
     "register": "Pomyślnie zarejestrowano. Teraz możesz się zalogować."
+  },
+  "error": {
+    "generic": "Wystąpił błąd. Proszę spróbować ponownie później."
   }
 }

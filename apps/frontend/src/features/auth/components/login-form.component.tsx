@@ -29,7 +29,7 @@ export default function LoginForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>{t("login_title")}</CardTitle>
+        <CardTitle className={"text-center"}>{t("auth.loginTitle")}</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -39,7 +39,7 @@ export default function LoginForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>{t("formFields.email")}</FormLabel>
                   <FormControl>
                     <Input placeholder="email@example.com" {...field} />
                   </FormControl>
@@ -52,7 +52,7 @@ export default function LoginForm() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Hasło</FormLabel>
+                  <FormLabel>{t("formFields.password")}</FormLabel>
                   <FormControl>
                     <Input type="password" {...field} />
                   </FormControl>
@@ -61,16 +61,16 @@ export default function LoginForm() {
               )}
             />
             <Button type="submit" className="w-full" isLoading={isPending}>
-              {t("login_title")}
+              {t("auth.loginTitle")}
             </Button>
           </form>
         </Form>
       </CardContent>
       <CardFooter>
         <CardDescription className={"text-center w-full"}>
-          {t("no_account_prompt")}{" "}
+          {t("auth.noAccountPrompt")}{" "}
           <Link href="/register" className="text-primary hover:underline">
-            {t("register_title")}
+            {t("auth.registerTitle")}
           </Link>
         </CardDescription>
       </CardFooter>

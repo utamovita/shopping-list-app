@@ -1,25 +1,28 @@
 {
   "email": {
-    "invalid": "EN Proszę podać poprawny adres email."
+    "invalid": "Please provide a valid email address."
   },
   "password": {
-    "required": "EN Hasło jest wymagane.",
-    "minLength": "EN Hasło musi mieć co najmniej {{count}} znaków."
+    "required": "Password is required.",
+    "minLength": "Password must be at least {{count}} characters long."
   },
   "name": {
-    "minLength": "EN Nazwa musi mieć co najmniej {{count}} znaków."
+    "minLength": "Name must be at least {{count}} characters long."
   },
   "user": {
-    "alreadyExists": "EN Użytkownik o tym adresie email już istnieje."
+    "alreadyExists": "A user with this email address already exists."
   },
   "credentials": {
-    "invalid": "EN Nieprawidłowe dane logowania."
+    "invalid": "Invalid login credentials."
   },
   "group": {
-    "notAMember": "EN Nie jesteś członkiem tej grupy."
+    "notAMember": "You are not a member of this group."
   },
   "success": {
-    "login": "EN Pomyślnie zalogowano.",
-    "register": "EN Pomyślnie zarejestrowano. Teraz możesz się zalogować."
+    "login": "Logged in successfully.",
+    "register": "Registered successfully. You can now log in."
+  },
+  "error": {
+    "generic": "An error occurred. Please try again later."
   }
 }
