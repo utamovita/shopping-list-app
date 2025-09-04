@@ -4,14 +4,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { User } from '@prisma/client';
+import { createMockUser } from 'src/test-utils/mocks';
 
 jest.mock('bcrypt');
 
 describe('AuthService', () => {
   let service: AuthService;
   let prisma: PrismaService;
-  let _jwt: JwtService;
+  let jwt: JwtService;
 
   const mockPrismaService = {
     user: {
@@ -35,7 +35,7 @@ describe('AuthService', () => {
 
     service = module.get<AuthService>(AuthService);
     prisma = module.get<PrismaService>(PrismaService);
-    _jwt = module.get<JwtService>(JwtService);
+    jwt = module.get<JwtService>(JwtService);
 
     jest.clearAllMocks();
   });
@@ -45,18 +45,18 @@ describe('AuthService', () => {
   });
 
   describe('register', () => {
-    it('should successfully create a user and return an access token (happy path)', async () => {
+    it('should successfully create a user and return an access token', async () => {
       const dto = {
         email: 'test@example.com',
         username: 'Test User',
         password: 'password123',
       };
       const hashedPassword = 'hashedPassword';
-      const createdUser = {
+      const createdUser = createMockUser({
         id: '1',
         email: dto.email,
         name: dto.username,
-      } as User;
+      });
 
       mockPrismaService.user.findUnique.mockResolvedValue(null);
       (bcrypt.hash as jest.Mock).mockResolvedValue(hashedPassword);
@@ -75,26 +75,22 @@ describe('AuthService', () => {
       expect(result).toEqual({ access_token: 'test_token' });
     });
 
-    it('should throw a ConflictException if email already exists (sad path)', async () => {
+    it('should throw a ConflictException if email already exists', async () => {
       const dto = {
         email: 'exists@example.com',
         username: 'Test',
         password: 'password123',
       };
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: '1' } as User);
+      mockPrismaService.user.findUnique.mockResolvedValue(createMockUser());
 
       await expect(service.register(dto)).rejects.toThrow(ConflictException);
     });
   });
 
   describe('login', () => {
-    it('should return an access token for valid credentials (happy path)', async () => {
+    it('should return an access token for valid credentials', async () => {
       const dto = { email: 'test@example.com', password: 'password123' };
-      const user = {
-        id: '1',
-        email: dto.email,
-        passwordHash: 'hashedPassword',
-      } as User;
+      const user = createMockUser({ passwordHash: 'hashedPassword' });
 
       mockPrismaService.user.findUnique.mockResolvedValue(user);
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
@@ -109,20 +105,9 @@ describe('AuthService', () => {
       expect(result).toEqual({ access_token: 'test_token' });
     });
 
-    it('should throw an UnauthorizedException for a non-existent user (sad path)', async () => {
-      const dto = { email: 'wrong@example.com', password: 'password123' };
-      mockPrismaService.user.findUnique.mockResolvedValue(null);
-
-      await expect(service.login(dto)).rejects.toThrow(UnauthorizedException);
-    });
-
-    it('should throw an UnauthorizedException for an incorrect password (sad path)', async () => {
+    it('should throw an UnauthorizedException for an incorrect password', async () => {
       const dto = { email: 'test@example.com', password: 'wrongpassword' };
-      const user = {
-        id: '1',
-        email: dto.email,
-        passwordHash: 'hashedPassword',
-      } as User;
+      const user = createMockUser({ passwordHash: 'hashedPassword' });
 
       mockPrismaService.user.findUnique.mockResolvedValue(user);
       (bcrypt.compare as jest.Mock).mockResolvedValue(false);

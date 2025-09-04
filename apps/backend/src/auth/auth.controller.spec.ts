@@ -3,18 +3,15 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import { I18nService } from 'nestjs-i18n';
+import { createMockUser } from 'src/test-utils/mocks';
 
 describe('AuthController', () => {
   let controller: AuthController;
-  let _service: AuthService;
+  let service: AuthService;
 
   const mockAuthService = {
     register: jest.fn(),
     login: jest.fn(),
-  };
-
-  const mockI18nService = {
-    t: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -27,7 +24,7 @@ describe('AuthController', () => {
         },
         {
           provide: I18nService,
-          useValue: mockI18nService,
+          useValue: { t: jest.fn() },
         },
       ],
     })
@@ -36,10 +33,51 @@ describe('AuthController', () => {
       .compile();
 
     controller = module.get<AuthController>(AuthController);
-    _service = module.get<AuthService>(AuthService);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
     expect(controller).toBeDefined();
+  });
+
+  describe('register (happy path)', () => {
+    it('should call authService.register and return the result', async () => {
+      const dto = {
+        email: 'test@example.com',
+        username: 'Test',
+        password: 'password123',
+      };
+      const expectedResult = { access_token: 'test-token' };
+      mockAuthService.register.mockResolvedValue(expectedResult);
+
+      const result = await controller.register(dto);
+
+      expect(service.register).toHaveBeenCalledWith(dto);
+      expect(result.data).toEqual(expectedResult);
+    });
+  });
+
+  describe('login (happy path)', () => {
+    it('should call authService.login and return the result', async () => {
+      const dto = { email: 'test@example.com', password: 'password123' };
+      const expectedResult = { access_token: 'test-token' };
+      mockAuthService.login.mockResolvedValue(expectedResult);
+
+      const result = await controller.login(dto);
+
+      expect(service.login).toHaveBeenCalledWith(dto);
+      expect(result.data).toEqual(expectedResult);
+    });
+  });
+
+  describe('getProfile (happy path)', () => {
+    it('should return the user object from the request', () => {
+      const mockUser = createMockUser();
+      const mockRequest = { user: mockUser };
+
+      const result = controller.getProfile(mockRequest);
+
+      expect(result).toEqual(mockUser);
+    });
   });
 });
