@@ -2,6 +2,7 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
 import boundaries from 'eslint-plugin-boundaries';
+import tseslint from '@typescript-eslint/eslint-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,34 +16,32 @@ const eslintConfig = [
   {
     plugins: {
       boundaries,
+      '@typescript-eslint': tseslint,
     },
     settings: {
       'boundaries/include': ['src/**/*'],
       'boundaries/elements': [
         {
           type: 'app',
-          pattern: 'app',
+          pattern: 'app/**',
+        },
+        {
+          type: 'widgets',
+          pattern: 'widgets/**/*',
         },
         {
           type: 'features',
-          pattern: 'features/*',
+          pattern: 'features/**/**/*',
         },
         {
           type: 'shared',
-          pattern: [
-            'components/*',
-            'hooks/*',
-            'lib/*',
-            'schemas/*',
-            'store/*',
-            'i18n/*',
-          ],
+          pattern: 'shared/**/*',
         },
       ],
     },
     rules: {
-      '@typescript-eslint/no-explicit-any': "error",
-      'boundaries/no-unknown-files': ['error'],
+      '@typescript-eslint/no-explicit-any': 'error',
+      'boundaries/no-unknown-files': 'error',
       'boundaries/element-types': [
         'error',
         {
@@ -57,8 +56,12 @@ const eslintConfig = [
               allow: ['shared', 'features'],
             },
             {
+              from: ['widgets'],
+              allow: ['features', 'shared'],
+            },
+            {
               from: ['app'],
-              allow: ['shared', 'features'],
+              allow: ['widgets', 'features', 'shared'],
             },
           ],
         },

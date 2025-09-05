@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/shared/ui/button";
 import {
   Form,
   FormControl,
@@ -8,8 +8,8 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+} from "@/shared/ui/form";
+import { Input } from "@/shared/ui/input";
 import {
   Card,
   CardContent,
@@ -17,7 +17,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
+} from "@/shared/ui/card";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useLoginForm } from "@/features/auth/hooks/use-login-form.hook";

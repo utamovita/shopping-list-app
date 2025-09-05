@@ -1,4 +1,4 @@
-import { apiClient } from "@/lib/api/api-client";
+import { apiClient } from "@/shared/lib/api/api-client";
 import { loginSchema, registerSchema } from "../schemas/auth.schema";
 import { AuthResponseType } from "@repo/validation-schemas/auth.schema";
 import { API_PATHS } from "@repo/config/paths";

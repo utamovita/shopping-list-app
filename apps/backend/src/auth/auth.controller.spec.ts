@@ -77,7 +77,7 @@ describe('AuthController', () => {
 
       const result = controller.getProfile(mockRequest);
 
-      expect(result).toEqual(mockUser);
+      expect(result).toEqual({ success: true, data: mockUser });
     });
   });
 });

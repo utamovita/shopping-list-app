@@ -1,6 +1,7 @@
-import { env } from "@/lib/env";
+import { env } from "@/shared/lib/env";
 import { ErrorResponse, SuccessResponse } from "@repo/types/api";
 import axios, { AxiosError } from "axios";
+import { useAuthStore } from "@/shared/store/auth.store";
 
 const axiosInstance = axios.create({
   baseURL: env.NEXT_PUBLIC_API_URL,
@@ -20,6 +21,19 @@ axiosInstance.interceptors.response.use(
 
       return Promise.reject(new Error(message));
     }
+    return Promise.reject(error);
+  },
+);
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = useAuthStore.getState().token;
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
     return Promise.reject(error);
   },
 );

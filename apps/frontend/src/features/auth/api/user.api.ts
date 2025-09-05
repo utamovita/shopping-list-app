@@ -1,0 +1,10 @@
+import { apiClient } from "@/shared/lib/api/api-client";
+import { API_PATHS } from "@repo/config/paths";
+import { UserProfile } from "@repo/types/api";
+
+export const userApi = {
+  getProfile: async () => {
+    const response = await apiClient.get<UserProfile>(API_PATHS.auth.profile);
+    return response.data;
+  },
+};

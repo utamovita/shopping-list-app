@@ -12,9 +12,8 @@ import { AuthService } from './auth.service';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { User } from '@prisma/client';
-import { SuccessResponse } from '@repo/types/api';
-import { AuthResponseType } from '@repo/validation-schemas/auth.schema';
+import type { SuccessResponse, UserProfile } from '@repo/types/api';
+import type { AuthResponseType } from '@repo/validation-schemas/auth.schema';
 
 @Controller('auth')
 export class AuthController {
@@ -39,7 +38,9 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @Get('profile')
-  getProfile(@Request() req: { user: Omit<User, 'passwordHash'> }) {
-    return req.user;
+  getProfile(
+    @Request() req: { user: UserProfile },
+  ): SuccessResponse<UserProfile> {
+    return { success: true, data: req.user };
   }
 }
