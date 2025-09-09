@@ -11,6 +11,7 @@ import { useTranslation } from "react-i18next";
 import { AuthResponseType } from "@repo/validation-schemas/auth.schema";
 import { SuccessResponse } from "@repo/types/api";
 import { APP_PATHS } from "@repo/config/paths";
+import { handleError } from "@/shared/lib/error/handle-error";
 
 type AuthType = "login" | "register";
 type FormSchema = z.infer<typeof loginSchema | typeof registerSchema>;
@@ -36,7 +37,7 @@ export function useAuthMutation(type: AuthType) {
       }
     },
     onError: (error) => {
-      toast.error(t(error.message));
+      handleError({ error });
     },
   });
 }
