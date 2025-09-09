@@ -1,16 +1,19 @@
 {
+  "hello": "Cześć",
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
     "welcomeBack": "Witaj z powrotem! Podaj swoje dane.",
     "createAccountPrompt": "Stwórz konto, aby zacząć.",
     "haveAccountPrompt": "Masz już konto?",
-    "noAccountPrompt": "Nie masz konta?"
+    "noAccountPrompt": "Nie masz konta?",
+    "logout": "Wyloguj się"
   },
   "formFields": {
     "email": "Email",
     "password": "Hasło",
     "username": "Nazwa użytkownika",
     "usernamePlaceholder": "Jan Kowalski"
-  }
+  },
+  "error": "Błąd"
 }

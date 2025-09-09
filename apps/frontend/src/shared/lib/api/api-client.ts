@@ -15,6 +15,10 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error: AxiosError) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().logout();
+    }
+
     if (error.response) {
       const errorResponse = error.response.data as ErrorResponse;
       const message = errorResponse.error.message || "error.generic";

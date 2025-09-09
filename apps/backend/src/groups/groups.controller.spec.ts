@@ -42,7 +42,7 @@ describe('GroupsController', () => {
       const result = await controller.create(dto, mockRequest);
 
       expect(service.create).toHaveBeenCalledWith(dto, mockUser.id);
-      expect(result).toEqual(expectedGroup);
+      expect(result).toEqual({ success: true, data: expectedGroup });
     });
   });
 });

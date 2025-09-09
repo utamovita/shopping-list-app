@@ -19,3 +19,10 @@ export type UserProfile = {
   email: string;
   name: string | null;
 };
+
+export type Group = {
+  id: string;
+  name: string;
+  createdAt: Date;
+  updatedAt: Date;
+};

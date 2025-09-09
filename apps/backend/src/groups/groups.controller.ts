@@ -1,8 +1,16 @@
-import { Controller, Post, Body, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Body,
+  UseGuards,
+  Request,
+} from '@nestjs/common';
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import { User } from '@prisma/client';
+import type { SuccessResponse, UserProfile } from '@repo/types/api';
+import type { Group } from '@prisma/client';
 
 @Controller('groups')
 @UseGuards(JwtAuthGuard)
@@ -10,10 +18,19 @@ export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
-  create(
+  async create(
     @Body() createGroupDto: CreateGroupDto,
-    @Request() req: { user: Omit<User, 'passwordHash'> },
-  ) {
-    return this.groupsService.create(createGroupDto, req.user.id);
+    @Request() req: { user: UserProfile },
+  ): Promise<SuccessResponse<Group>> {
+    const group = await this.groupsService.create(createGroupDto, req.user.id);
+    return { success: true, data: group };
+  }
+
+  @Get()
+  async findAllForUser(
+    @Request() req: { user: UserProfile },
+  ): Promise<SuccessResponse<Group[]>> {
+    const groups = await this.groupsService.findAllForUser(req.user.id);
+    return { success: true, data: groups };
   }
 }

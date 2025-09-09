@@ -1,16 +1,19 @@
 {
+  "hello": "Hello",
   "auth": {
     "loginTitle": "Log in",
     "registerTitle": "Sign up",
     "welcomeBack": "Welcome back! Please enter your details.",
     "createAccountPrompt": "Create an account to get started.",
     "haveAccountPrompt": "Already have an account?",
-    "noAccountPrompt": "Don't have an account?"
+    "noAccountPrompt": "Don't have an account?",
+    "logout": "Logout"
   },
   "formFields": {
     "email": "Email",
     "password": "Password",
     "username": "Username",
     "usernamePlaceholder": "John Doe"
-  }
+  },
+  "error": "Error"
 }

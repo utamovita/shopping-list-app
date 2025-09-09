@@ -30,4 +30,16 @@ export class GroupsService {
 
     return newGroup;
   }
+
+  async findAllForUser(userId: string) {
+    return this.prisma.group.findMany({
+      where: {
+        members: {
+          some: {
+            userId: userId,
+          },
+        },
+      },
+    });
+  }
 }
