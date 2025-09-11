@@ -20,7 +20,8 @@
   },
   "success": {
     "login": "Pomyślnie zalogowano.",
-    "register": "Pomyślnie zarejestrowano. Teraz możesz się zalogować."
+    "register": "Pomyślnie zarejestrowano. Teraz możesz się zalogować.",
+    "groupCreated": "Grupa została pomyślnie utworzona."
   },
   "error": {
     "generic": "Wystąpił błąd. Proszę spróbować ponownie później."

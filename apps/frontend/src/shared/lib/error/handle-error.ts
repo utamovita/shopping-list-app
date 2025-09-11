@@ -14,6 +14,7 @@ export function handleError({ error, showToast = true }: HandleErrorOptions) {
   }
 
   console.error("An error occurred:", error);
+  console.error("An error occurred (translated):", i18next.t(messageKey));
 
   if (showToast) {
     toast.error(i18next.t(messageKey));

@@ -40,6 +40,21 @@ export class GroupsService {
           },
         },
       },
+      include: {
+        _count: {
+          select: { shoppingItems: true },
+        },
+        members: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
+          },
+        },
+      },
     });
   }
 }

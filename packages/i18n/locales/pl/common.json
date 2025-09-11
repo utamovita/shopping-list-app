@@ -1,5 +1,6 @@
 {
   "hello": "Cześć",
+  "create": "Stwórz",
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
@@ -15,5 +16,18 @@
     "username": "Nazwa użytkownika",
     "usernamePlaceholder": "Jan Kowalski"
   },
-  "error": "Błąd"
+  "error": "Błąd",
+  "group": {
+    "mainTitle": "Twoje grupy",
+    "noGroups": "Nie masz jeszcze żadnych grup. Stwórz pierwszą!",
+    "createNew": "Stwórz nową grupę",
+    "createNewDescription": "Nadaj nazwę swojej nowej liście zakupów. Możesz później zaprosić do niej znajomych.",
+    "namePlaceholder": "Nazwa grupy",
+    "changeName": "Zmień nazwę grupy",
+    "manageMembers": "Zarządzaj członkami",
+    "itemsAmount": "rzeczy",
+    "membersAmount": "członków",
+    "leave": "Opuść grupę",
+    "delete": "Usuń grupę"
+  }
 }

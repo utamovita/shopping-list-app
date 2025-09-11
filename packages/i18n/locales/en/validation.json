@@ -20,7 +20,8 @@
   },
   "success": {
     "login": "Logged in successfully.",
-    "register": "Registered successfully. You can now log in."
+    "register": "Registered successfully. You can now log in.",
+    "groupCreated": "Group created successfully."
   },
   "error": {
     "generic": "An error occurred. Please try again later."

@@ -3,13 +3,16 @@
 import { useGroups } from "@/features/groups/hooks/use-groups.hook";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AlertFallback } from "@/shared/ui/alert";
-import { CreateGroupForm } from "@/features/groups/components/create-group-form.component";
+import { GroupCard } from "@/features/groups/components/group-card.component";
+import { AddGroupCard } from "@/features/groups/components/add-group-card.component";
+import { useTranslation } from "react-i18next";
 
 export function GroupsPanel() {
   const { data: groups, isError, isLoading } = useGroups();
+  const { t } = useTranslation();
 
   if (isLoading) {
-    return <SpinnerOverlay variant={"page"} spinnerSize={"lg"} />;
+    return <SpinnerOverlay variant="container" spinnerSize="lg" />;
   }
 
   if (isError || !groups) {
@@ -17,22 +20,23 @@ export function GroupsPanel() {
   }
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold mb-4">Twoje Grupy</h2>
+    <div className="relative space-y-6">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-semibold">
+          {t("common:group.mainTitle")}
+        </h2>
+      </div>
 
-      <CreateGroupForm />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {groups.data.map((group) => (
+          <GroupCard key={group.id} group={group} />
+        ))}
+        <AddGroupCard />
+      </div>
 
-      {groups.data.length > 0 ? (
-        <ul className="border-t pt-4">
-          {groups.data.map((group) => (
-            <li key={group.id} className="p-2 border-b">
-              {group.name}
-            </li>
-          ))}
-        </ul>
-      ) : (
+      {groups.data.length === 0 && (
         <p className="text-muted-foreground pt-4 text-center">
-          Nie należysz jeszcze do żadnej grupy. Stwórz swoją pierwszą!
+          {t("common:group.noGroups")}
         </p>
       )}
     </div>

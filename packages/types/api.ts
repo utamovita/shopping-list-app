@@ -12,8 +12,6 @@ export type ErrorResponse = {
   };
 };
 
-export type BaseResponse<T> = SuccessResponse<T> | ErrorResponse;
-
 export type UserProfile = {
   id: string;
   email: string;
@@ -23,6 +21,13 @@ export type UserProfile = {
 export type Group = {
   id: string;
   name: string;
-  createdAt: Date;
-  updatedAt: Date;
+  _count: {
+    shoppingItems: number;
+  };
+  members: Array<{
+    user: {
+      id: string;
+      name: string | null;
+    };
+  }>;
 };

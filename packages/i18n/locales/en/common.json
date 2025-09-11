@@ -1,5 +1,6 @@
 {
   "hello": "Hello",
+  "create": "Create",
   "auth": {
     "loginTitle": "Log in",
     "registerTitle": "Sign up",
@@ -15,5 +16,18 @@
     "username": "Username",
     "usernamePlaceholder": "John Doe"
   },
-  "error": "Error"
+  "error": "Error",
+  "group": {
+    "mainTitle": "Your shopping groups",
+    "noGroups": "You don't have any groups yet. Create your first one!",
+    "createNew": "Create new group",
+    "createNewDescription": "Name your new shopping list. You can invite friends to it later.",
+    "namePlaceholder": "Group name",
+    "changeName": "Change group name",
+    "manageMembers": "Manage members",
+    "itemsAmount": "items",
+    "membersAmount": "members",
+    "leave": "Leave group",
+    "delete": "Delete group"
+  }
 }

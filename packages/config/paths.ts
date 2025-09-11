@@ -3,6 +3,7 @@ export const APP_PATHS = {
   login: "/login",
   register: "/register",
   dashboard: "/dashboard",
+  dashboardGroup: (groupId: string) => `/dashboard/${groupId}`,
 };
 
 export const API_PATHS = {
