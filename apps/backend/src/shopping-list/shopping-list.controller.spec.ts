@@ -43,7 +43,7 @@ describe('ShoppingListController', () => {
       const result = await controller.getItems(groupId, mockRequest);
 
       expect(service.getItems).toHaveBeenCalledWith(groupId, mockUser.id);
-      expect(result).toEqual(mockItems);
+      expect(result).toEqual({ success: true, data: mockItems });
     });
   });
 
@@ -56,7 +56,7 @@ describe('ShoppingListController', () => {
       const result = await controller.addItem(groupId, dto, mockRequest);
 
       expect(service.addItem).toHaveBeenCalledWith(groupId, dto, mockUser.id);
-      expect(result).toEqual(newItem);
+      expect(result).toEqual({ success: true, data: newItem });
     });
   });
 });

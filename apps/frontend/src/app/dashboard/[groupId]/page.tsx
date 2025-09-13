@@ -1,5 +1,7 @@
 "use client";
 import { use } from "react";
+import { Authorized } from "@/features/auth/components/authorized.component";
+import { ShoppingListView } from "@/widgets/dashboard/shopping-list-view.component";
 
 export default function GroupPage({
   params,
@@ -9,8 +11,10 @@ export default function GroupPage({
   const { groupId } = use(params);
 
   return (
-    <div>
-      <p>Tutaj będzie lista zakupów dla grupy o ID: {groupId}</p>
-    </div>
+    <Authorized>
+      <div className="container mx-auto p-4 relative">
+        <ShoppingListView groupId={groupId} />
+      </div>
+    </Authorized>
   );
 }

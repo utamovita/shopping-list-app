@@ -31,3 +31,11 @@ export type Group = {
     };
   }>;
 };
+
+export type ShoppingListItem = {
+  id: string;
+  name: string;
+  addedBy: string | null;
+  createdAt: Date;
+  groupId: string;
+};
