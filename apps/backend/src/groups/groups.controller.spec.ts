@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';
 import { createMockGroup, createMockUser } from 'src/test-utils/mocks';
+import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
+import { RolesGuard } from '../auth/guard/roles.guard';
 
 describe('GroupsController', () => {
   let controller: GroupsController;
@@ -20,7 +22,12 @@ describe('GroupsController', () => {
           useValue: mockGroupsService,
         },
       ],
-    }).compile();
+    })
+      .overrideGuard(JwtAuthGuard)
+      .useValue({ canActivate: jest.fn(() => true) })
+      .overrideGuard(RolesGuard)
+      .useValue({ canActivate: jest.fn(() => true) })
+      .compile();
 
     controller = module.get<GroupsController>(GroupsController);
     service = module.get<GroupsService>(GroupsService);

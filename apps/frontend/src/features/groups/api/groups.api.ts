@@ -15,4 +15,10 @@ export const groupsApi = {
     const response = await apiClient.post<Group>(API_PATHS.groups, data);
     return response.data;
   },
+  remove: async (groupId: string) => {
+    const response = await apiClient.delete<void>(
+      `${API_PATHS.groups}/${groupId}`,
+    );
+    return response.data;
+  },
 };

@@ -57,4 +57,12 @@ export class GroupsService {
       },
     });
   }
+
+  async remove(groupId: string) {
+    return this.prisma.group.delete({
+      where: {
+        id: groupId,
+      },
+    });
+  }
 }
