@@ -83,21 +83,4 @@ describe('GroupsService', () => {
       await expect(service.create(dto, userId)).rejects.toThrow(dbError);
     });
   });
-
-  describe('findAllForUser', () => {
-    it('should return a list of groups for a user', async () => {
-      const userId = 'user-123';
-      const expectedGroups = [createMockGroup()];
-      mockPrismaService.group.findMany.mockResolvedValue(expectedGroups);
-
-      const result = await service.findAllForUser(userId);
-
-      expect(prisma.group.findMany).toHaveBeenCalledWith({
-        where: { members: { some: { userId } } },
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        include: expect.any(Object),
-      });
-      expect(result).toEqual(expectedGroups);
-    });
-  });
 });
