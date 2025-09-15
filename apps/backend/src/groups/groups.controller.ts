@@ -18,13 +18,24 @@ import type { Group } from '@prisma/client';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from '@prisma/client';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 
+@ApiTags('Groups')
+@ApiBearerAuth()
 @Controller('groups')
 @UseGuards(JwtAuthGuard)
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new group' })
+  @ApiResponse({ status: 201, description: 'Group created successfully.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async create(
     @Body() createGroupDto: CreateGroupDto,
     @Request() req: { user: UserProfile },
@@ -34,6 +45,9 @@ export class GroupsController {
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all groups for the current user' })
+  @ApiResponse({ status: 200, description: 'Returns a list of groups.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async findAllForUser(
     @Request() req: { user: UserProfile },
   ): Promise<SuccessResponse<Group[]>> {
@@ -45,6 +59,10 @@ export class GroupsController {
   @Roles(Role.ADMIN)
   @UseGuards(RolesGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Delete a group (requires ADMIN role)' })
+  @ApiResponse({ status: 204, description: 'Group deleted successfully.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async remove(@Param('groupId') groupId: string) {
     await this.groupsService.remove(groupId);
   }
