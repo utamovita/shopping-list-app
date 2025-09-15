@@ -32,6 +32,17 @@ export class ShoppingListService {
     });
   }
 
+  async removeItem(itemId: string, groupId: string, userId: string) {
+    await this.checkIfUserIsMember(groupId, userId);
+
+    return this.prisma.shoppingListItem.delete({
+      where: {
+        id: itemId,
+        groupId: groupId,
+      },
+    });
+  }
+
   private async checkIfUserIsMember(groupId: string, userId: string) {
     const membership = await this.prisma.groupMembership.findUnique({
       where: {

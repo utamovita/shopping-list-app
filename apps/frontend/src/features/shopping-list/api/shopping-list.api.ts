@@ -9,4 +9,23 @@ export const shoppingListApi = {
     );
     return response.data;
   },
+  addItem: async ({ groupId, name }: { groupId: string; name: string }) => {
+    const response = await apiClient.post<ShoppingListItem>(
+      API_PATHS.shoppingList(groupId),
+      { name },
+    );
+    return response.data;
+  },
+  removeItem: async ({
+    groupId,
+    itemId,
+  }: {
+    groupId: string;
+    itemId: string;
+  }) => {
+    const response = await apiClient.delete<void>(
+      `${API_PATHS.shoppingList(groupId)}/${itemId}`,
+    );
+    return response.data;
+  },
 };

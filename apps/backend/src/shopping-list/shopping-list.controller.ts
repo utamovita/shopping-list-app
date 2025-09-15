@@ -6,6 +6,9 @@ import {
   Param,
   Request,
   UseGuards,
+  Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ShoppingListService } from './shopping-list.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
@@ -67,5 +70,15 @@ export class ShoppingListController {
       req.user.id,
     );
     return { success: true, data: newItem };
+  }
+
+  @Delete(':itemId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async removeItem(
+    @Param('groupId') groupId: string,
+    @Param('itemId') itemId: string,
+    @Request() req: { user: UserProfile },
+  ) {
+    await this.shoppingListService.removeItem(itemId, groupId, req.user.id);
   }
 }
