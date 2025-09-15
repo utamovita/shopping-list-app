@@ -1,0 +1,54 @@
+import {
+  OnGatewayConnection,
+  OnGatewayDisconnect,
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
+import { Server, Socket } from 'socket.io';
+import { OnEvent } from '@nestjs/event-emitter';
+
+@WebSocketGateway({
+  cors: {
+    origin: '*',
+  },
+})
+export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
+  @WebSocketServer()
+  server: Server;
+
+  private connectedClients = new Map<string, Socket>();
+
+  handleConnection(client: Socket) {
+    console.log(`Client connected: ${client.id}`);
+    this.connectedClients.set(client.id, client);
+    this.logStatus();
+  }
+
+  handleDisconnect(client: Socket) {
+    console.log(`Client disconnected: ${client.id}`);
+    this.connectedClients.delete(client.id);
+    this.logStatus();
+  }
+
+  @SubscribeMessage('join_group')
+  handleJoinGroup(client: Socket, groupId: string) {
+    client.join(groupId);
+    console.log(`Client ${client.id} joined group ${groupId}`);
+  }
+
+  @SubscribeMessage('leave_group')
+  handleLeaveGroup(client: Socket, groupId: string) {
+    client.leave(groupId);
+    console.log(`Client ${client.id} left group ${groupId}`);
+  }
+
+  @OnEvent('shopping_list.updated')
+  handleShoppingListUpdate(groupId: string) {
+    this.server.to(groupId).emit('shopping_list_updated', { groupId });
+  }
+
+  private logStatus() {
+    console.log(`Total clients connected: ${this.connectedClients.size}`);
+  }
+}

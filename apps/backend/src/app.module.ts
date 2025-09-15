@@ -13,9 +13,12 @@ import {
   I18nModule,
 } from 'nestjs-i18n';
 import * as path from 'path';
+import { EventsModule } from './events/event.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       validate: (env) => envSchema.parse(env),
@@ -33,6 +36,7 @@ import * as path from 'path';
     PrismaModule,
     GroupsModule,
     ShoppingListModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

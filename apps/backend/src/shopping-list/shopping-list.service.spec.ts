@@ -3,10 +3,12 @@ import { ShoppingListService } from './shopping-list.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ForbiddenException } from '@nestjs/common';
 import { ShoppingListItem } from '@prisma/client';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('ShoppingListService', () => {
   let service: ShoppingListService;
   let prisma: PrismaService;
+  let eventEmitter: EventEmitter2;
 
   const mockPrismaService = {
     groupMembership: {
@@ -18,6 +20,10 @@ describe('ShoppingListService', () => {
     },
   };
 
+  const mockEventEmitter = {
+    emit: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -26,11 +32,16 @@ describe('ShoppingListService', () => {
           provide: PrismaService,
           useValue: mockPrismaService,
         },
+        {
+          provide: EventEmitter2,
+          useValue: mockEventEmitter,
+        },
       ],
     }).compile();
 
     service = module.get<ShoppingListService>(ShoppingListService);
     prisma = module.get<PrismaService>(PrismaService);
+    eventEmitter = module.get<EventEmitter2>(EventEmitter2);
 
     jest.clearAllMocks();
   });
@@ -63,6 +74,10 @@ describe('ShoppingListService', () => {
           addedBy: userId,
         },
       });
+      expect(eventEmitter.emit).toHaveBeenCalledWith(
+        'shopping_list.updated',
+        groupId,
+      );
       expect(result).toEqual(expectedItem);
     });
 
@@ -74,6 +89,8 @@ describe('ShoppingListService', () => {
       await expect(service.addItem(groupId, dto, userId)).rejects.toThrow(
         ForbiddenException,
       );
+
+      expect(eventEmitter.emit).not.toHaveBeenCalled();
     });
   });
 

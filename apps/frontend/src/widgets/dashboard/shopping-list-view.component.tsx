@@ -7,6 +7,7 @@ import { AddItemForm } from "@/features/shopping-list/components/add-item-form.c
 import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.hook";
 import { Button } from "@/shared/ui/button";
 import { Trash2 } from "lucide-react";
+import { useGroupSocket } from "@/features/shopping-list/hooks/use-group-socket.hook";
 
 type ShoppingListViewProps = {
   groupId: string;
@@ -15,6 +16,8 @@ type ShoppingListViewProps = {
 export function ShoppingListView({ groupId }: ShoppingListViewProps) {
   const { data: items, isLoading, isError } = useShoppingListItems(groupId);
   const { mutate: removeItem, isPending: isRemoving } = useRemoveItem(groupId);
+  useGroupSocket(groupId);
+
   if (isLoading) {
     return <SpinnerOverlay variant="container" />;
   }
