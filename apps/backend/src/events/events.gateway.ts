@@ -32,14 +32,14 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   @SubscribeMessage('join_group')
-  handleJoinGroup(client: Socket, groupId: string) {
-    client.join(groupId);
+  async handleJoinGroup(client: Socket, groupId: string) {
+    await client.join(groupId);
     console.log(`Client ${client.id} joined group ${groupId}`);
   }
 
   @SubscribeMessage('leave_group')
-  handleLeaveGroup(client: Socket, groupId: string) {
-    client.leave(groupId);
+  async handleLeaveGroup(client: Socket, groupId: string) {
+    await client.leave(groupId);
     console.log(`Client ${client.id} left group ${groupId}`);
   }
 

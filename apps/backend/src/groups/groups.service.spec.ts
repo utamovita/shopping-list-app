@@ -2,21 +2,20 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GroupsService } from './groups.service';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Group, Role } from '@prisma/client';
+import { createMockGroup } from 'src/test-utils/mocks';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 describe('GroupsService', () => {
   let service: GroupsService;
   let prisma: PrismaService;
 
   const mockTx = {
-    group: {
-      create: jest.fn(),
-    },
-    groupMembership: {
-      create: jest.fn(),
-    },
+    group: { create: jest.fn() },
+    groupMembership: { create: jest.fn() },
   };
 
   const mockPrismaService = {
+    group: { findMany: jest.fn() },
     $transaction: jest
       .fn()
       .mockImplementation(
@@ -26,20 +25,21 @@ describe('GroupsService', () => {
       ),
   };
 
+  const mockEventEmitter = {
+    emit: jest.fn(),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         GroupsService,
-        {
-          provide: PrismaService,
-          useValue: mockPrismaService,
-        },
+        { provide: PrismaService, useValue: mockPrismaService },
+        { provide: EventEmitter2, useValue: mockEventEmitter },
       ],
     }).compile();
 
     service = module.get<GroupsService>(GroupsService);
     prisma = module.get<PrismaService>(PrismaService);
-
     jest.clearAllMocks();
   });
 
@@ -51,7 +51,7 @@ describe('GroupsService', () => {
     it('should create a group and assign the creator as an admin within a transaction (happy path)', async () => {
       const dto = { name: 'Test Group' };
       const userId = 'user-123';
-      const createdGroup = { id: 'group-123', name: dto.name } as Group;
+      const createdGroup = createMockGroup({ name: dto.name });
 
       mockTx.group.create.mockResolvedValue(createdGroup);
 
@@ -81,6 +81,23 @@ describe('GroupsService', () => {
       mockPrismaService.$transaction.mockRejectedValue(dbError);
 
       await expect(service.create(dto, userId)).rejects.toThrow(dbError);
+    });
+  });
+
+  describe('findAllForUser', () => {
+    it('should return a list of groups for a user', async () => {
+      const userId = 'user-123';
+      const expectedGroups = [createMockGroup()];
+      mockPrismaService.group.findMany.mockResolvedValue(expectedGroups);
+
+      const result = await service.findAllForUser(userId);
+
+      expect(prisma.group.findMany).toHaveBeenCalledWith({
+        where: { members: { some: { userId } } },
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        include: expect.any(Object),
+      });
+      expect(result).toEqual(expectedGroups);
     });
   });
 });

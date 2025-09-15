@@ -17,6 +17,7 @@ describe('ShoppingListService', () => {
     shoppingListItem: {
       create: jest.fn(),
       findMany: jest.fn(),
+      delete: jest.fn(),
     },
   };
 
@@ -52,6 +53,7 @@ describe('ShoppingListService', () => {
 
   const userId = 'user-123';
   const groupId = 'group-123';
+  const itemId = 'item-123';
 
   describe('addItem', () => {
     it('should add an item if user is a member (happy path)', async () => {
@@ -119,6 +121,32 @@ describe('ShoppingListService', () => {
       await expect(service.getItems(groupId, userId)).rejects.toThrow(
         ForbiddenException,
       );
+    });
+  });
+
+  describe('removeItem', () => {
+    it('should remove an item and emit an event if user is a member', async () => {
+      mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
+      mockPrismaService.shoppingListItem.delete.mockResolvedValue({});
+
+      await service.removeItem(itemId, groupId, userId);
+
+      expect(prisma.shoppingListItem.delete).toHaveBeenCalledWith({
+        where: { id: itemId, groupId: groupId },
+      });
+      expect(eventEmitter.emit).toHaveBeenCalledWith(
+        'shopping_list.updated',
+        groupId,
+      );
+    });
+
+    it('should throw ForbiddenException if user is not a member', async () => {
+      mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
+
+      await expect(service.removeItem(itemId, groupId, userId)).rejects.toThrow(
+        ForbiddenException,
+      );
+      expect(eventEmitter.emit).not.toHaveBeenCalled();
     });
   });
 });

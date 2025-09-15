@@ -2,8 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { GroupsController } from './groups.controller';
 import { GroupsService } from './groups.service';
 import { createMockGroup, createMockUser } from 'src/test-utils/mocks';
-import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
-import { RolesGuard } from '../auth/guard/roles.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { BadRequestException } from '@nestjs/common';
 
 describe('GroupsController', () => {
   let controller: GroupsController;
@@ -11,6 +12,8 @@ describe('GroupsController', () => {
 
   const mockGroupsService = {
     create: jest.fn(),
+    findAllForUser: jest.fn(),
+    remove: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -38,18 +41,53 @@ describe('GroupsController', () => {
   });
 
   describe('create', () => {
-    it('should call GroupsService.create with correct data and return a new group', async () => {
+    it('should call service.create and return a success response (happy path)', async () => {
       const dto = { name: 'Test Group' };
       const mockUser = createMockUser({ id: 'user-123' });
       const mockRequest = { user: mockUser };
       const expectedGroup = createMockGroup({ name: dto.name });
-
       mockGroupsService.create.mockResolvedValue(expectedGroup);
 
       const result = await controller.create(dto, mockRequest);
 
       expect(service.create).toHaveBeenCalledWith(dto, mockUser.id);
       expect(result).toEqual({ success: true, data: expectedGroup });
+    });
+
+    it('should propagate exceptions from the service (sad path)', async () => {
+      const dto = { name: 'Test Group' };
+      const mockUser = createMockUser({ id: 'user-123' });
+      const mockRequest = { user: mockUser };
+      mockGroupsService.create.mockRejectedValue(new BadRequestException());
+
+      await expect(controller.create(dto, mockRequest)).rejects.toThrow(
+        BadRequestException,
+      );
+    });
+  });
+
+  describe('findAllForUser', () => {
+    it('should call service.findAllForUser and return a success response', async () => {
+      const mockUser = createMockUser({ id: 'user-123' });
+      const mockRequest = { user: mockUser };
+      const expectedGroups = [createMockGroup()];
+      mockGroupsService.findAllForUser.mockResolvedValue(expectedGroups);
+
+      const result = await controller.findAllForUser(mockRequest);
+
+      expect(service.findAllForUser).toHaveBeenCalledWith(mockUser.id);
+      expect(result).toEqual({ success: true, data: expectedGroups });
+    });
+  });
+
+  describe('remove', () => {
+    it('should call service.remove with correct group id', async () => {
+      const groupId = 'group-123';
+      mockGroupsService.remove.mockResolvedValue(undefined);
+
+      await controller.remove(groupId);
+
+      expect(service.remove).toHaveBeenCalledWith(groupId);
     });
   });
 });
