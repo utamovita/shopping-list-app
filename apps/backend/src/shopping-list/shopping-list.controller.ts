@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Patch,
   Body,
   Param,
   Request,
@@ -25,6 +26,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { UpdateShoppingListItemDto } from './dto/update-shopping-list-item.dto';
 
 @ApiTags('Shopping List')
 @ApiBearerAuth()
@@ -80,5 +82,22 @@ export class ShoppingListController {
     @Request() req: { user: UserProfile },
   ) {
     await this.shoppingListService.removeItem(itemId, groupId, req.user.id);
+  }
+
+  @Patch(':itemId')
+  @ApiOperation({ summary: 'Update a shopping list item' })
+  async updateItem(
+    @Param('groupId') groupId: string,
+    @Param('itemId') itemId: string,
+    @Request() req: { user: UserProfile },
+    @Body() updateDto: UpdateShoppingListItemDto,
+  ): Promise<SuccessResponse<ShoppingListItem>> {
+    const updatedItem = await this.shoppingListService.updateItem(
+      itemId,
+      groupId,
+      req.user.id,
+      updateDto,
+    );
+    return { success: true, data: updatedItem };
   }
 }

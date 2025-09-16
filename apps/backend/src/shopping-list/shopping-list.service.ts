@@ -2,6 +2,7 @@ import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateShoppingListItemDto } from './dto/create-shopping-list-item.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { UpdateShoppingListItemDto } from './dto/update-shopping-list-item.dto';
 
 @Injectable()
 export class ShoppingListService {
@@ -52,7 +53,24 @@ export class ShoppingListService {
     this.eventEmitter.emit('shopping_list.updated', groupId);
     return deletedItem;
   }
+  async updateItem(
+    itemId: string,
+    groupId: string,
+    userId: string,
+    updateDto: UpdateShoppingListItemDto,
+  ) {
+    await this.checkIfUserIsMember(groupId, userId);
 
+    const updatedItem = await this.prisma.shoppingListItem.update({
+      where: { id: itemId, groupId: groupId },
+      data: {
+        completed: updateDto.completed,
+      },
+    });
+
+    this.eventEmitter.emit('shopping_list.updated', groupId);
+    return updatedItem;
+  }
   private async checkIfUserIsMember(groupId: string, userId: string) {
     const membership = await this.prisma.groupMembership.findUnique({
       where: {

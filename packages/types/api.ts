@@ -36,6 +36,7 @@ export type ShoppingListItem = {
   id: string;
   name: string;
   addedBy: string | null;
+  completed: boolean;
   createdAt: Date;
   groupId: string;
 };

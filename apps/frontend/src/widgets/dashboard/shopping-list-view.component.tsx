@@ -8,6 +8,9 @@ import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.ho
 import { Button } from "@/shared/ui/button";
 import { Trash2 } from "lucide-react";
 import { useGroupSocket } from "@/features/shopping-list/hooks/use-group-socket.hook";
+import { cn } from "@/shared/lib/utils";
+import { useUpdateItem } from "@/features/shopping-list/hooks/use-update-item.component";
+import { Checkbox } from "@/shared/ui/checkbox";
 
 type ShoppingListViewProps = {
   groupId: string;
@@ -15,7 +18,8 @@ type ShoppingListViewProps = {
 
 export function ShoppingListView({ groupId }: ShoppingListViewProps) {
   const { data: items, isLoading, isError } = useShoppingListItems(groupId);
-  const { mutate: removeItem, isPending: isRemoving } = useRemoveItem(groupId);
+  const { mutate: removeItem } = useRemoveItem(groupId);
+  const { mutate: updateItem } = useUpdateItem(groupId);
   useGroupSocket(groupId);
 
   if (isLoading) {
@@ -29,23 +33,35 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-semibold">Lista Zakupów</h2>
-
       <AddItemForm groupId={groupId} />
-
       <div className="border rounded-md">
         {items.data.length > 0 ? (
           <ul>
-            {items.data.map((item, index) => (
+            {items.data.map((item) => (
               <li
                 key={item.id}
-                className="flex items-center p-4 border-b last:border-b-0"
+                className="flex items-center p-4 border-b last:border-b-0 gap-4"
               >
-                <span className="flex-grow">{item.name}</span>
+                <Checkbox
+                  id={item.id}
+                  checked={item.completed}
+                  onCheckedChange={(checked) =>
+                    updateItem({ itemId: item.id, completed: !!checked })
+                  }
+                />
+                <label
+                  htmlFor={item.id}
+                  className={cn(
+                    "flex-grow cursor-pointer",
+                    item.completed && "line-through text-muted-foreground",
+                  )}
+                >
+                  {item.name}
+                </label>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={() => removeItem(item.id)}
-                  disabled={isRemoving}
                 >
                   <Trash2 className="h-4 w-4 text-destructive" />
                 </Button>

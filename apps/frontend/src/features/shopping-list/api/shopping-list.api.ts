@@ -28,4 +28,19 @@ export const shoppingListApi = {
     );
     return response.data;
   },
+  updateItem: async ({
+    groupId,
+    itemId,
+    completed,
+  }: {
+    groupId: string;
+    itemId: string;
+    completed: boolean;
+  }) => {
+    const response = await apiClient.patch<ShoppingListItem>(
+      `${API_PATHS.shoppingList(groupId)}/${itemId}`,
+      { completed },
+    );
+    return response.data;
+  },
 };
