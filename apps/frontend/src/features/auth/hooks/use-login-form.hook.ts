@@ -2,14 +2,16 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { loginSchema } from "../schemas/auth.schema";
+import {
+  loginSchema,
+  type LoginDto,
+} from "../../../../../../packages/validation-schemas/src/auth.schema";
 import { useAuthMutation } from "./use-auth-mutation.hook";
 
 export function useLoginForm() {
   const { mutate, isPending } = useAuthMutation("login");
 
-  const form = useForm<z.infer<typeof loginSchema>>({
+  const form = useForm<LoginDto>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: "",
@@ -17,7 +19,7 @@ export function useLoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
+  function onSubmit(values: LoginDto) {
     mutate(values);
   }
 

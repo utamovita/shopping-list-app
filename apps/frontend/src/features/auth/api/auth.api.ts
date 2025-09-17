@@ -1,15 +1,18 @@
 import { apiClient } from "@/shared/lib/api/api-client";
-import { loginSchema, registerSchema } from "../schemas/auth.schema";
-import { AuthResponseType } from "@repo/validation-schemas/auth.schema";
+import {
+  type LoginDto,
+  type RegisterDto,
+} from "../../../../../../packages/validation-schemas/src/auth.schema";
+import { AuthResponseType } from "../../../../../../packages/validation-schemas/src/auth.schema";
 import { API_PATHS } from "@repo/config/paths";
 
 import { z } from "zod";
 
 export const authApi = {
-  login: async (values: z.infer<typeof loginSchema>) => {
+  login: async (values: LoginDto) => {
     return apiClient.post<AuthResponseType>(API_PATHS.auth.login, values);
   },
-  register: async (values: z.infer<typeof registerSchema>) => {
+  register: async (values: RegisterDto) => {
     return apiClient.post<AuthResponseType>(API_PATHS.auth.register, values);
   },
 };

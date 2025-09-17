@@ -1,4 +1,10 @@
-import * as z from "zod";
+import { z } from "zod";
+
+export const authResponseSchema = z.object({
+  access_token: z.string(),
+});
+
+export type AuthResponseType = z.infer<typeof authResponseSchema>;
 
 export const loginSchema = z.object({
   email: z.string().email({ message: "validation:email.invalid" }),
@@ -6,6 +12,7 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = loginSchema.extend({
+  email: z.string().email({ message: "validation:email.invalid" }),
   username: z.string().min(3, {
     message: JSON.stringify({
       key: "validation:name.minLength",
@@ -19,3 +26,6 @@ export const registerSchema = loginSchema.extend({
     }),
   }),
 });
+
+export type LoginDto = z.infer<typeof loginSchema>;
+export type RegisterDto = z.infer<typeof registerSchema>;

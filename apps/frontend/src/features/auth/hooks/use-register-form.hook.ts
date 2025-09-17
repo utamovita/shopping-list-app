@@ -2,14 +2,16 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { registerSchema } from "../schemas/auth.schema";
+import {
+  registerSchema,
+  type RegisterDto,
+} from "../../../../../../packages/validation-schemas/src/auth.schema";
 import { useAuthMutation } from "./use-auth-mutation.hook";
 
 export function useRegisterForm() {
   const { mutate, isPending } = useAuthMutation("register");
 
-  const form = useForm<z.infer<typeof registerSchema>>({
+  const form = useForm<RegisterDto>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       username: "",
@@ -18,7 +20,7 @@ export function useRegisterForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
+  function onSubmit(values: RegisterDto) {
     mutate(values);
   }
 

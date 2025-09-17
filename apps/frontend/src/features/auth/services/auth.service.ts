@@ -1,10 +1,12 @@
 import { authApi } from "../api/auth.api";
-import { loginSchema, registerSchema } from "../schemas/auth.schema";
-import { authResponseSchema } from "@repo/validation-schemas/auth.schema";
-import { z } from "zod";
+import { authResponseSchema } from "../../../../../../packages/validation-schemas/src/auth.schema";
+import {
+  type LoginDto,
+  type RegisterDto,
+} from "../../../../../../packages/validation-schemas/src/auth.schema";
 
 export const authService = {
-  login: async (values: z.infer<typeof loginSchema>) => {
+  login: async (values: LoginDto) => {
     const response = await authApi.login(values);
     const serverResponse = response.data;
 
@@ -16,7 +18,7 @@ export const authService = {
     };
   },
 
-  register: async (values: z.infer<typeof registerSchema>) => {
+  register: async (values: RegisterDto) => {
     const response = await authApi.register(values);
     const serverResponse = response.data;
 

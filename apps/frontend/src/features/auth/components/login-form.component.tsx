@@ -30,7 +30,9 @@ export default function LoginForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>{t("auth.loginTitle")}</CardTitle>
+        <CardTitle className={"text-center"} role="heading" aria-level={2}>
+          {t("auth.loginTitle")}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>

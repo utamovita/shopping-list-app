@@ -13,7 +13,7 @@ import { RegisterUserDto } from './dto/register-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
 import type { SuccessResponse, UserProfile } from '@repo/types/api';
-import type { AuthResponseType } from '@repo/validation-schemas/auth.schema';
+import type { AuthResponseType } from '@repo/validation-schemas';
 import {
   ApiBearerAuth,
   ApiOperation,
