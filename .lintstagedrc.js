@@ -1,21 +1,25 @@
 module.exports = {
   "*.{js,jsx,ts,tsx,md}": "pnpm format",
+
   "apps/backend/src/**/*.{ts,tsx}": (filenames) => {
     const fileArgs = filenames.join(" ");
+    const lintCommand = `pnpm --filter backend run lint ${fileArgs}`;
+    const checkTypesCommand = "pnpm --filter backend run check-types";
+    const testCommand = `pnpm --filter backend test -- --findRelatedTests ${fileArgs} --passWithNoTests`;
 
-    return [
-      `pnpm --filter backend run lint ${fileArgs}`,
-      "pnpm --filter backend run check-types",
-      `pnpm --filter backend test -- --findRelatedTests ${fileArgs} --passWithNoTests`,
-    ];
+    return [lintCommand, checkTypesCommand, testCommand];
   },
-  "apps/frontend/src/**/*.{ts,tsx}": (filenames) => {
-    const fileArgs = filenames.map((f) => `--file ${f}`).join(" ");
-    const lintCommand = `pnpm --filter frontend exec next lint --dir apps/frontend ${fileArgs}`;
 
-    return [
-      lintCommand,
-      "pnpm --filter frontend exec tsc --noEmit -p tsconfig.json",
-    ];
+  "apps/frontend/src/**/*.{ts,tsx}": (filenames) => {
+    const lintFileArgs = filenames.map((f) => `--file ${f}`).join(" ");
+    const lintCommand = `pnpm --filter frontend exec next lint --dir apps/frontend ${lintFileArgs}`;
+
+    const checkTypesCommand =
+      "pnpm --filter frontend exec tsc --noEmit -p tsconfig.json";
+
+    const testFileArgs = filenames.join(" ");
+    const testCommand = `pnpm --filter frontend run test -- --findRelatedTests ${testFileArgs} --passWithNoTests`;
+
+    return [lintCommand, checkTypesCommand, testCommand];
   },
 };
