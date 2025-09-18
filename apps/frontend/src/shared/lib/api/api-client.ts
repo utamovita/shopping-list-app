@@ -1,5 +1,5 @@
 import { env } from "@/shared/lib/env";
-import { ErrorResponse, SuccessResponse } from "@repo/types/api";
+import { ErrorResponse, SuccessResponse } from "@repo/types";
 import axios, { AxiosError } from "axios";
 import { useAuthStore } from "@/shared/store/auth.store";
 

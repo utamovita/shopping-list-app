@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import type { Group } from "@repo/types/api";
+import type { Group } from "@repo/types";
 import { MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { DeleteGroupDialog } from "./delete-group-dialog.component";

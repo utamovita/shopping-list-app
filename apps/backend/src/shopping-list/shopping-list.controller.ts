@@ -21,7 +21,7 @@ import type {
   SuccessResponse,
   UserProfile,
   ShoppingListItem,
-} from '@repo/types/api';
+} from '@repo/types';
 import {
   ApiBearerAuth,
   ApiOperation,

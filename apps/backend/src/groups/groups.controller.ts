@@ -13,7 +13,7 @@ import {
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import type { SuccessResponse, UserProfile } from '@repo/types/api';
+import type { SuccessResponse, UserProfile } from '@repo/types';
 import type { Group } from '@prisma/client';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { Role } from '@prisma/client';

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from "@/shared/ui/card";
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
-import type { Group } from "@repo/types/api";
+import type { Group } from "@repo/types";
 import { Users, List } from "lucide-react";
 import Link from "next/link";
 import { APP_PATHS } from "@repo/config";
