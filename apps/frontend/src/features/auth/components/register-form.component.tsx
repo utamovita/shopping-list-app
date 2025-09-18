@@ -30,7 +30,7 @@ export default function RegisterForm() {
   return (
     <Card className="w-[400px]">
       <CardHeader>
-        <CardTitle className={"text-center"}>
+        <CardTitle className={"text-center"} role="heading" aria-level={2}>
           {t("auth.registerTitle")}
         </CardTitle>
       </CardHeader>
