@@ -1,4 +1,6 @@
 import "@testing-library/jest-dom";
+import { toHaveNoViolations } from "jest-axe";
+import React from "react";
 
 jest.mock("@/shared/lib/i18n/client", () => ({}));
 
@@ -30,3 +32,11 @@ jest.mock("next/navigation", () => ({
     };
   },
 }));
+
+jest.mock("next/link", () => {
+  return ({ children, href }: { children: React.ReactNode; href: string }) => {
+    return React.createElement("a", { href }, children);
+  };
+});
+
+expect.extend(toHaveNoViolations);
