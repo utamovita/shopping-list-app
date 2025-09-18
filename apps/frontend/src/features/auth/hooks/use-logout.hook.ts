@@ -2,7 +2,7 @@
 
 import { useAuthStore } from "@/shared/store/auth.store";
 import { useRouter } from "next/navigation";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 
 export function useLogout() {
   const logout = useAuthStore((state) => state.logout);

@@ -2,11 +2,10 @@ import { apiClient } from "@/shared/lib/api/api-client";
 import {
   type LoginDto,
   type RegisterDto,
-} from "../../../../../../packages/validation-schemas/src/auth.schema";
-import { AuthResponseType } from "../../../../../../packages/validation-schemas/src/auth.schema";
-import { API_PATHS } from "@repo/config/paths";
+  AuthResponseType,
+} from "@repo/schemas";
 
-import { z } from "zod";
+import { API_PATHS } from "@repo/config";
 
 export const authApi = {
   login: async (values: LoginDto) => {

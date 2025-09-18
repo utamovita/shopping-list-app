@@ -1,9 +1,9 @@
 import { authApi } from "../api/auth.api";
-import { authResponseSchema } from "../../../../../../packages/validation-schemas/src/auth.schema";
 import {
   type LoginDto,
   type RegisterDto,
-} from "../../../../../../packages/validation-schemas/src/auth.schema";
+  authResponseSchema,
+} from "@repo/schemas";
 
 export const authService = {
   login: async (values: LoginDto) => {

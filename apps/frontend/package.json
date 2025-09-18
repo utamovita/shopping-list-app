@@ -21,7 +21,7 @@
     "@repo/config": "workspace:^",
     "@repo/i18n": "workspace:^",
     "@repo/types": "workspace:^",
-    "@repo/validation-schemas": "workspace:^",
+    "@repo/schemas": "workspace:^",
     "@tanstack/react-query": "^5.85.2",
     "axios": "^1.11.0",
     "class-variance-authority": "^0.7.1",

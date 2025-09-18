@@ -1,6 +1,7 @@
 {
   "hello": "Hello",
   "create": "Create",
+  "add": "Add",
   "auth": {
     "loginTitle": "Log in",
     "registerTitle": "Sign up",
@@ -28,6 +29,10 @@
     "itemsAmount": "items",
     "membersAmount": "members",
     "leave": "Leave group",
-    "delete": "Delete group"
+    "delete": "Delete group",
+    "deleteSuccess": "Group has been deleted."
+  },
+  "shoppingList": {
+    "addItemPlaceholder": "Add new item..."
   }
 }

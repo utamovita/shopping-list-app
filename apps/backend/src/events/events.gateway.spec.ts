@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EventsGateway } from './events.gateway';
 import { Server, Socket } from 'socket.io';
-
+import { EVENT_NAME } from '@repo/config';
 describe('EventsGateway', () => {
   let gateway: EventsGateway;
 
@@ -44,12 +44,12 @@ describe('EventsGateway', () => {
   });
 
   describe('handleShoppingListUpdate', () => {
-    it('should emit a shopping_list_updated event to a specific room', () => {
+    it(`should emit a ${EVENT_NAME.shoppingListUpdated} event to a specific room`, () => {
       const groupId = 'group-123';
       gateway.handleShoppingListUpdate(groupId);
 
       expect(mockServer.to).toHaveBeenCalledWith(groupId);
-      expect(mockEmit).toHaveBeenCalledWith('shopping_list_updated', {
+      expect(mockEmit).toHaveBeenCalledWith(EVENT_NAME.shoppingListUpdated, {
         groupId,
       });
     });

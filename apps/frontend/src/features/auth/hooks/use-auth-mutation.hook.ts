@@ -6,13 +6,9 @@ import { useRouter } from "next/navigation";
 import { authService } from "../services/auth.service";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-import {
-  AuthResponseType,
-  LoginDto,
-  RegisterDto,
-} from "../../../../../../packages/validation-schemas/src/auth.schema";
+import { AuthResponseType, LoginDto, RegisterDto } from "@repo/schemas";
 import { SuccessResponse } from "@repo/types/api";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 import { handleError } from "@/shared/lib/error/handle-error";
 
 type AuthType = "login" | "register";

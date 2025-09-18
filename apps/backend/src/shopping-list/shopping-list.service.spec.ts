@@ -4,6 +4,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { ForbiddenException } from '@nestjs/common';
 import { ShoppingListItem } from '@prisma/client';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EVENT_NAME } from '@repo/config';
 
 describe('ShoppingListService', () => {
   let service: ShoppingListService;
@@ -77,7 +78,7 @@ describe('ShoppingListService', () => {
         },
       });
       expect(eventEmitter.emit).toHaveBeenCalledWith(
-        'shopping_list.updated',
+        EVENT_NAME.shoppingListUpdated,
         groupId,
       );
       expect(result).toEqual(expectedItem);
@@ -135,7 +136,7 @@ describe('ShoppingListService', () => {
         where: { id: itemId, groupId: groupId },
       });
       expect(eventEmitter.emit).toHaveBeenCalledWith(
-        'shopping_list.updated',
+        EVENT_NAME.shoppingListUpdated,
         groupId,
       );
     });

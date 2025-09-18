@@ -11,7 +11,7 @@ import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
 import type { Group } from "@repo/types/api";
 import { Users, List } from "lucide-react";
 import Link from "next/link";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 import { useTranslation } from "react-i18next";
 import { GroupCardActions } from "./group-card-actions.component";
 

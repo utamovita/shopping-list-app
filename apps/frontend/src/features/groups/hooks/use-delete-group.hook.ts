@@ -16,7 +16,7 @@ export function useDeleteGroup() {
       if (response?.message) {
         toast.success(t(response.message));
       } else {
-        toast.success("Grupa została usunięta.");
+        toast.success(t("group.deleteSuccess"));
       }
       queryClient.invalidateQueries({ queryKey: ["groups"] });
     },

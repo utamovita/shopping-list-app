@@ -2,10 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  loginSchema,
-  type LoginDto,
-} from "../../../../../../packages/validation-schemas/src/auth.schema";
+import { loginSchema, type LoginDto } from "@repo/schemas";
 import { useAuthMutation } from "./use-auth-mutation.hook";
 
 export function useLoginForm() {

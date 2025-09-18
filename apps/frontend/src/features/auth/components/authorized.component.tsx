@@ -3,7 +3,7 @@
 import { useAuthStore } from "@/shared/store/auth.store";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 import { useIsMounted } from "@/shared/hooks/use-has-mounted.hook";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 

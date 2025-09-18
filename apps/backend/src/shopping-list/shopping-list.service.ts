@@ -1,8 +1,11 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateShoppingListItemDto } from './dto/create-shopping-list-item.dto';
+import {
+  CreateShoppingListItemDto,
+  UpdateShoppingListItemDto,
+} from './dto/shopping-list-item.dto';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import { UpdateShoppingListItemDto } from './dto/update-shopping-list-item.dto';
+import { EVENT_NAME } from '@repo/config';
 
 @Injectable()
 export class ShoppingListService {
@@ -36,7 +39,7 @@ export class ShoppingListService {
       },
     });
 
-    this.eventEmitter.emit('shopping_list.updated', groupId);
+    this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return newItem;
   }
 
@@ -50,7 +53,7 @@ export class ShoppingListService {
       },
     });
 
-    this.eventEmitter.emit('shopping_list.updated', groupId);
+    this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return deletedItem;
   }
   async updateItem(
@@ -68,7 +71,7 @@ export class ShoppingListService {
       },
     });
 
-    this.eventEmitter.emit('shopping_list.updated', groupId);
+    this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return updatedItem;
   }
   private async checkIfUserIsMember(groupId: string, userId: string) {

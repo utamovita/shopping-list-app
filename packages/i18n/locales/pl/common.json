@@ -1,6 +1,7 @@
 {
   "hello": "Cześć",
   "create": "Stwórz",
+  "add": "Dodaj",
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
@@ -28,6 +29,10 @@
     "itemsAmount": "rzeczy",
     "membersAmount": "członków",
     "leave": "Opuść grupę",
-    "delete": "Usuń grupę"
+    "delete": "Usuń grupę",
+    "deleteSuccess": "Grupa została usunięta."
+  },
+  "shoppingList": {
+    "addItemPlaceholder": "Dodaj nowy przedmiot..."
   }
 }

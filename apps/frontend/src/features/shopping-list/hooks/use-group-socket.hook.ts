@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { socket } from "@/shared/lib/socket";
 import { useQueryClient } from "@tanstack/react-query";
+import { EVENT_NAME } from "@repo/config";
 
 export function useGroupSocket(groupId: string) {
   const queryClient = useQueryClient();
@@ -14,12 +15,12 @@ export function useGroupSocket(groupId: string) {
       }
     };
 
-    socket.on("shopping_list_updated", onUpdate);
-    socket.emit("join_group", groupId);
+    socket.on(EVENT_NAME.shoppingListUpdated, onUpdate);
+    socket.emit(EVENT_NAME.joinGroup, groupId);
 
     return () => {
-      socket.emit("leave_group", groupId);
-      socket.off("shopping_list_updated", onUpdate);
+      socket.emit(EVENT_NAME.leaveGroup, groupId);
+      socket.off(EVENT_NAME.shoppingListUpdated, onUpdate);
     };
   }, [groupId, queryClient]);
 }

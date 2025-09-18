@@ -21,7 +21,7 @@ import {
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useLoginForm } from "@/features/auth/hooks/use-login-form.hook";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 
 export default function LoginForm() {
   const { form, onSubmit, isPending } = useLoginForm();

@@ -1,5 +1,5 @@
 import { apiClient } from "@/shared/lib/api/api-client";
-import { API_PATHS } from "@repo/config/paths";
+import { API_PATHS } from "@repo/config";
 import type { ShoppingListItem } from "@repo/types/api";
 
 export const shoppingListApi = {

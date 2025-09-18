@@ -1,5 +1,5 @@
 import { apiClient } from "@/shared/lib/api/api-client";
-import { API_PATHS } from "@repo/config/paths";
+import { API_PATHS } from "@repo/config";
 import type { Group } from "@repo/types/api";
 
 type CreateGroupDto = {

@@ -2,7 +2,7 @@ import { render, screen, renderHook } from "@testing-library/react";
 import { useForm } from "react-hook-form";
 import LoginForm from "./login-form.component";
 import { useLoginForm } from "../hooks/use-login-form.hook";
-import { type LoginDto } from "@repo/validation-schemas";
+import { type LoginDto } from "@repo/schemas";
 
 jest.mock("../hooks/use-login-form.hook");
 

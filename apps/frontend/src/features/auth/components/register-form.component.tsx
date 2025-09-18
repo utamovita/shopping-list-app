@@ -21,7 +21,7 @@ import {
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { useRegisterForm } from "@/features/auth/hooks/use-register-form.hook";
-import { APP_PATHS } from "@repo/config/paths";
+import { APP_PATHS } from "@repo/config";
 
 export default function RegisterForm() {
   const { form, onSubmit, isPending } = useRegisterForm();

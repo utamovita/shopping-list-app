@@ -7,7 +7,7 @@ import {
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { OnEvent } from '@nestjs/event-emitter';
-
+import { EVENT_NAME } from '@repo/config';
 @WebSocketGateway({
   cors: {
     origin: '*',
@@ -31,21 +31,21 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
     this.logStatus();
   }
 
-  @SubscribeMessage('join_group')
+  @SubscribeMessage(EVENT_NAME.joinGroup)
   async handleJoinGroup(client: Socket, groupId: string) {
     await client.join(groupId);
     console.log(`Client ${client.id} joined group ${groupId}`);
   }
 
-  @SubscribeMessage('leave_group')
+  @SubscribeMessage(EVENT_NAME.leaveGroup)
   async handleLeaveGroup(client: Socket, groupId: string) {
     await client.leave(groupId);
     console.log(`Client ${client.id} left group ${groupId}`);
   }
 
-  @OnEvent('shopping_list.updated')
+  @OnEvent(EVENT_NAME.shoppingListUpdated)
   handleShoppingListUpdate(groupId: string) {
-    this.server.to(groupId).emit('shopping_list_updated', { groupId });
+    this.server.to(groupId).emit(EVENT_NAME.shoppingListUpdated, { groupId });
   }
 
   private logStatus() {
