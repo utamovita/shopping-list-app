@@ -2,6 +2,7 @@
   "hello": "Cześć",
   "create": "Stwórz",
   "add": "Dodaj",
+  "yesDelete": "Tak, usuń",
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
@@ -30,9 +31,12 @@
     "membersAmount": "członków",
     "leave": "Opuść grupę",
     "delete": "Usuń grupę",
-    "deleteSuccess": "Grupa została usunięta."
+    "deleteSuccess": "Grupa została usunięta.",
+    "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć."
   },
   "shoppingList": {
-    "addItemPlaceholder": "Dodaj nowy przedmiot..."
+    "mainTitle": "Lista zakupów",
+    "addItemPlaceholder": "Dodaj nowy przedmiot...",
+    "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!"
   }
 }

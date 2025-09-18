@@ -2,6 +2,7 @@
   "hello": "Hello",
   "create": "Create",
   "add": "Add",
+  "yesDelete": "Yes, delete",
   "auth": {
     "loginTitle": "Log in",
     "registerTitle": "Sign up",
@@ -30,9 +31,12 @@
     "membersAmount": "members",
     "leave": "Leave group",
     "delete": "Delete group",
-    "deleteSuccess": "Group has been deleted."
+    "deleteSuccess": "Group has been deleted.",
+    "deleteGroupPrompt": "Are you sure you want to delete the group {{groupName}}? This action cannot be undone."
   },
   "shoppingList": {
-    "addItemPlaceholder": "Add new item..."
+    "mainTitle": "Shopping list",
+    "addItemPlaceholder": "Add new item...",
+    "noItems": "This list is still empty. Add the first product!"
   }
 }

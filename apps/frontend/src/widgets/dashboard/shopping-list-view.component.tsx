@@ -11,6 +11,7 @@ import { useGroupSocket } from "@/features/shopping-list/hooks/use-group-socket.
 import { cn } from "@/shared/lib/utils";
 import { useUpdateItem } from "@/features/shopping-list/hooks/use-update-item.component";
 import { Checkbox } from "@/shared/ui/checkbox";
+import { useTranslation } from "react-i18next";
 
 type ShoppingListViewProps = {
   groupId: string;
@@ -20,6 +21,7 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
   const { data: items, isLoading, isError } = useShoppingListItems(groupId);
   const { mutate: removeItem } = useRemoveItem(groupId);
   const { mutate: updateItem } = useUpdateItem(groupId);
+  const { t } = useTranslation("common");
   useGroupSocket(groupId);
 
   if (isLoading) {
@@ -32,7 +34,7 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-semibold">Lista Zakupów</h2>
+      <h2 className="text-2xl font-semibold">{t("shoppingList.mainTitle")}</h2>
       <AddItemForm groupId={groupId} />
       <div className="border rounded-md">
         {items.data.length > 0 ? (
@@ -70,7 +72,7 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
           </ul>
         ) : (
           <p className="text-center text-muted-foreground p-8">
-            Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!
+            {t("shoppingList.noItems")}
           </p>
         )}
       </div>
