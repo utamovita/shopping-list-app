@@ -82,7 +82,7 @@ describe("RegisterForm", () => {
   it("should display an error message for a short username", async () => {
     render(<RegisterForm />);
 
-    await userEvent.type(screen.getByLabelText("formFields.username"), "Joe");
+    await userEvent.type(screen.getByLabelText("formFields.username"), "Jo");
     await userEvent.type(
       screen.getByLabelText("formFields.email"),
       "test@example.com",

@@ -53,7 +53,11 @@ export function SpinnerOverlay({
   ...props
 }: SpinnerOverlayProps) {
   return (
-    <div className={cn(overlayVariants({ variant, className }))} {...props}>
+    <div
+      data-testid="spinner-overlay"
+      className={cn(overlayVariants({ variant, className }))}
+      {...props}
+    >
       <Spinner size={spinnerSize} />
     </div>
   );
