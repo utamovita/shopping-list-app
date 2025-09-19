@@ -1,4 +1,5 @@
 {
+  "required": "To pole jest wymagane.",
   "email": {
     "invalid": "Proszę podać poprawny adres email."
   },

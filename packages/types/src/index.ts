@@ -1,7 +1,1 @@
-export type {
-  SuccessResponse,
-  ErrorResponse,
-  UserProfile,
-  Group,
-  ShoppingListItem,
-} from "./api";
+export type * from "./api";
