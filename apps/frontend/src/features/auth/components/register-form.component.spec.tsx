@@ -95,7 +95,7 @@ describe("RegisterForm", () => {
       screen.getByRole("button", { name: "auth.registerTitle" }),
     );
 
-    const errorMessage = await screen.findByText("validation:name.minLength");
+    const errorMessage = await screen.findByText("validation:name.minLength_3");
     expect(errorMessage).toBeInTheDocument();
   });
 
@@ -116,7 +116,7 @@ describe("RegisterForm", () => {
     );
 
     const errorMessage = await screen.findByText(
-      "validation:password.minLength",
+      "validation:password.minLength_8",
     );
     expect(errorMessage).toBeInTheDocument();
   });

@@ -37,6 +37,7 @@
   "shoppingList": {
     "mainTitle": "Lista zakupów",
     "addItemPlaceholder": "Dodaj nowy przedmiot...",
-    "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!"
+    "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!",
+    "removeItem": "Usuń {{itemName}}"
   }
 }

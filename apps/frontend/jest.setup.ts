@@ -5,14 +5,14 @@ import React from "react";
 jest.mock("@/shared/lib/i18n/client", () => ({}));
 
 jest.mock("react-i18next", () => ({
-  useTranslation: () => {
-    return {
-      t: (str: string) => str,
-      i18n: {
-        changeLanguage: () => new Promise(() => {}),
-      },
-    };
-  },
+  useTranslation: () => ({
+    t: (key: string, options?: { [key: string]: string | number }) => {
+      if (!options) {
+        return key;
+      }
+      return `${key}_${Object.values(options).join("_")}`;
+    },
+  }),
 }));
 
 jest.mock("next/navigation", () => ({

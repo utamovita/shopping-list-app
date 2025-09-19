@@ -37,6 +37,7 @@
   "shoppingList": {
     "mainTitle": "Shopping list",
     "addItemPlaceholder": "Add new item...",
-    "noItems": "This list is still empty. Add the first product!"
+    "noItems": "This list is still empty. Add the first product!",
+    "removeItem": "Remove item"
   }
 }
