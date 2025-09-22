@@ -2,6 +2,8 @@ import "@testing-library/jest-dom";
 import { toHaveNoViolations } from "jest-axe";
 import React from "react";
 
+expect.extend(toHaveNoViolations);
+
 jest.mock("@/shared/lib/i18n/client", () => ({}));
 
 jest.mock("react-i18next", () => ({
@@ -38,5 +40,3 @@ jest.mock("next/link", () => {
     return React.createElement("a", { href }, children);
   };
 });
-
-expect.extend(toHaveNoViolations);
