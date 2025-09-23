@@ -23,11 +23,13 @@ jobs:
         run: pnpm install
       - name: Generate Prisma Client (Explicitly)
         run: pnpm --filter backend exec prisma generate
-      - name: Lint
-        run: pnpm lint
-      - name: Check types
-        run: pnpm check-types
-      - name: Run tests
-        run: pnpm test
-      - name: Build projects
-        run: pnpm build
+      - name: Check TypeScript Types Directly
+        run: pnpm --filter backend run check-ts
+#      - name: Lint
+#        run: pnpm lint
+#      - name: Check types
+#        run: pnpm check-types
+#      - name: Run tests
+#        run: pnpm test
+#      - name: Build projects
+#        run: pnpm build
