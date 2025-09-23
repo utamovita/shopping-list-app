@@ -4,7 +4,7 @@ module.exports = {
   "apps/backend/src/**/*.{ts,tsx}": (filenames) => {
     const fileArgs = filenames.join(" ");
     const lintCommand = `pnpm --filter backend run lint ${fileArgs}`;
-    const checkTypesCommand = "pnpm --filter backend run check-types";
+    const checkTypesCommand = "pnpm --filter backend run check-ts";
     const testCommand = `pnpm --filter backend test -- --findRelatedTests ${fileArgs} --passWithNoTests`;
 
     return [lintCommand, checkTypesCommand, testCommand];

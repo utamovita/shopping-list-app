@@ -15,7 +15,7 @@ import { EVENT_NAME } from '@repo/config';
 })
 export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
-  server: Server;
+  server!: Server;
 
   private connectedClients = new Map<string, Socket>();
 

@@ -7,18 +7,18 @@ export class RegisterUserDto extends createZodDto(registerSchema) {
     example: 'johndoe@example.pl',
     description: 'The email of the user to be registered.',
   })
-  email: string;
+  email!: string;
 
   @ApiProperty({
     example: 'John Doe',
     description: 'The name of the user to be registered.',
   })
-  username: string;
+  username!: string;
 
   @ApiProperty({
     example: 'JohnPaul2137!',
     description:
       'The password of the user to be registered. Must be at least 8 characters long.',
   })
-  password: string;
+  password!: string;
 }

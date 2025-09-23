@@ -12,7 +12,7 @@ export class CreateShoppingListItemDto extends createZodDto(
     example: 'Milk',
     description: 'The name of the shopping list item',
   })
-  name: string;
+  name!: string;
 }
 
 export class UpdateShoppingListItemDto extends createZodDto(
@@ -22,5 +22,5 @@ export class UpdateShoppingListItemDto extends createZodDto(
     example: true,
     description: 'The completion status of the shopping list item',
   })
-  completed: boolean;
+  completed!: boolean;
 }

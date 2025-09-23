@@ -7,11 +7,11 @@ export class LoginUserDto extends createZodDto(loginSchema) {
     description: 'The email of the user trying to log in.',
     example: 'johndoe@example.com',
   })
-  email: string;
+  email!: string;
 
   @ApiProperty({
     description: 'The password of the user trying to log in.',
     example: 'JohnPaul2137!',
   })
-  password: string;
+  password!: string;
 }
