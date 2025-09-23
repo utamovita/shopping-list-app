@@ -9,7 +9,9 @@
     "lint:frontend": "pnpm --filter frontend run lint",
     "check-types:frontend": "pnpm --filter frontend run check-types",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "clean": "rm -rf .turbo node_modules",
+    "postinstall": "pnpm --filter backend exec prisma generate"
   },
   "devDependencies": {
     "husky": "^9.1.7",
