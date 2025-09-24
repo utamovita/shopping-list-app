@@ -9,6 +9,13 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      # env for frontend
+      NEXT_PUBLIC_API_URL: http://localhost:3001/api
+
+      # env for backend
+      DATABASE_URL: "postgresql://user:password@localhost:5432/shopping-list?schema=public"
+      JWT_SECRET: "papaj2137"
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
