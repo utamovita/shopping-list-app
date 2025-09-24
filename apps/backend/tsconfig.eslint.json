@@ -3,6 +3,10 @@
   "include": [
     "src/**/*.ts",
     "test/**/*.ts",
-    "eslint.config.mjs"
+    "**/*.spec.ts",
+    "eslint.config.mjs",
+    "../../packages/types/src/**/*.ts",
+    "../../packages/schemas/src/**/*.ts",
+    "../../packages/config/src/**/*.ts"
   ]
 }
