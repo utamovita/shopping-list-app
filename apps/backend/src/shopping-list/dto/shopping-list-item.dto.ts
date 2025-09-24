@@ -2,7 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { createZodDto } from 'nestjs-zod';
 import {
   createShoppingListItemSchema,
-  updateShoppingListItemSchema,
+  updateShoppingListItemBodySchema,
+  shoppingListItemParamsSchema,
 } from '@repo/schemas';
 
 export class CreateShoppingListItemDto extends createZodDto(
@@ -16,7 +17,7 @@ export class CreateShoppingListItemDto extends createZodDto(
 }
 
 export class UpdateShoppingListItemDto extends createZodDto(
-  updateShoppingListItemSchema,
+  updateShoppingListItemBodySchema,
 ) {
   @ApiProperty({
     example: true,
@@ -24,3 +25,7 @@ export class UpdateShoppingListItemDto extends createZodDto(
   })
   completed!: boolean;
 }
+
+export class ShoppingListItemParamsDto extends createZodDto(
+  shoppingListItemParamsSchema,
+) {}

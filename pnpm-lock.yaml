@@ -59,6 +59,9 @@ importers:
       '@repo/config':
         specifier: workspace:^
         version: link:../../packages/config
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       '@repo/i18n':
         specifier: workspace:^
         version: link:../../packages/i18n
@@ -68,6 +71,9 @@ importers:
       '@repo/types':
         specifier: workspace:^
         version: link:../../packages/types
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../../packages/typescript-config
       bcrypt:
         specifier: ^6.0.0
         version: 6.0.0
@@ -213,6 +219,9 @@ importers:
       '@repo/config':
         specifier: workspace:^
         version: link:../../packages/config
+      '@repo/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
       '@repo/i18n':
         specifier: workspace:^
         version: link:../../packages/i18n
@@ -222,6 +231,9 @@ importers:
       '@repo/types':
         specifier: workspace:^
         version: link:../../packages/types
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../../packages/typescript-config
       '@tanstack/react-query':
         specifier: ^5.85.2
         version: 5.85.2(react@19.1.0)

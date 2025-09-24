@@ -18,6 +18,7 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
     {
       id: "1",
       name: "Milk",
+
       completed: false,
       groupId: "group-1",
       addedBy: "user-1",
@@ -52,6 +53,7 @@ const createWrapper = () => {
 
 describe("useUpdateItem", () => {
   const groupId = "group-1";
+  const itemId = "1";
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -64,12 +66,12 @@ describe("useUpdateItem", () => {
 
     const { result } = renderHook(() => useUpdateItem(groupId), { wrapper });
 
-    result.current.mutate({ itemId: "1", completed: true });
+    result.current.mutate({ itemId, completed: true });
 
     await waitFor(() => {
       const updatedData =
         queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
-      const updatedItem = updatedData?.data.find((item) => item.id === "1");
+      const updatedItem = updatedData?.data.find((item) => item.id === itemId);
       expect(updatedItem?.completed).toBe(true);
     });
   });
@@ -85,12 +87,14 @@ describe("useUpdateItem", () => {
 
     const { result } = renderHook(() => useUpdateItem(groupId), { wrapper });
 
-    result.current.mutate({ itemId: "1", completed: true });
+    result.current.mutate({ itemId, completed: true });
 
     await waitFor(() => {
       const revertedData =
         queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
-      const revertedItem = revertedData?.data.find((item) => item.id === "1");
+      const revertedItem = revertedData?.data.find(
+        (item) => item.id === itemId,
+      );
       expect(revertedItem?.completed).toBe(false);
     });
 
@@ -98,11 +102,21 @@ describe("useUpdateItem", () => {
   });
 
   it("should invalidate queries on settled", async () => {
+    const mockUpdatedItem: ShoppingListItem = {
+      id: "1",
+      name: "Milk",
+      completed: true,
+      groupId: "group-1",
+      addedBy: "user-1",
+      createdAt: new Date(),
+    };
+
     mockShoppingListApi.updateItem.mockResolvedValue({
       success: true,
       message: "Item updated",
-      data: { ...mockItems.data[0], completed: true },
+      data: mockUpdatedItem,
     });
+
     const { wrapper, queryClient } = createWrapper();
     const queryKey = ["shopping-list", groupId];
     queryClient.setQueryData(queryKey, { ...mockItems });
@@ -110,10 +124,16 @@ describe("useUpdateItem", () => {
 
     const { result } = renderHook(() => useUpdateItem(groupId), { wrapper });
 
-    result.current.mutate({ itemId: "1", completed: true });
+    result.current.mutate({ itemId, completed: true });
 
     await waitFor(() => {
       expect(invalidateQueriesSpy).toHaveBeenCalledWith({ queryKey });
+    });
+
+    expect(mockShoppingListApi.updateItem).toHaveBeenCalledWith({
+      groupId,
+      itemId,
+      completed: true,
     });
   });
 });

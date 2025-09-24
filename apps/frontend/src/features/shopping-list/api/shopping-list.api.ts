@@ -1,6 +1,10 @@
 import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
 import type { ShoppingListItem } from "@repo/types";
+import {
+  ShoppingListItemParams,
+  UpdateShoppingListItemDto,
+} from "@repo/schemas";
 
 export const shoppingListApi = {
   getItems: async (groupId: string) => {
@@ -16,13 +20,7 @@ export const shoppingListApi = {
     );
     return response.data;
   },
-  removeItem: async ({
-    groupId,
-    itemId,
-  }: {
-    groupId: string;
-    itemId: string;
-  }) => {
+  removeItem: async ({ groupId, itemId }: ShoppingListItemParams) => {
     const response = await apiClient.delete<void>(
       `${API_PATHS.shoppingList(groupId)}/${itemId}`,
     );
@@ -32,11 +30,7 @@ export const shoppingListApi = {
     groupId,
     itemId,
     completed,
-  }: {
-    groupId: string;
-    itemId: string;
-    completed: boolean;
-  }) => {
+  }: UpdateShoppingListItemDto) => {
     const response = await apiClient.patch<ShoppingListItem>(
       `${API_PATHS.shoppingList(groupId)}/${itemId}`,
       { completed },

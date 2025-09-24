@@ -4,43 +4,49 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleError } from "@/shared/lib/error/handle-error";
 import { shoppingListApi } from "../api/shopping-list.api";
 import type { ShoppingListItem, SuccessResponse } from "@repo/types";
+import type { UpdateShoppingListItemDto } from "@repo/schemas";
+
+type UpdateItemVariables = Omit<UpdateShoppingListItemDto, "groupId">;
 
 export function useUpdateItem(groupId: string) {
   const queryClient = useQueryClient();
+  const queryKey = ["shopping-list", groupId];
 
   return useMutation({
-    mutationFn: (item: { itemId: string; completed: boolean }) =>
-      shoppingListApi.updateItem({ groupId, ...item }),
-    onMutate: async (updatedItem) => {
-      await queryClient.cancelQueries({ queryKey: ["shopping-list", groupId] });
-      const previousItems = queryClient.getQueryData<
-        SuccessResponse<ShoppingListItem[]>
-      >(["shopping-list", groupId]);
+    mutationFn: (variables: UpdateItemVariables) =>
+      shoppingListApi.updateItem({ ...variables, groupId }),
 
-      queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
-        ["shopping-list", groupId],
-        (old) => ({
-          ...old!,
-          data: old!.data.map((item) =>
-            item.id === updatedItem.itemId
-              ? { ...item, completed: updatedItem.completed }
-              : item,
-          ),
-        }),
+    onMutate: async (variables: UpdateItemVariables) => {
+      await queryClient.cancelQueries({ queryKey });
+
+      const previousItems =
+        queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
+
+      if (!previousItems) {
+        return;
+      }
+
+      const newItemsData = previousItems.data.map((item) =>
+        item.id === variables.itemId
+          ? ({ ...item, completed: variables.completed } as ShoppingListItem)
+          : item,
       );
+
+      queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey, {
+        ...previousItems,
+        data: newItemsData,
+      });
+
       return { previousItems };
     },
-    onError: (err, variables, context) => {
+    onError: (error, _variables, context) => {
       if (context?.previousItems) {
-        queryClient.setQueryData(
-          ["shopping-list", groupId],
-          context.previousItems,
-        );
+        queryClient.setQueryData(queryKey, context.previousItems);
       }
-      handleError({ error: err, showToast: true });
+      handleError({ error, showToast: true });
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["shopping-list", groupId] });
+      void queryClient.invalidateQueries({ queryKey });
     },
   });
 }

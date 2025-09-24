@@ -49,7 +49,7 @@ describe('ShoppingListController', () => {
       const mockItems = [{ id: 'item-1', name: 'Milk' }];
       mockShoppingListService.getItems.mockResolvedValue(mockItems);
 
-      const result = await controller.getItems(groupId, mockRequest);
+      const result = await controller.getItems({ groupId }, mockRequest);
 
       expect(service.getItems).toHaveBeenCalledWith(groupId, mockUser.id);
       expect(result).toEqual({ success: true, data: mockItems });
@@ -62,7 +62,7 @@ describe('ShoppingListController', () => {
       const newItem = { id: 'item-2', name: 'Bread' };
       mockShoppingListService.addItem.mockResolvedValue(newItem);
 
-      const result = await controller.addItem(groupId, dto, mockRequest);
+      const result = await controller.addItem({ groupId }, dto, mockRequest);
 
       expect(service.addItem).toHaveBeenCalledWith(groupId, dto, mockUser.id);
       expect(result).toEqual({ success: true, data: newItem });
@@ -73,7 +73,7 @@ describe('ShoppingListController', () => {
     it('should call service.removeItem with correct params', async () => {
       mockShoppingListService.removeItem.mockResolvedValue(undefined);
 
-      await controller.removeItem(groupId, itemId, mockRequest);
+      await controller.removeItem({ groupId, itemId }, mockRequest);
 
       expect(service.removeItem).toHaveBeenCalledWith(
         itemId,

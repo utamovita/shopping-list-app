@@ -15,6 +15,7 @@ import { ShoppingListService } from './shopping-list.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import {
   CreateShoppingListItemDto,
+  ShoppingListItemParamsDto,
   UpdateShoppingListItemDto,
 } from './dto/shopping-list-item.dto';
 import type {
@@ -47,10 +48,13 @@ export class ShoppingListController {
     description: 'Forbidden. User is not a member of this group.',
   })
   async getItems(
-    @Param('groupId') groupId: string,
+    @Param() params: Pick<ShoppingListItemParamsDto, 'groupId'>,
     @Request() req: { user: UserProfile },
   ): Promise<SuccessResponse<ShoppingListItem[]>> {
-    const items = await this.shoppingListService.getItems(groupId, req.user.id);
+    const items = await this.shoppingListService.getItems(
+      params.groupId,
+      req.user.id,
+    );
     return { success: true, data: items };
   }
 
@@ -64,12 +68,12 @@ export class ShoppingListController {
     description: 'Forbidden. User is not a member of this group.',
   })
   async addItem(
-    @Param('groupId') groupId: string,
+    @Param() params: Pick<ShoppingListItemParamsDto, 'groupId'>,
     @Body() createShoppingListItemDto: CreateShoppingListItemDto,
     @Request() req: { user: UserProfile },
   ): Promise<SuccessResponse<ShoppingListItem>> {
     const newItem = await this.shoppingListService.addItem(
-      groupId,
+      params.groupId,
       createShoppingListItemDto,
       req.user.id,
     );
@@ -79,24 +83,26 @@ export class ShoppingListController {
   @Delete(':itemId')
   @HttpCode(HttpStatus.NO_CONTENT)
   async removeItem(
-    @Param('groupId') groupId: string,
-    @Param('itemId') itemId: string,
+    @Param() params: ShoppingListItemParamsDto,
     @Request() req: { user: UserProfile },
   ) {
-    await this.shoppingListService.removeItem(itemId, groupId, req.user.id);
+    await this.shoppingListService.removeItem(
+      params.itemId,
+      params.groupId,
+      req.user.id,
+    );
   }
 
   @Patch(':itemId')
   @ApiOperation({ summary: 'Update a shopping list item' })
   async updateItem(
-    @Param('groupId') groupId: string,
-    @Param('itemId') itemId: string,
+    @Param() params: ShoppingListItemParamsDto,
     @Request() req: { user: UserProfile },
     @Body() updateDto: UpdateShoppingListItemDto,
   ): Promise<SuccessResponse<ShoppingListItem>> {
     const updatedItem = await this.shoppingListService.updateItem(
-      itemId,
-      groupId,
+      params.itemId,
+      params.groupId,
       req.user.id,
       updateDto,
     );
