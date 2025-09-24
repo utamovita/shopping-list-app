@@ -30,6 +30,10 @@ jobs:
       - name: Generate Prisma Client
         run: pnpm --filter backend exec prisma generate
 
+      # --- FIX: Run build before linting ---
+      - name: Build projects
+        run: pnpm build
+
       - name: Lint Backend
         run: pnpm --filter backend lint
 
@@ -38,6 +42,3 @@ jobs:
 
       - name: Run tests
         run: pnpm test
-
-      - name: Build projects
-        run: pnpm build
