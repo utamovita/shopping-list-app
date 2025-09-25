@@ -39,5 +39,12 @@
     "addItemPlaceholder": "Add new item...",
     "noItems": "This list is still empty. Add the first product!",
     "removeItem": "Remove item"
+  },
+  "invitations": {
+    "dialog": {
+      "title": "Invite to group",
+      "description": "Enter the email of the person you want to invite to the group \"{{groupName}}\".",
+      "btnSend": "Send invitation"
+    }
   }
 }

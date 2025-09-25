@@ -21,6 +21,7 @@ model User {
   
   memberships   GroupMembership[]
   notifications Notification[]
+  sentInvitations Invitation[]      @relation("SentInvitations")
 }
 
 model Group {
@@ -31,6 +32,7 @@ model Group {
 
   members       GroupMembership[]
   shoppingItems ShoppingListItem[]
+  invitations   Invitation[]
 }
 
 enum Role {
@@ -68,4 +70,19 @@ model Notification {
 
   userId    String
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groupId         String
+  invitedByUserId String
+
+  group         Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  invitedByUser User  @relation("SentInvitations", fields: [invitedByUserId], references: [id], onDelete: Cascade)
+
+  @@unique([email, groupId])
 }

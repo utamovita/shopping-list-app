@@ -40,3 +40,17 @@ export type ShoppingListItem = {
   createdAt: Date;
   groupId: string;
 };
+
+export type Invitation = {
+  id: string;
+  email: string;
+  createdAt: Date;
+  group: {
+    id: string;
+    name: string;
+  };
+  invitedByUser: {
+    id: string;
+    name: string | null;
+  };
+};

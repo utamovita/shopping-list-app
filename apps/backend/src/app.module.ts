@@ -15,6 +15,7 @@ import {
 import * as path from 'path';
 import { EventsModule } from './events/event.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
+import { InvitationsModule } from './invitations/invitations.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     GroupsModule,
     ShoppingListModule,
     EventsModule,
+    InvitationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
