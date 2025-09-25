@@ -1,10 +1,11 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '@prisma/client';
-import { ROLES_KEY } from '../decorators/roles.decorator';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Role } from '@repo/database';
 import { UserProfile } from '@repo/types';
 import { Request } from 'express';
+
+import { PrismaService } from '../../prisma/prisma.service';
+import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -19,7 +20,8 @@ export class RolesGuard implements CanActivate {
       context.getClass(),
     ]);
 
-    if (!requiredRoles) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!requiredRoles || requiredRoles.length === 0) {
       return true;
     }
 
@@ -30,7 +32,8 @@ export class RolesGuard implements CanActivate {
     const user = request.user;
     const groupId = request.params.groupId;
 
-    if (!user || !groupId) {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    if (!user || typeof user.id !== 'string' || !groupId) {
       return false;
     }
 
@@ -38,7 +41,7 @@ export class RolesGuard implements CanActivate {
       where: {
         userId_groupId: {
           userId: user.id,
-          groupId: groupId,
+          groupId,
         },
       },
       select: {

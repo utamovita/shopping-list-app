@@ -3,8 +3,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleError } from "@/shared/lib/error/handle-error";
 import { shoppingListApi } from "../api/shopping-list.api";
-import type { ShoppingListItem, SuccessResponse } from "@repo/types";
+import type { SuccessResponse } from "@repo/types";
 import type { UpdateShoppingListItemDto } from "@repo/schemas";
+import type { ShoppingListItem } from "@repo/database";
 
 type UpdateItemVariables = Omit<UpdateShoppingListItemDto, "groupId">;
 

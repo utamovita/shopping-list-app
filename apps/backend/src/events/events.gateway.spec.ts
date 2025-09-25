@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EventsGateway } from './events.gateway';
-import { Server, Socket } from 'socket.io';
 import { EVENT_NAME } from '@repo/config';
+import { Server, Socket } from 'socket.io';
+
+import { EventsGateway } from './events.gateway';
 describe('EventsGateway', () => {
   let gateway: EventsGateway;
 

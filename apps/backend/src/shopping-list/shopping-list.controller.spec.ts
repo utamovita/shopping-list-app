@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ShoppingListController } from './shopping-list.controller';
-import { ShoppingListService } from './shopping-list.service';
 import { createMockUser } from 'src/test-utils/mocks';
+
 import { JwtAuthGuard } from '../auth/guard/jwt-auth.guard';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { ShoppingListController } from './shopping-list.controller';
+import { ShoppingListService } from './shopping-list.service';
 
 describe('ShoppingListController', () => {
   let controller: ShoppingListController;

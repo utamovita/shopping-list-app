@@ -1,10 +1,11 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ShoppingListService } from './shopping-list.service';
-import { PrismaService } from 'src/prisma/prisma.service';
 import { ForbiddenException } from '@nestjs/common';
-import { ShoppingListItem } from '@prisma/client';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Test, TestingModule } from '@nestjs/testing';
 import { EVENT_NAME } from '@repo/config';
+import { ShoppingListItem } from '@repo/database';
+import { PrismaService } from 'src/prisma/prisma.service';
+
+import { ShoppingListService } from './shopping-list.service';
 
 describe('ShoppingListService', () => {
   let service: ShoppingListService;

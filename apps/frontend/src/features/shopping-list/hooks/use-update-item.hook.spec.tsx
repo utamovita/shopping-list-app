@@ -3,7 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUpdateItem } from "./use-update-item.hook";
 import { shoppingListApi } from "../api/shopping-list.api";
 import type { ReactNode } from "react";
-import type { ShoppingListItem, SuccessResponse } from "@repo/types";
+import type { SuccessResponse } from "@repo/types";
+import type { ShoppingListItem } from "@repo/database";
 
 jest.mock("../api/shopping-list.api");
 

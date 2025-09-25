@@ -1,11 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { EVENT_NAME } from '@repo/config';
 import { PrismaService } from 'src/prisma/prisma.service';
+
 import {
   CreateShoppingListItemDto,
   UpdateShoppingListItemDto,
 } from './dto/shopping-list-item.dto';
-import { EventEmitter2 } from '@nestjs/event-emitter';
-import { EVENT_NAME } from '@repo/config';
 
 @Injectable()
 export class ShoppingListService {

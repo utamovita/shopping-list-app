@@ -1,4 +1,4 @@
-import { Group, User } from '@prisma/client';
+import { Group, User } from '@repo/database';
 
 export const createMockUser = (overrides: Partial<User> = {}): User => {
   const defaultUser: User = {

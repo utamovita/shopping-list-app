@@ -1,10 +1,11 @@
+import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GroupsController } from './groups.controller';
-import { GroupsService } from './groups.service';
-import { createMockGroup, createMockUser } from 'src/test-utils/mocks';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { BadRequestException } from '@nestjs/common';
+import { createMockGroup, createMockUser } from 'src/test-utils/mocks';
+
+import { GroupsController } from './groups.controller';
+import { GroupsService } from './groups.service';
 
 describe('GroupsController', () => {
   let controller: GroupsController;

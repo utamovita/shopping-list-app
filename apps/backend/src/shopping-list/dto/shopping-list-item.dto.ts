@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { createZodDto } from 'nestjs-zod';
 import {
   createShoppingListItemSchema,
-  updateShoppingListItemBodySchema,
   shoppingListItemParamsSchema,
+  updateShoppingListItemBodySchema,
 } from '@repo/schemas';
+import { createZodDto } from 'nestjs-zod';
 
 export class CreateShoppingListItemDto extends createZodDto(
   createShoppingListItemSchema,

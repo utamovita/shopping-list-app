@@ -1,25 +1,26 @@
 import {
-  Controller,
-  Post,
-  Get,
-  Request,
   Body,
+  Controller,
+  Get,
   HttpCode,
   HttpStatus,
+  Post,
+  Request,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { RegisterUserDto } from './dto/register-user.dto';
-import { LoginUserDto } from './dto/login-user.dto';
-import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import type { SuccessResponse, UserProfile } from '@repo/types';
-import type { AuthResponseType } from '@repo/schemas';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import type { AuthResponseType } from '@repo/schemas';
+import type { SuccessResponse, UserProfile } from '@repo/types';
+
+import { AuthService } from './auth.service';
+import { LoginUserDto } from './dto/login-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { JwtAuthGuard } from './guard/jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')

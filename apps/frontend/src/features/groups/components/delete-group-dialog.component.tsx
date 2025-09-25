@@ -1,13 +1,13 @@
 "use client";
 
 import { CustomDialog } from "@/shared/ui/custom-dialog.component";
-import { Group } from "@repo/types";
+import { GroupWithDetails } from "@repo/types";
 import { Button } from "@/shared/ui/button";
 import { useDeleteGroup } from "../hooks/use-delete-group.hook";
 import { useTranslation } from "react-i18next";
 
 type DeleteGroupDialogProps = {
-  group: Group;
+  group: GroupWithDetails;
   children: React.ReactNode;
 };
 

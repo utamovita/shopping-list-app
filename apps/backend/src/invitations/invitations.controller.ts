@@ -1,19 +1,21 @@
 import {
-  Controller,
-  Post,
   Body,
+  Controller,
   Param,
+  Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { InvitationsService } from './invitations.service';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import type { Invitation } from '@repo/database';
+import { Role } from '@repo/database';
+import type { SuccessResponse, UserProfile } from '@repo/types';
+import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from '@prisma/client';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import type { Invitation, SuccessResponse, UserProfile } from '@repo/types';
+
 import { CreateInvitationDto } from './dto/create-invitation.dto';
+import { InvitationsService } from './invitations.service';
 
 @ApiTags('Invitations')
 @ApiBearerAuth()

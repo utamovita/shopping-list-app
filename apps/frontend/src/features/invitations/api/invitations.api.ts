@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
-import { Invitation } from "@repo/types";
+import { Invitation } from "@repo/database";
 import { CreateInvitationDto } from "@repo/schemas";
 
 export const invitationsApi = {

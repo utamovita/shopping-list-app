@@ -1,21 +1,22 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
-import { PrismaModule } from './prisma/prisma.module';
-import { GroupsModule } from './groups/groups.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
-import { envSchema } from './config/env.schema';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import {
   AcceptLanguageResolver,
   I18nJsonLoader,
   I18nModule,
 } from 'nestjs-i18n';
 import * as path from 'path';
+
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { envSchema } from './config/env.schema';
 import { EventsModule } from './events/event.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { GroupsModule } from './groups/groups.module';
 import { InvitationsModule } from './invitations/invitations.module';
+import { PrismaModule } from './prisma/prisma.module';
+import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @Module({
   imports: [

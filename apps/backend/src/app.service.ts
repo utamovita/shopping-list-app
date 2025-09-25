@@ -9,7 +9,7 @@ export class AppService {
   }
 
   async getHelloTranslated(): Promise<string> {
-    const lang = I18nContext.current()!.lang;
+    const lang = I18nContext.current()?.lang;
     return this.i18n.t('common.login_title', { lang });
   }
 }

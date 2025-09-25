@@ -3,13 +3,13 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { DeleteGroupDialog } from "./delete-group-dialog.component";
 import { useDeleteGroup } from "../hooks/use-delete-group.hook";
-import type { Group } from "@repo/types";
+import type { GroupWithDetails } from "@repo/types";
 
 jest.mock("../hooks/use-delete-group.hook");
 
 const mockUseDeleteGroup = useDeleteGroup as jest.Mock;
 
-const mockGroup: Group = {
+const mockGroup: GroupWithDetails = {
   id: "group-123",
   name: "Test Group Name",
   members: [],

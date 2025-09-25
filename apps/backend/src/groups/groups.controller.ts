@@ -1,29 +1,34 @@
 import {
-  Controller,
-  Post,
-  Get,
-  Delete,
   Body,
-  UseGuards,
-  Request,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
   HttpStatus,
   Param,
-  HttpCode,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import { GroupsService } from './groups.service';
-import { CreateGroupDto } from './dto/create-group.dto';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import type { SuccessResponse, UserProfile } from '@repo/types';
-import type { Group } from '@prisma/client';
-import { Roles } from 'src/auth/decorators/roles.decorator';
-import { Role } from '@prisma/client';
-import { RolesGuard } from 'src/auth/guard/roles.guard';
 import {
   ApiBearerAuth,
   ApiOperation,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import type { Group } from '@repo/database';
+import { Role } from '@repo/database';
+import type {
+  GroupWithDetails,
+  SuccessResponse,
+  UserProfile,
+} from '@repo/types';
+import { Roles } from 'src/auth/decorators/roles.decorator';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+
+import { CreateGroupDto } from './dto/create-group.dto';
+import { GroupsService } from './groups.service';
 
 @ApiTags('Groups')
 @ApiBearerAuth()
@@ -50,8 +55,10 @@ export class GroupsController {
   @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async findAllForUser(
     @Request() req: { user: UserProfile },
-  ): Promise<SuccessResponse<Group[]>> {
-    const groups = await this.groupsService.findAllForUser(req.user.id);
+  ): Promise<SuccessResponse<GroupWithDetails[]>> {
+    const groups: GroupWithDetails[] = await this.groupsService.findAllForUser(
+      req.user.id,
+    );
     return { success: true, data: groups };
   }
 

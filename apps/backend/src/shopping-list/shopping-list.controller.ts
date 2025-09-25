@@ -1,28 +1,16 @@
 import {
-  Controller,
-  Get,
-  Post,
-  Patch,
   Body,
-  Param,
-  Request,
-  UseGuards,
+  Controller,
   Delete,
+  Get,
   HttpCode,
   HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Request,
+  UseGuards,
 } from '@nestjs/common';
-import { ShoppingListService } from './shopping-list.service';
-import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
-import {
-  CreateShoppingListItemDto,
-  ShoppingListItemParamsDto,
-  UpdateShoppingListItemDto,
-} from './dto/shopping-list-item.dto';
-import type {
-  SuccessResponse,
-  UserProfile,
-  ShoppingListItem,
-} from '@repo/types';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -30,6 +18,16 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import type { ShoppingListItem } from '@repo/database';
+import type { SuccessResponse, UserProfile } from '@repo/types';
+import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+
+import {
+  CreateShoppingListItemDto,
+  ShoppingListItemParamsDto,
+  UpdateShoppingListItemDto,
+} from './dto/shopping-list-item.dto';
+import { ShoppingListService } from './shopping-list.service';
 
 @ApiTags('Shopping List')
 @ApiBearerAuth()

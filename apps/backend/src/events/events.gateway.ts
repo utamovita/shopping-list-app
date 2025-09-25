@@ -1,3 +1,4 @@
+import { OnEvent } from '@nestjs/event-emitter';
 import {
   OnGatewayConnection,
   OnGatewayDisconnect,
@@ -5,9 +6,8 @@ import {
   WebSocketGateway,
   WebSocketServer,
 } from '@nestjs/websockets';
-import { Server, Socket } from 'socket.io';
-import { OnEvent } from '@nestjs/event-emitter';
 import { EVENT_NAME } from '@repo/config';
+import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
     origin: '*',
@@ -49,6 +49,8 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   }
 
   private logStatus() {
-    console.log(`Total clients connected: ${this.connectedClients.size}`);
+    console.log(
+      `Total clients connected: ${String(this.connectedClients.size)}`,
+    );
   }
 }

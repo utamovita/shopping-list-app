@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { I18nService } from 'nestjs-i18n';
+import { createMockUser } from 'src/test-utils/mocks';
+
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
-import { I18nService } from 'nestjs-i18n';
-import { createMockUser } from 'src/test-utils/mocks';
 
 describe('AuthController', () => {
   let controller: AuthController;

@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { createZodDto } from 'nestjs-zod';
 import { registerSchema } from '@repo/schemas';
+import { createZodDto } from 'nestjs-zod';
 
 export class RegisterUserDto extends createZodDto(registerSchema) {
   @ApiProperty({

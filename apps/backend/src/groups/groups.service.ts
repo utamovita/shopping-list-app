@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { Role } from '@repo/database';
+import { GroupWithDetails } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
+
 import { CreateGroupDto } from './dto/create-group.dto';
-import { Role } from '@prisma/client';
 
 @Injectable()
 export class GroupsService {
@@ -31,7 +33,7 @@ export class GroupsService {
     return newGroup;
   }
 
-  async findAllForUser(userId: string) {
+  async findAllForUser(userId: string): Promise<GroupWithDetails[]> {
     return this.prisma.group.findMany({
       where: {
         members: {

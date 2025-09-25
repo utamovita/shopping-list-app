@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { InvitationsController } from './invitations.controller';
-import { InvitationsService } from './invitations.service';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
+
+import { InvitationsController } from './invitations.controller';
+import { InvitationsService } from './invitations.service';
 
 describe('InvitationsController', () => {
   let controller: InvitationsController;

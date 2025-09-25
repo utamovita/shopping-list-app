@@ -15,11 +15,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createInvitationSchema, CreateInvitationDto } from "@repo/schemas";
 import { useCreateInvitation } from "../hooks/use-create-invitation.hook";
-import { Group } from "@repo/types";
+import { GroupWithDetails } from "@repo/types";
 import { useTranslation } from "react-i18next";
 
 type CreateInvitationDialogProps = {
-  group: Group;
+  group: GroupWithDetails;
   children: React.ReactNode;
 };
 

@@ -1,3 +1,5 @@
+import type { User, Group } from "@repo/database";
+
 export type SuccessResponse<T> = {
   success: true;
   data: T;
@@ -12,45 +14,21 @@ export type ErrorResponse = {
   };
 };
 
-export type UserProfile = {
-  id: string;
-  email: string;
-  name: string | null;
-};
+export type UserProfile = Omit<
+  User,
+  "passwordHash" | "provider" | "createdAt" | "updatedAt"
+>;
 
-export type Group = {
-  id: string;
-  name: string;
-  _count: {
-    shoppingItems: number;
-  };
-  members: Array<{
-    user: {
-      id: string;
-      name: string | null;
-    };
-  }>;
-};
-
-export type ShoppingListItem = {
-  id: string;
-  name: string;
-  addedBy: string | null;
-  completed: boolean;
-  createdAt: Date;
-  groupId: string;
-};
-
-export type Invitation = {
-  id: string;
-  email: string;
-  createdAt: Date;
-  group: {
-    id: string;
-    name: string;
-  };
-  invitedByUser: {
+export type GroupMember = {
+  user: {
     id: string;
     name: string | null;
   };
+};
+
+export type GroupWithDetails = Group & {
+  _count: {
+    shoppingItems: number;
+  };
+  members: GroupMember[];
 };

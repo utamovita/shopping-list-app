@@ -3,7 +3,8 @@ import { useCreateInvitation } from "./use-create-invitation.hook";
 import { invitationsApi } from "../api/invitations.api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { Invitation, SuccessResponse } from "@repo/types";
+import type { SuccessResponse } from "@repo/types";
+import type { Invitation } from "@repo/database";
 
 jest.mock("../api/invitations.api");
 jest.mock("sonner");

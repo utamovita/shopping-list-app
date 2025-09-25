@@ -1,6 +1,6 @@
 import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
-import type { ShoppingListItem } from "@repo/types";
+import type { ShoppingListItem } from "@repo/database";
 import {
   ShoppingListItemParams,
   UpdateShoppingListItemDto,

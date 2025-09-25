@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { InvitationsService } from './invitations.service';
-import { InvitationsController } from './invitations.controller';
 import { PrismaModule } from 'src/prisma/prisma.module';
+
+import { InvitationsController } from './invitations.controller';
+import { InvitationsService } from './invitations.service';
 
 @Module({
   imports: [PrismaModule],

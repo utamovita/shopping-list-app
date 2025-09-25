@@ -5,7 +5,8 @@ import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.ho
 import { useUpdateItem } from "@/features/shopping-list/hooks/use-update-item.hook";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
-import { ShoppingListItem, SuccessResponse } from "@repo/types";
+import { SuccessResponse } from "@repo/types";
+import type { ShoppingListItem } from "@repo/database";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 

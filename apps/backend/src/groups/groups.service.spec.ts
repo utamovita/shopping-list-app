@@ -1,9 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { GroupsService } from './groups.service';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Group, Role } from '@prisma/client';
-import { createMockGroup } from 'src/test-utils/mocks';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { Test, TestingModule } from '@nestjs/testing';
+import { Group, Role } from '@repo/database';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { createMockGroup } from 'src/test-utils/mocks';
+
+import { GroupsService } from './groups.service';
 
 describe('GroupsService', () => {
   let service: GroupsService;
