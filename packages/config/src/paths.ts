@@ -14,5 +14,10 @@ export const API_PATHS = {
   },
   groups: "/groups",
   shoppingList: (groupId: string) => `/groups/${groupId}/items`,
-  invitations: (groupId: string) => `/groups/${groupId}/invitations`,
+  invitations: {
+    received: "/invitations/received",
+    accept: (invitationId: string) => `/invitations/${invitationId}/accept`,
+    decline: (invitationId: string) => `/invitations/${invitationId}/decline`,
+    groupInvitations: (groupId: string) => `/groups/${groupId}/invitations`,
+  },
 };

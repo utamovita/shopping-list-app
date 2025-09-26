@@ -3,6 +3,8 @@
   "create": "Stwórz",
   "add": "Dodaj",
   "yesDelete": "Tak, usuń",
+  "accept": "Akceptuj",
+  "decline": "Odrzuć",
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
@@ -40,11 +42,19 @@
     "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!",
     "removeItem": "Usuń {{itemName}}"
   },
-  "invitations": {
+  "invitation": {
+    "mainTitle": "Zaproszenia",
+    "sentMsg": "Zaproszenie zostało wysłane.",
+    "joinedMsg": "Pomyślnie dołączyłeś do grupy.",
+    "declinedMsg": "Zaproszenie zostało odrzucone.",
     "dialog": {
       "title": "Zaproś do grupy",
       "description": "Wpisz email osoby, którą chcesz zaprosić do grupy \"{{groupName}}\".",
       "btnSend": "Wyślij zaproszenie"
+    },
+    "notification": {
+      "invitesYou": "zaprasza Cię do grupy",
+      "noInvitations": "Brak nowych zaproszeń."
     }
   }
 }

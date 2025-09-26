@@ -46,8 +46,8 @@ export function CreateInvitationDialog({
   return (
     <CustomDialog
       trigger={children}
-      title={t("invitations.dialog.title")}
-      description={t("invitations.dialog.description", {
+      title={t("invitation.dialog.title")}
+      description={t("invitation.dialog.description", {
         groupName: group.name,
       })}
     >
@@ -67,7 +67,7 @@ export function CreateInvitationDialog({
             )}
           />
           <Button type="submit" className="w-full" isLoading={isPending}>
-            {t("invitations.dialog.btnSend")}
+            {t("invitation.dialog.btnSend")}
           </Button>
         </form>
       </Form>

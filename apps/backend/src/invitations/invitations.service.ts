@@ -1,9 +1,11 @@
 import {
   BadRequestException,
   ConflictException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Role } from '@repo/database';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -11,10 +13,6 @@ export class InvitationsService {
   constructor(private prisma: PrismaService) {}
 
   async create(groupId: string, invitingUserId: string, invitedEmail: string) {
-    if (!invitedEmail) {
-      throw new BadRequestException('Email is required.');
-    }
-
     const invitedUser = await this.prisma.user.findUnique({
       where: { email: invitedEmail },
     });
@@ -54,5 +52,78 @@ export class InvitationsService {
         invitedByUserId: invitingUserId,
       },
     });
+  }
+
+  async findAllReceivedForUser(userId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+
+    return this.prisma.invitation.findMany({
+      where: {
+        email: user.email,
+      },
+      include: {
+        group: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        invitedByUser: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  async accept(invitationId: string, userId: string) {
+    const invitation = await this.findAndVerifyInvitation(invitationId, userId);
+
+    return this.prisma.$transaction(async (tx) => {
+      await tx.groupMembership.create({
+        data: {
+          userId: userId,
+          groupId: invitation.groupId,
+          role: Role.USER,
+        },
+      });
+
+      await tx.invitation.delete({
+        where: { id: invitationId },
+      });
+    });
+  }
+
+  async decline(invitationId: string, userId: string) {
+    await this.findAndVerifyInvitation(invitationId, userId);
+    await this.prisma.invitation.delete({ where: { id: invitationId } });
+  }
+
+  private async findAndVerifyInvitation(invitationId: string, userId: string) {
+    const user = await this.prisma.user.findUnique({ where: { id: userId } });
+
+    if (!user) {
+      throw new NotFoundException('User not found.');
+    }
+
+    const invitation = await this.prisma.invitation.findUnique({
+      where: { id: invitationId },
+    });
+
+    if (!invitation) {
+      throw new NotFoundException('Invitation not found.');
+    }
+
+    if (invitation.email !== user.email) {
+      throw new ForbiddenException('This invitation is not for you.');
+    }
+
+    return invitation;
   }
 }

@@ -20,7 +20,7 @@ describe('InvitationsService', () => {
     service = module.get<InvitationsService>(InvitationsService);
   });
 
-  it('should be definedd', () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
 });

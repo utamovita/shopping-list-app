@@ -3,8 +3,7 @@ import { useCreateInvitation } from "./use-create-invitation.hook";
 import { invitationsApi } from "../api/invitations.api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
-import type { SuccessResponse } from "@repo/types";
-import type { Invitation } from "@repo/database";
+import type { SuccessResponse, Invitation } from "@repo/types";
 
 jest.mock("../api/invitations.api");
 jest.mock("sonner");
@@ -38,7 +37,7 @@ describe("useCreateInvitation", () => {
         groupId: "group-123",
         invitedByUserId: "user-123",
       },
-      message: "invitations.sentSuccess",
+      message: "invitation.sentMsg",
     };
     mockInvitationsApi.send.mockResolvedValue(mockResponse);
 
@@ -56,7 +55,7 @@ describe("useCreateInvitation", () => {
     });
 
     await waitFor(() => {
-      expect(toast.success).toHaveBeenCalledWith("invitations.sentSuccess");
+      expect(toast.success).toHaveBeenCalledWith("invitation.sentMsg");
     });
   });
 });

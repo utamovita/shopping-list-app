@@ -14,7 +14,7 @@ export function useCreateInvitation(groupId: string) {
     mutationFn: (data: CreateInvitationDto) =>
       invitationsApi.send({ groupId, data }),
     onSuccess: () => {
-      toast.success(t("invitations.sentSuccess"));
+      toast.success(t("invitation.sentMsg"));
     },
     onError: (error) => {
       handleError({ error });

@@ -6,6 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { useTranslation } from "react-i18next";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AlertFallback } from "@/shared/ui/alert";
+import { InvitationsBell } from "@/features/invitations/components/invitations-bell.component";
 
 export function UserProfile() {
   const { isError, data: profile, isLoading } = useProfile();
@@ -25,9 +26,12 @@ export function UserProfile() {
       <h1 className="text-2xl font-bold">
         {t("common:hello")}, {profile.data.name}!
       </h1>
-      <Button onClick={handleLogout} variant="outline">
-        {t("common:auth.logout")}
-      </Button>
+      <div className="flex items-center gap-2">
+        <InvitationsBell />
+        <Button onClick={handleLogout} variant="outline">
+          {t("common:auth.logout")}
+        </Button>
+      </div>
     </header>
   );
 }
