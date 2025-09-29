@@ -2,6 +2,7 @@ import type {
   User,
   Group,
   Invitation as PrismaInvitation,
+  Role,
 } from "@repo/database";
 
 export type SuccessResponse<T> = {
@@ -35,6 +36,7 @@ export type GroupWithDetails = Group & {
     shoppingItems: number;
   };
   members: GroupMember[];
+  currentUserRole?: Role;
 };
 
 export type Invitation = PrismaInvitation & {

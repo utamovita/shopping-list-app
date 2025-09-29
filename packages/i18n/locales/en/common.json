@@ -34,7 +34,15 @@
     "leave": "Leave group",
     "delete": "Delete group",
     "deleteSuccess": "Group has been deleted.",
-    "deleteGroupPrompt": "Are you sure you want to delete the group {{groupName}}? This action cannot be undone."
+    "deleteGroupPrompt": "Are you sure you want to delete the group {{groupName}}? This action cannot be undone.",
+    "changeNameDialog": {
+      "title": "Change group name",
+      "description:": "Enter a new name for your shopping list.",
+      "newName": "New name",
+      "newNamePlaceholder": "E.g. Weekend shopping",
+      "save": "Save changes",
+      "success": "Group name has been changed."
+    }
   },
   "shoppingList": {
     "mainTitle": "Shopping list",

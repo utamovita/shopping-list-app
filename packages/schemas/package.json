@@ -13,6 +13,8 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
+    "@repo/database": "workspace:^",
+    "@repo/typescript-config": "workspace:^",
     "tsup": "^8.5.0"
   }
 }

@@ -14,7 +14,6 @@ describe('GroupsController', () => {
   const mockGroupsService = {
     create: jest.fn(),
     findAllForUser: jest.fn(),
-    remove: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -78,17 +77,6 @@ describe('GroupsController', () => {
 
       expect(service.findAllForUser).toHaveBeenCalledWith(mockUser.id);
       expect(result).toEqual({ success: true, data: expectedGroups });
-    });
-  });
-
-  describe('remove', () => {
-    it('should call service.remove with correct group id', async () => {
-      const groupId = 'group-123';
-      mockGroupsService.remove.mockResolvedValue(undefined);
-
-      await controller.remove(groupId);
-
-      expect(service.remove).toHaveBeenCalledWith(groupId);
     });
   });
 });

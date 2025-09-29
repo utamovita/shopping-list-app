@@ -35,6 +35,14 @@
     "delete": "Usuń grupę",
     "deleteSuccess": "Grupa została usunięta.",
     "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć."
+    "changeNameDialog": {
+      "title": "Zmień nazwę grupy",
+      "description:": "Wprowadź nową nazwę dla swojej listy zakupów.",
+      "newName": "Nowa nazwa",
+      "newNamePlaceholder": "Np. Zakupy na weekend",
+      "save": "Zapisz zmiany",
+      "success": "Nazwa grupy została zmieniona."
+    }
   },
   "shoppingList": {
     "mainTitle": "Lista zakupów",

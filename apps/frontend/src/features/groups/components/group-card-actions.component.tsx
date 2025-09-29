@@ -11,6 +11,7 @@ import { MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { DeleteGroupDialog } from "./delete-group-dialog.component";
 import { CreateInvitationDialog } from "@/features/invitations/components/create-invitation-dialog.component";
+import { RenameGroupDialog } from "@/features/groups/components/rename-group-dialog";
 
 type GroupCardActionsProps = {
   group: Group;
@@ -32,7 +33,11 @@ export function GroupCardActions({ group }: GroupCardActionsProps) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem>{t("group.changeName")}</DropdownMenuItem>
+          <RenameGroupDialog group={group}>
+            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+              {t("group.changeName")}
+            </DropdownMenuItem>
+          </RenameGroupDialog>
           <CreateInvitationDialog group={group}>
             <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
               {t("group.manageMembers")}
