@@ -68,6 +68,12 @@ const eslintConfig = [
       ],
     },
   },
+  {
+    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.test.ts', '**/*.test.tsx'],
+    rules: {
+      'boundaries/element-types': 'off',
+    },
+  },
 ];
 
 export default eslintConfig;

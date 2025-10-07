@@ -2,7 +2,7 @@ import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
 import type { GroupWithDetails } from "@repo/types";
 import { UpdateGroupDto } from "@repo/schemas";
-import { Group } from "@repo/database";
+import { Group, Role } from "@repo/database";
 
 type CreateGroupDto = {
   name: string;
@@ -38,5 +38,30 @@ export const groupsApi = {
       `${API_PATHS.groups}/${groupId}`,
     );
     return response.data;
+  },
+  removeMember: async ({
+    groupId,
+    memberId,
+  }: {
+    groupId: string;
+    memberId: string;
+  }) => {
+    return apiClient.delete<void>(
+      `${API_PATHS.groups}/${groupId}/members/${memberId}`,
+    );
+  },
+  updateMemberRole: async ({
+    groupId,
+    memberId,
+    role,
+  }: {
+    groupId: string;
+    memberId: string;
+    role: Role;
+  }) => {
+    return apiClient.patch<Group>(
+      `${API_PATHS.groups}/${groupId}/members/${memberId}`,
+      { role },
+    );
   },
 };

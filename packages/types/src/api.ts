@@ -2,7 +2,6 @@ import type {
   User,
   Group,
   Invitation as PrismaInvitation,
-  Role,
 } from "@repo/database";
 
 export type SuccessResponse<T> = {
@@ -19,12 +18,15 @@ export type ErrorResponse = {
   };
 };
 
+export type Role = "ADMIN" | "USER";
+
 export type UserProfile = Omit<
   User,
   "passwordHash" | "provider" | "createdAt" | "updatedAt"
 >;
 
 export type GroupMember = {
+  role: Role;
   user: {
     id: string;
     name: string | null;

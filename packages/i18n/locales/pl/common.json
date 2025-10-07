@@ -5,6 +5,10 @@
   "yesDelete": "Tak, usuń",
   "accept": "Akceptuj",
   "decline": "Odrzuć",
+  "role": {
+    "admin": "Administrator",
+    "user": "Członek"
+  },
   "auth": {
     "loginTitle": "Zaloguj się",
     "registerTitle": "Zarejestruj się",
@@ -22,19 +26,19 @@
   },
   "error": "Błąd",
   "group": {
+    "group": "Grupa",
     "mainTitle": "Twoje grupy",
     "noGroups": "Nie masz jeszcze żadnych grup. Stwórz pierwszą!",
     "createNew": "Stwórz nową grupę",
     "createNewDescription": "Nadaj nazwę swojej nowej liście zakupów. Możesz później zaprosić do niej znajomych.",
     "namePlaceholder": "Nazwa grupy",
     "changeName": "Zmień nazwę grupy",
-    "manageMembers": "Zarządzaj członkami",
     "itemsAmount": "rzeczy",
     "membersAmount": "członków",
     "leave": "Opuść grupę",
     "delete": "Usuń grupę",
     "deleteSuccess": "Grupa została usunięta.",
-    "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć."
+    "deleteGroupPrompt": "Czy na pewno chcesz usunąć grupę {{groupName}}? Tej akcji nie można cofnąć.",
     "changeNameDialog": {
       "title": "Zmień nazwę grupy",
       "description:": "Wprowadź nową nazwę dla swojej listy zakupów.",
@@ -42,6 +46,12 @@
       "newNamePlaceholder": "Np. Zakupy na weekend",
       "save": "Zapisz zmiany",
       "success": "Nazwa grupy została zmieniona."
+    },
+    "manageMembers": {
+      "title": "Zarządzaj członkami",
+      "currentMembers": "Obceni członkowie.",
+      "removedMemberSuccess": "Członek został usunięty z grupy.",
+      "roleUpdatedSuccess": "Członek został usunięty z grupy."
     }
   },
   "shoppingList": {

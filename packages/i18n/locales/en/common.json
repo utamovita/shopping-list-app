@@ -5,6 +5,10 @@
   "yesDelete": "Yes, delete",
   "accept": "Accept",
   "decline": "Decline",
+  "role": {
+    "admin": "Admin",
+    "user": "Member"
+  },
   "auth": {
     "loginTitle": "Log in",
     "registerTitle": "Sign up",
@@ -22,13 +26,13 @@
   },
   "error": "Error",
   "group": {
+    "group": "Group",
     "mainTitle": "Your shopping groups",
     "noGroups": "You don't have any groups yet. Create your first one!",
     "createNew": "Create new group",
     "createNewDescription": "Name your new shopping list. You can invite friends to it later.",
     "namePlaceholder": "Group name",
     "changeName": "Change group name",
-    "manageMembers": "Manage members",
     "itemsAmount": "items",
     "membersAmount": "members",
     "leave": "Leave group",
@@ -42,6 +46,12 @@
       "newNamePlaceholder": "E.g. Weekend shopping",
       "save": "Save changes",
       "success": "Group name has been changed."
+    },
+    "manageMembers": {
+      "title": "Manage members",
+      "currentMembers": "Current members.",
+      "removedMemberSuccess": "Member has been removed from the group.",
+      "roleUpdatedSuccess": "Member role has been updated."
     }
   },
   "shoppingList": {

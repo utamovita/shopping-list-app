@@ -1,6 +1,6 @@
 "use client";
 
-import { useCreateGroup } from "../hooks/use-create-group.hook";
+import { useCreateGroup } from "./use-create-group.hook";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { useForm } from "react-hook-form";
@@ -16,9 +16,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/shared/ui/form";
+import { useUiStore } from "@/shared/store/ui.store";
 
 export function CreateGroupForm() {
   const { mutate, isPending } = useCreateGroup();
+  const { closeDialog } = useUiStore();
+
   const { t } = useTranslation();
 
   const form = useForm<CreateGroupDto>({
@@ -33,6 +36,7 @@ export function CreateGroupForm() {
       onSuccess: () => {
         form.reset();
         toast.success(t("validation:success.groupCreated"));
+        closeDialog();
       },
     });
   };

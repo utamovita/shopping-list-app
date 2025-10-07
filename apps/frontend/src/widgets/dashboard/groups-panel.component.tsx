@@ -4,7 +4,7 @@ import { useGroups } from "@/features/groups/hooks/use-groups.hook";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AlertFallback } from "@/shared/ui/alert";
 import { GroupCard } from "@/features/groups/components/group-card.component";
-import { AddGroupCard } from "@/features/groups/components/add-group-card.component";
+import { AddGroupCard } from "@/features/groups/subfeatures/create-group/add-group-card.component";
 import { useTranslation } from "react-i18next";
 
 export function GroupsPanel() {

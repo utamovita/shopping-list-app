@@ -2,7 +2,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { invitationsApi } from "../api/invitations.api";
+import { invitationsApi } from "@/features/groups/api/invitations.api";
 import { useTranslation } from "react-i18next";
 
 export function useDeclineInvitation() {

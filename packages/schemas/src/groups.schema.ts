@@ -1,5 +1,4 @@
 import { z } from "zod";
-import type { Role } from "@repo/database";
 
 export const createGroupSchema = z.object({
   name: z
@@ -20,7 +19,7 @@ export const updateGroupSchema = z.object({
 export type UpdateGroupDto = z.infer<typeof updateGroupSchema>;
 
 export const updateMemberRoleSchema = z.object({
-  role: z.custom<Role>(),
+  role: z.enum(["ADMIN", "USER"]),
 });
 
 export type UpdateMemberRoleDto = z.infer<typeof updateMemberRoleSchema>;

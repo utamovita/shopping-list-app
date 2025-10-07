@@ -8,19 +8,15 @@ import {
   Patch,
   UseGuards,
 } from '@nestjs/common';
-import {
-  ApiBearerAuth,
-  ApiOperation,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import { Group, Role } from '@repo/database';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Group, GroupMembership, Role } from '@repo/database';
 import { SuccessResponse } from '@repo/types';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 
 import { UpdateGroupDto } from './dto/update-group.dto';
+import { UpdateMemberRoleDto } from './dto/update-member-role.dto';
 import { GroupsService } from './groups.service';
 
 @ApiTags('Groups')
@@ -44,10 +40,34 @@ export class GroupAdminController {
   @Delete()
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiOperation({ summary: 'Delete a group (requires ADMIN role)' })
-  @ApiResponse({ status: 204, description: 'Group deleted successfully.' })
-  @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @ApiResponse({ status: 401, description: 'Unauthorized.' })
   async remove(@Param('groupId') groupId: string) {
     await this.groupsService.remove(groupId);
+  }
+
+  @Patch('members/:memberId')
+  @ApiOperation({ summary: "Update a member's role (requires ADMIN role)" })
+  async updateMemberRole(
+    @Param('groupId') groupId: string,
+    @Param('memberId') memberId: string,
+    @Body() updateDto: UpdateMemberRoleDto,
+  ): Promise<SuccessResponse<GroupMembership>> {
+    const membership = await this.groupsService.updateMemberRole(
+      groupId,
+      memberId,
+      updateDto,
+    );
+    return { success: true, data: membership };
+  }
+
+  @Delete('members/:memberId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({
+    summary: 'Remove a member from a group (requires ADMIN role)',
+  })
+  async removeMember(
+    @Param('groupId') groupId: string,
+    @Param('memberId') memberId: string,
+  ) {
+    await this.groupsService.removeMember(groupId, memberId);
   }
 }

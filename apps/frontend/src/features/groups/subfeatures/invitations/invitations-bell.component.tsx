@@ -3,9 +3,9 @@
 import { Button } from "@/shared/ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Bell } from "lucide-react";
-import { useReceivedInvitations } from "@/features/invitations/hooks/use-received-invitations.hook";
-import { useAcceptInvitation } from "@/features/invitations/hooks/use-accept-invitation.hook";
-import { useDeclineInvitation } from "@/features/invitations/hooks/use-decline-invitation.hook";
+import { useReceivedInvitations } from "@/features/groups/subfeatures/invitations/hooks/use-received-invitations.hook";
+import { useAcceptInvitation } from "@/features/groups/subfeatures/invitations/hooks/use-accept-invitation.hook";
+import { useDeclineInvitation } from "@/features/groups/subfeatures/invitations/hooks/use-decline-invitation.hook";
 import { Spinner } from "@/shared/ui/spinner";
 import { useTranslation } from "react-i18next";
 

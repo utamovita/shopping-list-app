@@ -6,19 +6,23 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
-import type { Group } from "@repo/database";
 import { MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { DeleteGroupDialog } from "./delete-group-dialog.component";
-import { CreateInvitationDialog } from "@/features/invitations/components/create-invitation-dialog.component";
-import { RenameGroupDialog } from "@/features/groups/components/rename-group-dialog";
+import { GroupWithDetails } from "@repo/types";
+import { Role } from "@repo/database";
+import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
 
 type GroupCardActionsProps = {
-  group: Group;
+  group: GroupWithDetails;
 };
 
 export function GroupCardActions({ group }: GroupCardActionsProps) {
   const { t } = useTranslation("common");
+  const openDialog = useUiStore((state) => state.openDialog);
+
+  if (group.currentUserRole !== Role.ADMIN) {
+    return null;
+  }
 
   return (
     <div
@@ -33,24 +37,22 @@ export function GroupCardActions({ group }: GroupCardActionsProps) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <RenameGroupDialog group={group}>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              {t("group.changeName")}
-            </DropdownMenuItem>
-          </RenameGroupDialog>
-          <CreateInvitationDialog group={group}>
-            <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-              {t("group.manageMembers")}
-            </DropdownMenuItem>
-          </CreateInvitationDialog>
-          <DeleteGroupDialog group={group}>
-            <DropdownMenuItem
-              onSelect={(e) => e.preventDefault()}
-              className="text-destructive focus:bg-destructive/10 focus:text-destructive"
-            >
-              {t("group.delete")}
-            </DropdownMenuItem>
-          </DeleteGroupDialog>
+          <DropdownMenuItem
+            onClick={() => openDialog(DIALOG_TYPES.RENAME_GROUP, { group })}
+          >
+            {t("group.changeName")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => openDialog(DIALOG_TYPES.MANAGE_MEMBERS, { group })}
+          >
+            {t("group.manageMembers.title")}
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => openDialog(DIALOG_TYPES.DELETE_GROUP, { group })}
+            className="text-destructive focus:bg-destructive/10 focus:text-destructive"
+          >
+            {t("group.delete")}
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

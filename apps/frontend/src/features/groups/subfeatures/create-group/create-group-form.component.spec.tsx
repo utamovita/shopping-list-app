@@ -1,10 +1,10 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { CreateGroupForm } from "./create-group-form.component";
-import { useCreateGroup } from "../hooks/use-create-group.hook";
+import { useCreateGroup } from "./use-create-group.hook";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 
-jest.mock("../hooks/use-create-group.hook");
+jest.mock("./use-create-group.hook");
 
 const mockUseCreateGroup = useCreateGroup as jest.Mock;
 

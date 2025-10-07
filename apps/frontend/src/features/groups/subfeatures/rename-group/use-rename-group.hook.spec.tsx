@@ -1,11 +1,11 @@
 import { renderHook, waitFor } from "@testing-library/react";
-import { useUpdateGroup } from "./use-update-group.hook";
-import { groupsApi } from "../api/groups.api";
+import { useRenameGroup } from "./use-rename-group.hook";
+import { groupsApi } from "@/features/groups/api/groups.api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
 import type { GroupWithDetails, SuccessResponse } from "@repo/types";
 
-jest.mock("../api/groups.api");
+jest.mock("../../api/groups.api");
 jest.mock("sonner");
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),
@@ -43,7 +43,7 @@ describe("useUpdateGroup", () => {
     };
     mockGroupsApi.update.mockResolvedValue(mockResponse);
 
-    const { result } = renderHook(() => useUpdateGroup(), { wrapper });
+    const { result } = renderHook(() => useRenameGroup(), { wrapper });
 
     result.current.mutate(updateData);
 

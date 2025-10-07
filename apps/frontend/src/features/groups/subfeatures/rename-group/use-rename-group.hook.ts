@@ -4,20 +4,22 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { groupsApi } from "../api/groups.api";
+import { groupsApi } from "@/features/groups/api/groups.api";
+import { UpdateGroupDto } from "@repo/schemas";
 
-export function useDeleteGroup() {
+type UpdateGroupData = {
+  groupId: string;
+  data: UpdateGroupDto;
+};
+
+export function useRenameGroup() {
   const queryClient = useQueryClient();
   const { t } = useTranslation(["common"]);
 
   return useMutation({
-    mutationFn: (groupId: string) => groupsApi.remove(groupId),
-    onSuccess: (response) => {
-      if (response?.message) {
-        toast.success(t(response.message));
-      } else {
-        toast.success(t("group.deleteSuccess"));
-      }
+    mutationFn: (updateData: UpdateGroupData) => groupsApi.update(updateData),
+    onSuccess: () => {
+      toast.success(t("group.changeNameDialog.success"));
       queryClient.invalidateQueries({ queryKey: ["groups"] });
     },
     onError: (error) => {

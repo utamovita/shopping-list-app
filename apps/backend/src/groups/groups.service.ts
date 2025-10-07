@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { Role } from '@repo/database';
 import { GroupWithDetails } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
@@ -85,6 +85,16 @@ export class GroupsService {
   }
 
   async removeMember(groupId: string, memberId: string) {
+    const memberCount = await this.prisma.groupMembership.count({
+      where: { groupId },
+    });
+
+    if (memberCount <= 1) {
+      throw new ForbiddenException(
+        'You cannot remove the last member of a group. Delete the group instead.',
+      );
+    }
+
     return this.prisma.groupMembership.delete({
       where: {
         userId_groupId: {
@@ -100,6 +110,32 @@ export class GroupsService {
     memberId: string,
     updateDto: UpdateMemberRoleDto,
   ) {
+    if (updateDto.role === Role.USER) {
+      const membership = await this.prisma.groupMembership.findUnique({
+        where: {
+          userId_groupId: {
+            userId: memberId,
+            groupId: groupId,
+          },
+        },
+      });
+
+      if (membership?.role === Role.ADMIN) {
+        const adminCount = await this.prisma.groupMembership.count({
+          where: {
+            groupId: groupId,
+            role: Role.ADMIN,
+          },
+        });
+
+        if (adminCount <= 1) {
+          throw new ForbiddenException(
+            'Cannot remove the last admin from the group.',
+          );
+        }
+      }
+    }
+
     return this.prisma.groupMembership.update({
       where: {
         userId_groupId: {

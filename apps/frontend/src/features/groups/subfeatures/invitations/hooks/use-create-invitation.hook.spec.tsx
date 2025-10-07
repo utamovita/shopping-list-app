@@ -1,11 +1,11 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useCreateInvitation } from "./use-create-invitation.hook";
-import { invitationsApi } from "../api/invitations.api";
+import { invitationsApi } from "@/features/groups/api/invitations.api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { toast } from "sonner";
 import type { SuccessResponse, Invitation } from "@repo/types";
 
-jest.mock("../api/invitations.api");
+jest.mock("../../../api/invitations.api");
 jest.mock("sonner");
 jest.mock("react-i18next", () => ({
   useTranslation: () => ({ t: (key: string) => key }),

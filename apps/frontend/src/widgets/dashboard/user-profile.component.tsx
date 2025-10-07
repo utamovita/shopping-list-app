@@ -6,7 +6,7 @@ import { Button } from "@/shared/ui/button";
 import { useTranslation } from "react-i18next";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AlertFallback } from "@/shared/ui/alert";
-import { InvitationsBell } from "@/features/invitations/components/invitations-bell.component";
+import { InvitationsBell } from "@/features/groups/subfeatures/invitations/invitations-bell.component";
 
 export function UserProfile() {
   const { isError, data: profile, isLoading } = useProfile();

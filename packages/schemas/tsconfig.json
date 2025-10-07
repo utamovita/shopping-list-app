@@ -3,7 +3,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@repo/database": ["../database"]
+      "@repo/database": ["../database"],
+      "@repo/types": ["../types/src"]
     }
   },
   "include": ["src"],
