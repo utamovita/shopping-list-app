@@ -1,5 +1,7 @@
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Express } from 'express';
 import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AppModule } from './app.module';
@@ -7,8 +9,13 @@ import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const configService = app.get(ConfigService);
+  const frontendUrl = configService.get<string>('FRONTEND_URL');
 
-  app.enableCors();
+  app.enableCors({
+    origin: frontendUrl,
+  });
+
   app.useGlobalPipes(new ZodValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
 
@@ -22,7 +29,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api-docs', app, document);
 
-  await app.listen(process.env.PORT ?? 3000);
+  if (process.env.VERCEL) {
+    await app.init();
+    const expressApp = app.getHttpAdapter().getInstance() as Express;
+    return expressApp;
+  } else {
+    await app.listen(3000);
+  }
 }
 
 void bootstrap();
