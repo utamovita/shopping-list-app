@@ -3,6 +3,7 @@ import {
   ConflictException,
   ForbiddenException,
   Injectable,
+  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
 import { Role } from '@repo/database';
@@ -45,13 +46,30 @@ export class InvitationsService {
       );
     }
 
-    return this.prisma.invitation.create({
+    const newInvitation = await this.prisma.invitation.create({
       data: {
         email: invitedEmail,
         groupId,
         invitedByUserId: invitingUserId,
       },
     });
+
+    const createdInvitationWithDetails =
+      await this.prisma.invitation.findUnique({
+        where: { id: newInvitation.id },
+        include: {
+          group: { select: { id: true, name: true } },
+          invitedByUser: { select: { id: true, name: true } },
+        },
+      });
+
+    if (!createdInvitationWithDetails) {
+      throw new InternalServerErrorException(
+        'Could not find newly created invitation.',
+      );
+    }
+
+    return createdInvitationWithDetails;
   }
 
   async findAllReceivedForUser(userId: string) {
