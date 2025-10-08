@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "https://sharelister-backend.focusite.pl/:path*"
+    }
+  ]
+}
