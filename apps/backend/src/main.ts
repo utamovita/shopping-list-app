@@ -34,6 +34,7 @@ async function bootstrap() {
   if (process.env.VERCEL) {
     await app.init();
     const expressApp = app.getHttpAdapter().getInstance() as Express;
+
     return expressApp;
   } else {
     await app.listen(3000);
