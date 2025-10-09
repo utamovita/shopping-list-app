@@ -9,6 +9,7 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
+//Force redeploy
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
