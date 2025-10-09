@@ -27,6 +27,7 @@ export default function LoginForm() {
   const { form, onSubmit, isPending } = useLoginForm();
   const { t } = useTranslation("common");
 
+  console.log("dupa");
   return (
     <Card className="w-[400px]">
       <CardHeader>
