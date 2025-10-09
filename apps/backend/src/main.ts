@@ -9,7 +9,6 @@ import { ZodValidationPipe } from 'nestjs-zod';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
-//Force redeploy
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
@@ -34,9 +33,7 @@ async function bootstrap() {
 
   if (process.env.VERCEL) {
     await app.init();
-    const expressApp = app.getHttpAdapter().getInstance() as Express;
-
-    return expressApp;
+    return app.getHttpAdapter().getInstance() as Express;
   } else {
     await app.listen(3000);
   }
