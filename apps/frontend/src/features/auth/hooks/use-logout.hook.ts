@@ -9,6 +9,7 @@ export function useLogout() {
   const router = useRouter();
 
   const handleLogout = () => {
+    console.log("dupa");
     logout();
     router.push(APP_PATHS.login);
   };
