@@ -1,10 +1,8 @@
-// src/features/groups/subfeatures/delete-group/delete-group-dialog.component.spec.tsx
-
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { useDeleteGroup } from "./use-delete-group.hook";
-import type { GroupWithDetails } from "@repo/types";
+import type { Group } from "@repo/database";
 import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
 import { DialogManager } from "@/widgets/dialog-manager";
 
@@ -18,13 +16,11 @@ jest.mock("react-i18next", () => ({
 
 const mockUseDeleteGroup = useDeleteGroup as jest.Mock;
 
-const mockGroup: GroupWithDetails = {
+const mockGroup: Group = {
   id: "group-123",
   name: "Test Group Name",
-  members: [],
-  _count: {
-    shoppingItems: 0,
-  },
+  createdAt: new Date(),
+  updatedAt: new Date(),
 };
 
 const TestBed = () => {

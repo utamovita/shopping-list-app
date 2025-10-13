@@ -1,0 +1,89 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String?
+  provider     String   @default("credentials")
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  memberships     GroupMembership[]
+  notifications   Notification[]
+  sentInvitations Invitation[]      @relation("SentInvitations")
+}
+
+model Group {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  members       GroupMembership[]
+  shoppingItems ShoppingListItem[]
+  invitations   Invitation[]
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+model GroupMembership {
+  userId  String
+  groupId String
+  role    Role   @default(USER)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  group Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@id([userId, groupId])
+}
+
+model ShoppingListItem {
+  id        String   @id @default(cuid())
+  name      String
+  completed Boolean  @default(false)
+  addedBy   String?
+  createdAt DateTime @default(now())
+
+  groupId String
+  group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  message   String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Invitation {
+  id        String   @id @default(cuid())
+  email     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  groupId         String
+  invitedByUserId String
+
+  group         Group @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  invitedByUser User  @relation("SentInvitations", fields: [invitedByUserId], references: [id], onDelete: Cascade)
+
+  @@unique([email, groupId])
+}

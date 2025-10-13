@@ -1,4 +1,4 @@
-import { Group } from "@repo/database";
+import type { Group } from "@repo/database";
 import { Button } from "@/shared/ui/button";
 import {
   Form,

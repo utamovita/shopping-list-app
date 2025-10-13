@@ -36,6 +36,14 @@ describe("useCreateInvitation", () => {
         updatedAt: new Date(),
         groupId: "group-123",
         invitedByUserId: "user-123",
+        group: {
+          id: "group-123",
+          name: "Test Group",
+        },
+        invitedByUser: {
+          id: "user-123",
+          name: "Test User",
+        },
       },
       message: "invitation.sentMsg",
     };

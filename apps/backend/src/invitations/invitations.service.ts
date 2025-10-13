@@ -51,6 +51,20 @@ export class InvitationsService {
         groupId,
         invitedByUserId: invitingUserId,
       },
+      include: {
+        group: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        invitedByUser: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
     });
   }
 
