@@ -1,6 +1,27 @@
 import { PrismaClient } from "../prisma/generated/client";
 
-export * from "@prisma/client";
+import type {
+  User,
+  Group,
+  Role,
+  Invitation,
+  ShoppingListItem,
+  GroupMembership,
+  Notification,
+} from "../prisma/generated/client";
 
-export const prisma = new PrismaClient();
+const prisma = new PrismaClient();
+
 export default prisma;
+
+export { PrismaClient };
+
+export type {
+  User,
+  Group,
+  Role,
+  Invitation,
+  ShoppingListItem,
+  GroupMembership,
+  Notification,
+};
