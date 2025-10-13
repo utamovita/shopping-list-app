@@ -19,7 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/shared/ui/select";
-import type { Role } from "@repo/database";
+import type { Role } from "@repo/types";
 import { useTranslation } from "react-i18next";
 
 type ManageMembersDialogProps = {

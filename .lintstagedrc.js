@@ -18,7 +18,7 @@ module.exports = {
       "pnpm --filter frontend exec tsc --noEmit -p tsconfig.json";
 
     const testFileArgs = filenames.join(" ");
-    const testCommand = `pnpm --filter frontend run test -- --findRelatedTests ${testFileArgs} --passWithNoTests`;
+    const testCommand = `pnpm --filter frontend exec jest --findRelatedTests ${testFileArgs} --passWithNoTests`;
 
     return [lintCommand, checkTypesCommand, testCommand];
   },

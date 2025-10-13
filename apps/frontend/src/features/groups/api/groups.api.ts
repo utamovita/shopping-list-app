@@ -2,7 +2,8 @@ import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
 import type { GroupWithDetails } from "@repo/types";
 import { UpdateGroupDto } from "@repo/schemas";
-import type { Group, Role } from "@repo/database";
+import type { Group } from "@repo/database";
+import type { Role } from "@repo/types";
 
 type CreateGroupDto = {
   name: string;

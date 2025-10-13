@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Role } from '@repo/database';
+import type { Role } from '@repo/types';
 import { UserProfile } from '@repo/types';
 import { Request } from 'express';
 

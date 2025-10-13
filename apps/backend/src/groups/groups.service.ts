@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { Role } from '@repo/database';
+import type { Role } from '@repo/types';
 import { GroupWithDetails } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
@@ -59,7 +59,7 @@ export class GroupsService {
         data: {
           userId,
           groupId: group.id,
-          role: Role.ADMIN,
+          role: 'ADMIN' as Role,
         },
       });
 
@@ -110,7 +110,7 @@ export class GroupsService {
     memberId: string,
     updateDto: UpdateMemberRoleDto,
   ) {
-    if (updateDto.role === Role.USER) {
+    if (updateDto.role === ('USER' as Role)) {
       const membership = await this.prisma.groupMembership.findUnique({
         where: {
           userId_groupId: {
@@ -120,11 +120,11 @@ export class GroupsService {
         },
       });
 
-      if (membership?.role === Role.ADMIN) {
+      if (membership?.role === ('ADMIN' as Role)) {
         const adminCount = await this.prisma.groupMembership.count({
           where: {
             groupId: groupId,
-            role: Role.ADMIN,
+            role: 'ADMIN' as Role,
           },
         });
 

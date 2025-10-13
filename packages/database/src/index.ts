@@ -3,7 +3,6 @@ import { PrismaClient } from "../prisma/generated/client";
 import type {
   User,
   Group,
-  Role,
   Invitation,
   ShoppingListItem,
   GroupMembership,
@@ -19,7 +18,6 @@ export { PrismaClient };
 export type {
   User,
   Group,
-  Role,
   Invitation,
   ShoppingListItem,
   GroupMembership,

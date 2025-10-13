@@ -5,7 +5,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Role } from '@repo/database';
+import type { Role } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -104,7 +104,7 @@ export class InvitationsService {
         data: {
           userId: userId,
           groupId: invitation.groupId,
-          role: Role.USER,
+          role: 'USER' as Role,
         },
       });
 
