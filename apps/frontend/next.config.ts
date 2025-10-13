@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination: "https://sharelister-backend.onrender.com/api/:path*",
+        destination: "https://sharelister-backend.onrender.com/:path*",
       },
     ];
   },
