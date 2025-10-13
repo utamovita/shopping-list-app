@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  NEXT_PUBLIC_API_URL: z.string().url({ message: "Invalid API URL" }),
+  NEXT_PUBLIC_API_URL: z.string(),
 });
 
 const clientEnv = {
