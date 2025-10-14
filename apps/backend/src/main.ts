@@ -10,7 +10,7 @@ async function bootstrap() {
   try {
     console.log('Running database migrations...');
     execSync(
-      'npx prisma migrate deploy --schema=../../packages/database/prisma/schema.prisma',
+      '../../node_modules/.bin/prisma migrate deploy --schema=../../packages/database/prisma/schema.prisma',
     );
     console.log('Database migrations completed.');
   } catch (error) {
