@@ -13,8 +13,7 @@ services:
         sync: false
     region: frankfurt
     buildCommand: cd ../.. && pnpm install && pnpm turbo build --filter=backend
-    preDeployCommand: cd ../.. && pnpm --filter @repo/database prisma migrate deploy
-    startCommand: cd ../.. & pnpm --filter backend start:prod
+    startCommand: cd ../.. && pnpm --filter @repo/database prisma migrate deploy && pnpm --filter backend start:prod
     autoDeployTrigger: commit
     rootDir: apps/backend
 databases:
