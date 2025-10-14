@@ -5,13 +5,10 @@ import { AlertFallback } from "@/shared/ui/alert";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AddItemForm } from "@/features/shopping-list/components/add-item-form.component";
 import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.hook";
-import { Button } from "@/shared/ui/button";
-import { Trash2 } from "lucide-react";
 import { useGroupSocket } from "@/features/shopping-list/hooks/use-group-socket.hook";
-import { cn } from "@/shared/lib/utils";
 import { useUpdateItem } from "@/features/shopping-list/hooks/use-update-item.hook";
-import { Checkbox } from "@/shared/ui/checkbox";
 import { useTranslation } from "react-i18next";
+import { ShoppingListItemComponent } from "@/features/shopping-list/components/shopping-list-item.component";
 
 type ShoppingListViewProps = {
   groupId: string;
@@ -40,37 +37,14 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
         {items.data.length > 0 ? (
           <ul>
             {items.data.map((item) => (
-              <li
+              <ShoppingListItemComponent
                 key={item.id}
-                className="flex items-center p-4 border-b last:border-b-0 gap-4"
-              >
-                <Checkbox
-                  id={item.id}
-                  checked={item.completed}
-                  onCheckedChange={(checked) =>
-                    updateItem({ itemId: item.id, completed: !!checked })
-                  }
-                />
-                <label
-                  htmlFor={item.id}
-                  className={cn(
-                    "flex-grow cursor-pointer",
-                    item.completed && "line-through text-muted-foreground",
-                  )}
-                >
-                  {item.name}
-                </label>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => removeItem(item.id)}
-                  aria-label={t("shoppingList.removeItem", {
-                    itemName: item.name,
-                  })}
-                >
-                  <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
-              </li>
+                item={item}
+                onToggle={(itemId, completed) =>
+                  updateItem({ itemId, completed })
+                }
+                onRemove={(itemId) => removeItem(itemId)}
+              />
             ))}
           </ul>
         ) : (
