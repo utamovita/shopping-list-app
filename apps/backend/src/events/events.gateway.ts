@@ -21,6 +21,10 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   private connectedClients = new Map<string, Socket>();
 
   handleConnection(client: Socket) {
+    const origin = client.handshake.headers.origin;
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    console.log(`[WebSocket] Próba połączenia z origin: ${origin}`); // <-- DODAJ TĘ LINIĘ
+
     console.log(`Client connected: ${client.id}`);
     this.connectedClients.set(client.id, client);
     this.logStatus();
