@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Group, GroupMembership } from '@repo/database';
-import { SuccessResponse } from '@repo/types';
+import { ROLES, SuccessResponse } from '@repo/types';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
@@ -23,7 +23,7 @@ import { GroupsService } from './groups.service';
 @ApiBearerAuth()
 @Controller('groups/:groupId')
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles('ADMIN')
+@Roles(ROLES.ADMIN)
 export class GroupAdminController {
   constructor(private readonly groupsService: GroupsService) {}
 

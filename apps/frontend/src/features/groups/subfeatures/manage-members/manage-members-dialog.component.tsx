@@ -21,6 +21,7 @@ import {
 } from "@/shared/ui/select";
 import type { Role } from "@repo/types";
 import { useTranslation } from "react-i18next";
+import { ROLES } from "@repo/types";
 
 type ManageMembersDialogProps = {
   group: GroupWithDetails;
@@ -77,9 +78,12 @@ export function ManageMembersDialog({
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        {/* TODO: Replace with Role enum */}
-                        <SelectItem value="ADMIN">{t("role.admin")}</SelectItem>
-                        <SelectItem value="USER">{t("role.user")}</SelectItem>
+                        <SelectItem value={ROLES.ADMIN}>
+                          {t("role.admin")}
+                        </SelectItem>
+                        <SelectItem value={ROLES.USER}>
+                          {t("role.user")}
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                     <Button

@@ -18,7 +18,12 @@ export type ErrorResponse = {
   };
 };
 
-export type Role = "ADMIN" | "USER";
+export const ROLES = {
+  ADMIN: "ADMIN",
+  USER: "USER",
+} as const;
+
+export type Role = (typeof ROLES)[keyof typeof ROLES];
 
 export type UserProfile = Omit<
   User,

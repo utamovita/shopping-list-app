@@ -8,7 +8,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { GroupWithDetails } from "@repo/types";
+import { GroupWithDetails, ROLES } from "@repo/types";
 import { DIALOG_TYPES, useUiStore } from "@/shared/store/ui.store";
 
 type GroupCardActionsProps = {
@@ -19,8 +19,7 @@ export function GroupCardActions({ group }: GroupCardActionsProps) {
   const { t } = useTranslation("common");
   const openDialog = useUiStore((state) => state.openDialog);
 
-  //TODO Replace with role enum
-  if (group.currentUserRole !== "ADMIN") {
+  if (group.currentUserRole !== ROLES.ADMIN) {
     return null;
   }
 

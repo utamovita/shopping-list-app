@@ -1,7 +1,7 @@
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Group } from '@repo/database';
-import type { Role } from '@repo/types';
+import { ROLES } from '@repo/types';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { createMockGroup } from 'src/test-utils/mocks';
 
@@ -69,7 +69,7 @@ describe('GroupsService', () => {
         data: {
           userId: userId,
           groupId: createdGroup.id,
-          role: 'ADMIN' as Role,
+          role: ROLES.ADMIN,
         },
       });
       expect(result).toEqual(createdGroup);
