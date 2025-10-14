@@ -16,6 +16,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
+    "start:prod:migrate": "pnpm --filter @repo/database prisma migrate deploy && node dist/main",
     "lint": "eslint . --fix",
     "check-ts": "tsc --noEmit -p tsconfig.json",
     "test": "jest",
