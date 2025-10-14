@@ -1,11 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { execSync } from 'child_process';
 import { ZodValidationPipe } from 'nestjs-zod';
 
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 
 async function bootstrap() {
+  try {
+    console.log('Running database migrations...');
+    execSync(
+      'pnpm prisma migrate deploy --schema=../../packages/database/prisma/schema.prisma',
+    );
+    console.log('Database migrations completed.');
+  } catch (error) {
+    console.error('Failed to run database migrations:', error);
+    process.exit(1);
+  }
+
   const app = await NestFactory.create(AppModule);
 
   app.enableCors();
