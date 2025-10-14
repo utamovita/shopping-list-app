@@ -2,8 +2,6 @@ services:
   # Serwis dla bazy danych PostgreSQL
   - type: pserv
     name: sharelister
-    databaseName: sharelister
-    user: utamovita
     plan: free
     region: frankfurt
 
