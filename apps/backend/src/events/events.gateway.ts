@@ -10,7 +10,8 @@ import { EVENT_NAME } from '@repo/config';
 import { Server, Socket } from 'socket.io';
 @WebSocketGateway({
   cors: {
-    origin: '*',
+    origin: process.env.FRONTEND_URL,
+    credentials: true,
   },
 })
 export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
