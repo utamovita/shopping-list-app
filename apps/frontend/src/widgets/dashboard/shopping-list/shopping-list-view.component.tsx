@@ -20,7 +20,7 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
   const { t } = useTranslation("common");
   useGroupSocket(groupId);
 
-  if (isError || !items) {
+  if (isError) {
     return <AlertFallback />;
   }
 
@@ -29,7 +29,7 @@ export function ShoppingListView({ groupId }: ShoppingListViewProps) {
       <h2 className="text-2xl font-semibold">{t("shoppingList.mainTitle")}</h2>
       <AddItemForm groupId={groupId} />
       <div className="border rounded-md">
-        {items.data.length > 0 ? (
+        {items && items.data.length > 0 ? (
           <ul>
             {items.data.map((item) => (
               <ShoppingListItemComponent
