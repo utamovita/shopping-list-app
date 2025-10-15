@@ -68,13 +68,6 @@ describe("ShoppingListView", () => {
     mockUseUpdateItem.mockReturnValue({ mutate: mockUpdateItem });
   });
 
-  it("should render a spinner while loading", () => {
-    mockUseShoppingListItems.mockReturnValue({ isLoading: true });
-    render(<ShoppingListView groupId="group-1" />, { wrapper: TestWrapper });
-
-    expect(screen.getByTestId("spinner-overlay")).toBeInTheDocument();
-  });
-
   it("should render an error message on error", () => {
     mockUseShoppingListItems.mockReturnValue({ isError: true });
     render(<ShoppingListView groupId="group-1" />, { wrapper: TestWrapper });

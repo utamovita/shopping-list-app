@@ -2,7 +2,6 @@
 
 import { useShoppingListItems } from "@/features/shopping-list/hooks/use-shopping-list-items.hook";
 import { AlertFallback } from "@/shared/ui/alert";
-import { SpinnerOverlay } from "@/shared/ui/spinner";
 import { AddItemForm } from "@/features/shopping-list/components/add-item-form.component";
 import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.hook";
 import { useGroupSocket } from "@/features/shopping-list/hooks/use-group-socket.hook";
@@ -15,15 +14,11 @@ type ShoppingListViewProps = {
 };
 
 export function ShoppingListView({ groupId }: ShoppingListViewProps) {
-  const { data: items, isLoading, isError } = useShoppingListItems(groupId);
+  const { data: items, isError } = useShoppingListItems(groupId);
   const { mutate: removeItem } = useRemoveItem(groupId);
   const { mutate: updateItem } = useUpdateItem(groupId);
   const { t } = useTranslation("common");
   useGroupSocket(groupId);
-
-  if (isLoading) {
-    return <SpinnerOverlay variant="container" />;
-  }
 
   if (isError || !items) {
     return <AlertFallback />;

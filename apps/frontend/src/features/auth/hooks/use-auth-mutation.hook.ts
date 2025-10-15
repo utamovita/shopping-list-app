@@ -31,7 +31,7 @@ export function useAuthMutation(type: AuthType) {
         if (response.message) {
           toast.success(t(response.message));
         }
-        router.push(APP_PATHS.dashboard);
+        router.replace(APP_PATHS.dashboard);
       }
     },
     onError: (error) => {

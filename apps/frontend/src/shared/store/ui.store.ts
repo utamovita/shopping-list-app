@@ -31,6 +31,9 @@ type UiStore = {
   dialogState: DialogState;
   openDialog: <T extends DialogType>(type: T, props: DialogPayload[T]) => void;
   closeDialog: () => void;
+
+  isPageTransitioning: boolean;
+  setPageTransitioning: (isLoading: boolean) => void;
 };
 
 export const useUiStore = create<UiStore>((set) => ({
@@ -42,4 +45,7 @@ export const useUiStore = create<UiStore>((set) => ({
     set({ dialogState: { type, props } as DialogState });
   },
   closeDialog: () => set({ dialogState: { type: null, props: {} } }),
+
+  isPageTransitioning: false,
+  setPageTransitioning: (isLoading) => set({ isPageTransitioning: isLoading }),
 }));

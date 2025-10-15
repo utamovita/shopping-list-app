@@ -10,11 +10,11 @@ import {
 import { Avatar, AvatarFallback } from "@/shared/ui/avatar";
 import type { GroupWithDetails } from "@repo/types";
 import { Users, List } from "lucide-react";
-import Link from "next/link";
 import { APP_PATHS } from "@repo/config";
 import { useTranslation } from "react-i18next";
 import { GroupCardActions } from "./group-card-actions.component";
 import { GroupMember } from "@repo/types";
+import { LoadingLink } from "@/shared/components/loading-link.component";
 
 type GroupCardProps = {
   group: GroupWithDetails;
@@ -25,7 +25,7 @@ export function GroupCard({ group }: GroupCardProps) {
 
   return (
     <Card className="flex flex-col justify-between">
-      <Link
+      <LoadingLink
         href={APP_PATHS.dashboardGroup(group.id)}
         className="block flex-grow"
       >
@@ -49,21 +49,22 @@ export function GroupCard({ group }: GroupCardProps) {
             </div>
           </div>
         </CardContent>
-      </Link>
-      <CardFooter>
-        <div className="flex -space-x-2 overflow-hidden">
-          {group.members.map(({ user }: GroupMember) => (
-            <Avatar
-              key={user.id}
-              className="h-8 w-8 border-2 border-background"
-            >
-              <AvatarFallback>
-                {user.name?.charAt(0).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          ))}
-        </div>
-      </CardFooter>
+
+        <CardFooter>
+          <div className="flex -space-x-2 overflow-hidden">
+            {group.members.map(({ user }: GroupMember) => (
+              <Avatar
+                key={user.id}
+                className="h-8 w-8 border-2 border-background"
+              >
+                <AvatarFallback>
+                  {user.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            ))}
+          </div>
+        </CardFooter>
+      </LoadingLink>
     </Card>
   );
 }

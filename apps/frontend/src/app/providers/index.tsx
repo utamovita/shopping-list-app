@@ -6,9 +6,13 @@ import { useState } from "react";
 import { Toaster } from "@/shared/ui/sonner";
 import { ThemeProvider } from "@/app/providers/theme-provider";
 import { DialogManager } from "@/widgets/dialog-manager";
+import { useUiStore } from "@/shared/store/ui.store";
+import { SpinnerOverlay } from "@/shared/ui/spinner";
+import { PageTransitionManager } from "@/app/providers/page-transition-manager";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
+  const isPageTransitioning = useUiStore((state) => state.isPageTransitioning);
 
   return (
     <ThemeProvider
@@ -18,6 +22,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       disableTransitionOnChange
     >
       <QueryClientProvider client={queryClient}>
+        <PageTransitionManager />
+        {isPageTransitioning && (
+          <SpinnerOverlay variant="page" spinnerSize="lg" />
+        )}
         {children}
         <Toaster richColors />
         <DialogManager />
