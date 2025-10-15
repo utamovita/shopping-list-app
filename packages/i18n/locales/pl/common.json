@@ -58,7 +58,8 @@
     "mainTitle": "Lista zakupów",
     "addItemPlaceholder": "Dodaj nowy przedmiot...",
     "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!",
-    "removeItem": "Usuń {{itemName}}"
+    "removeItem": "Usuń {{itemName}}",
+    "dragHandleLabel": "Przeciągnij, aby zmienić kolejność elementu '{{itemName}}'"
   },
   "invitation": {
     "mainTitle": "Zaproszenia",

@@ -16,9 +16,10 @@ async function bootstrap() {
     origin: frontendUrl,
     credentials: true,
   });
-  app.enableCors();
+
   app.useGlobalPipes(new ZodValidationPipe());
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.enableShutdownHooks();
 
   const config = new DocumentBuilder()
     .setTitle('Shopping List API')

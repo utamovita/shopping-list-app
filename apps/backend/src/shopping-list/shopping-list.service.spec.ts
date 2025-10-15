@@ -20,6 +20,7 @@ describe('ShoppingListService', () => {
       create: jest.fn(),
       findMany: jest.fn(),
       delete: jest.fn(),
+      aggregate: jest.fn(),
     },
   };
 
@@ -67,6 +68,9 @@ describe('ShoppingListService', () => {
       } as ShoppingListItem;
 
       mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
+      mockPrismaService.shoppingListItem.aggregate.mockResolvedValue({
+        _max: { order: null },
+      });
       mockPrismaService.shoppingListItem.create.mockResolvedValue(expectedItem);
 
       const result = await service.addItem(groupId, dto, userId);
@@ -76,6 +80,7 @@ describe('ShoppingListService', () => {
           name: dto.name,
           groupId,
           addedBy: userId,
+          order: 0,
         },
       });
       expect(eventEmitter.emit).toHaveBeenCalledWith(
@@ -113,6 +118,7 @@ describe('ShoppingListService', () => {
 
       expect(prisma.shoppingListItem.findMany).toHaveBeenCalledWith({
         where: { groupId },
+        orderBy: { order: 'asc' },
       });
       expect(result).toEqual(expectedItems);
     });

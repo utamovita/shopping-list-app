@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   createShoppingListItemSchema,
+  reorderShoppingListSchema,
   shoppingListItemParamsSchema,
   updateShoppingListItemBodySchema,
 } from '@repo/schemas';
@@ -28,4 +29,8 @@ export class UpdateShoppingListItemDto extends createZodDto(
 
 export class ShoppingListItemParamsDto extends createZodDto(
   shoppingListItemParamsSchema,
+) {}
+
+export class ReorderShoppingListDto extends createZodDto(
+  reorderShoppingListSchema,
 ) {}

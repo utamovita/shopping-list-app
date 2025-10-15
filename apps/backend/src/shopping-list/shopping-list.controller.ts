@@ -24,6 +24,7 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 import {
   CreateShoppingListItemDto,
+  ReorderShoppingListDto,
   ShoppingListItemParamsDto,
   UpdateShoppingListItemDto,
 } from './dto/shopping-list-item.dto';
@@ -54,6 +55,22 @@ export class ShoppingListController {
       req.user.id,
     );
     return { success: true, data: items };
+  }
+
+  @Patch('reorder')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reorder shopping list items' })
+  async reorderItems(
+    @Param('groupId') groupId: string,
+    @Request() req: { user: UserProfile },
+    @Body() reorderDto: ReorderShoppingListDto,
+  ): Promise<SuccessResponse<{ success: boolean }>> {
+    const result = await this.shoppingListService.reorderItems(
+      groupId,
+      req.user.id,
+      reorderDto.items,
+    );
+    return { success: true, data: result };
   }
 
   @Post()

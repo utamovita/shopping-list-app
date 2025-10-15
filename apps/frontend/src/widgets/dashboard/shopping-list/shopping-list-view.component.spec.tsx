@@ -30,6 +30,7 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
       groupId: "group-1",
       addedBy: "user-1",
       createdAt: new Date(),
+      order: 0,
     },
     {
       id: "2",
@@ -38,6 +39,7 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
       groupId: "group-1",
       addedBy: "user-1",
       createdAt: new Date(),
+      order: 1,
     },
   ],
 };

@@ -22,6 +22,9 @@ export class ShoppingListService {
       where: {
         groupId,
       },
+      orderBy: {
+        order: 'asc',
+      },
     });
   }
 
@@ -32,16 +35,50 @@ export class ShoppingListService {
   ) {
     await this.checkIfUserIsMember(groupId, userId);
 
+    const maxOrderResult = await this.prisma.shoppingListItem.aggregate({
+      _max: {
+        order: true,
+      },
+      where: {
+        groupId,
+      },
+    });
+
+    const lastOrder = maxOrderResult._max.order;
+    const newOrder = (lastOrder ?? -1) + 1;
+
     const newItem = await this.prisma.shoppingListItem.create({
       data: {
         name: createShoppingListItemDto.name,
         groupId,
         addedBy: userId,
+        order: newOrder,
       },
     });
 
     this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return newItem;
+  }
+
+  async reorderItems(
+    groupId: string,
+    userId: string,
+    orderedItems: { id: string; order: number }[],
+  ) {
+    await this.checkIfUserIsMember(groupId, userId);
+
+    const updates = orderedItems.map((item) =>
+      this.prisma.shoppingListItem.update({
+        where: { id: item.id, groupId: groupId },
+        data: { order: item.order },
+      }),
+    );
+
+    await this.prisma.$transaction(updates);
+
+    this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
+
+    return { success: true };
   }
 
   async removeItem(itemId: string, groupId: string, userId: string) {

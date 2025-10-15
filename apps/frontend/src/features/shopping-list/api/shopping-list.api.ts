@@ -37,4 +37,17 @@ export const shoppingListApi = {
     );
     return response.data;
   },
+  reorderItems: async ({
+    groupId,
+    items,
+  }: {
+    groupId: string;
+    items: { id: string; order: number }[];
+  }) => {
+    const response = await apiClient.patch<{ success: boolean }>(
+      `${API_PATHS.shoppingList(groupId)}/reorder`,
+      { items },
+    );
+    return response.data;
+  },
 };

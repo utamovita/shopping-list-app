@@ -42,3 +42,4 @@ yarn-error.log*
 
 # Prisma
 packages/database/prisma/generated/*
+packages/database/.env

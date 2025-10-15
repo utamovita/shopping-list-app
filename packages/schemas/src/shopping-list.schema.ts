@@ -27,3 +27,12 @@ export type UpdateShoppingListItemDto = z.infer<
 export type ShoppingListItemParams = z.infer<
   typeof shoppingListItemParamsSchema
 >;
+
+export const reorderShoppingListSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      order: z.number(),
+    }),
+  ),
+});

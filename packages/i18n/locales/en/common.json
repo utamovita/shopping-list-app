@@ -58,7 +58,8 @@
     "mainTitle": "Shopping list",
     "addItemPlaceholder": "Add new item...",
     "noItems": "This list is still empty. Add the first product!",
-    "removeItem": "Remove item"
+    "removeItem": "Remove item",
+    "dragHandleLabel": "Drag to reorder item '{{itemName}}'"
   },
   "invitation": {
     "mainTitle": "Invitations",
