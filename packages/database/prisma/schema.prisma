@@ -58,7 +58,7 @@ model ShoppingListItem {
   completed Boolean  @default(false)
   addedBy   String?
   createdAt DateTime @default(now())
-  order     Int
+  order     Int      @default(0)
 
   groupId String
   group   Group  @relation(fields: [groupId], references: [id], onDelete: Cascade)
