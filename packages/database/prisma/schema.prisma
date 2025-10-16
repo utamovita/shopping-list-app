@@ -55,6 +55,7 @@ model GroupMembership {
 model ShoppingListItem {
   id        String   @id @default(cuid())
   name      String
+  quantity  Int      @default(1)
   completed Boolean  @default(false)
   addedBy   String?
   createdAt DateTime @default(now())

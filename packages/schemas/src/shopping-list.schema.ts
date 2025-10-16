@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const createShoppingListItemSchema = z.object({
   name: z.string().min(1, { message: "validation:required" }),
+  quantity: z.number().int().positive().optional().default(1),
 });
 
 export const shoppingListItemParamsSchema = z.object({

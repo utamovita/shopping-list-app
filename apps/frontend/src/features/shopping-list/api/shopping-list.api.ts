@@ -2,6 +2,7 @@ import { apiClient } from "@/shared/lib/api/api-client";
 import { API_PATHS } from "@repo/config";
 import type { ShoppingListItem } from "@repo/database";
 import {
+  CreateShoppingListItemDto,
   ShoppingListItemParams,
   UpdateShoppingListItemDto,
 } from "@repo/schemas";
@@ -13,10 +14,16 @@ export const shoppingListApi = {
     );
     return response.data;
   },
-  addItem: async ({ groupId, name }: { groupId: string; name: string }) => {
+  addItem: async ({
+    groupId,
+    name,
+    quantity,
+  }: {
+    groupId: string;
+  } & CreateShoppingListItemDto) => {
     const response = await apiClient.post<ShoppingListItem>(
       API_PATHS.shoppingList(groupId),
-      { name },
+      { name, quantity },
     );
     return response.data;
   },

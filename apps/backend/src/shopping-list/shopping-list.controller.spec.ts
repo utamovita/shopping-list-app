@@ -59,7 +59,7 @@ describe('ShoppingListController', () => {
 
   describe('addItem', () => {
     it('should call service.addItem with correct params and return the new item', async () => {
-      const dto = { name: 'Bread' };
+      const dto = { name: 'Bread', quantity: 1 };
       const newItem = { id: 'item-2', name: 'Bread' };
       mockShoppingListService.addItem.mockResolvedValue(newItem);
 

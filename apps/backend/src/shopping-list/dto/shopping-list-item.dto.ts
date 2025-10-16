@@ -15,6 +15,11 @@ export class CreateShoppingListItemDto extends createZodDto(
     description: 'The name of the shopping list item',
   })
   name!: string;
+  @ApiProperty({
+    example: 'Milk',
+    description: 'The name of the shopping list item',
+  })
+  quantity!: number;
 }
 
 export class UpdateShoppingListItemDto extends createZodDto(

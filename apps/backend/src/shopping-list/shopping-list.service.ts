@@ -50,6 +50,7 @@ export class ShoppingListService {
     const newItem = await this.prisma.shoppingListItem.create({
       data: {
         name: createShoppingListItemDto.name,
+        quantity: createShoppingListItemDto.quantity,
         groupId,
         addedBy: userId,
         order: newOrder,

@@ -40,6 +40,11 @@ export const ShoppingListItemComponent = React.forwardRef<
         )}
       >
         {item.name}
+        {item.quantity > 1 && (
+          <span className="ml-2 text-muted-foreground font-bold">
+            (x{item.quantity})
+          </span>
+        )}
       </label>
       <Button
         variant="ghost"

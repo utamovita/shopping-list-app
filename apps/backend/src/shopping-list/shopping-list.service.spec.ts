@@ -60,10 +60,11 @@ describe('ShoppingListService', () => {
 
   describe('addItem', () => {
     it('should add an item if user is a member (happy path)', async () => {
-      const dto = { name: 'Milk' };
+      const dto = { name: 'Milk', quantity: 1 };
       const expectedItem = {
         id: 'item-1',
         name: 'Milk',
+        quantity: 1,
         groupId,
       } as ShoppingListItem;
 
@@ -78,6 +79,7 @@ describe('ShoppingListService', () => {
       expect(prisma.shoppingListItem.create).toHaveBeenCalledWith({
         data: {
           name: dto.name,
+          quantity: dto.quantity,
           groupId,
           addedBy: userId,
           order: 0,
@@ -91,7 +93,7 @@ describe('ShoppingListService', () => {
     });
 
     it('should throw ForbiddenException if user is not a member (sad path)', async () => {
-      const dto = { name: 'Milk' };
+      const dto = { name: 'Milk', quantity: 1 };
 
       mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
 

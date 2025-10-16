@@ -26,6 +26,7 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
     {
       id: "1",
       name: "Milk",
+      quantity: 1,
       completed: false,
       groupId: "group-1",
       addedBy: "user-1",
@@ -35,6 +36,7 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
     {
       id: "2",
       name: "Bread",
+      quantity: 1,
       completed: true,
       groupId: "group-1",
       addedBy: "user-1",

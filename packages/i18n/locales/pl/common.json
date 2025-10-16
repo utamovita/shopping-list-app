@@ -59,7 +59,8 @@
     "addItemPlaceholder": "Dodaj nowy przedmiot...",
     "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!",
     "removeItem": "Usuń {{itemName}}",
-    "dragHandleLabel": "Przeciągnij, aby zmienić kolejność elementu '{{itemName}}'"
+    "dragHandleLabel": "Przeciągnij, aby zmienić kolejność elementu '{{itemName}}'",
+    "selectQuantity": "Wybierz ilość"
   },
   "invitation": {
     "mainTitle": "Zaproszenia",

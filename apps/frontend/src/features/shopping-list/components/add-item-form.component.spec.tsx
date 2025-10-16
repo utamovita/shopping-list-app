@@ -56,7 +56,7 @@ describe("AddItemForm", () => {
 
     await waitFor(() => {
       expect(mockMutate).toHaveBeenCalledWith(
-        "New Shopping Item",
+        { name: "New Shopping Item", quantity: 1 },
         expect.anything(),
       );
     });
