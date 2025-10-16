@@ -21,7 +21,7 @@
   },
   "success": {
     "login": "Logged in successfully.",
-    "register": "Registered successfully. You can now log in.",
+    "register": "Registered successfully.",
     "groupCreated": "Group created successfully."
   },
   "error": {
