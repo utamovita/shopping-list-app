@@ -58,7 +58,7 @@ describe('ShoppingListController', () => {
   });
 
   describe('addItem', () => {
-    it('should call service.addItem with correct params and return the new item', async () => {
+    it('should call service.add-item with correct params and return the new item', async () => {
       const dto = { name: 'Bread', quantity: 1 };
       const newItem = { id: 'item-2', name: 'Bread' };
       mockShoppingListService.addItem.mockResolvedValue(newItem);
@@ -71,7 +71,7 @@ describe('ShoppingListController', () => {
   });
 
   describe('removeItem', () => {
-    it('should call service.removeItem with correct params', async () => {
+    it('should call service.remove-item with correct params', async () => {
       mockShoppingListService.removeItem.mockResolvedValue(undefined);
 
       await controller.removeItem({ groupId, itemId }, mockRequest);

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { shoppingListApi } from "../api/shopping-list.api";
+import { shoppingListApi } from "../../api/shopping-list.api";
 import { handleError } from "@/shared/lib/error/handle-error";
 import type { ShoppingListItem } from "@repo/database";
 

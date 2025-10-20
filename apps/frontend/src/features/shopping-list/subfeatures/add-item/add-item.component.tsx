@@ -1,6 +1,6 @@
 "use client";
 
-import { useAddItem } from "../hooks/use-add-item.hook";
+import { useAddItem } from "./use-add-item.hook";
 import { Button } from "@/shared/ui/button";
 import { Input } from "@/shared/ui/input";
 import { useForm, Controller } from "react-hook-form";
@@ -16,7 +16,7 @@ import {
 import { CreateShoppingListItemDto } from "@repo/schemas";
 import { X } from "lucide-react";
 
-export function AddItemForm({ groupId }: { groupId: string }) {
+function AddItem({ groupId }: { groupId: string }) {
   const { mutate, isPending } = useAddItem(groupId);
   const {
     register,
@@ -141,3 +141,5 @@ export function AddItemForm({ groupId }: { groupId: string }) {
     </form>
   );
 }
+
+export { AddItem };

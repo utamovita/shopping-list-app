@@ -1,12 +1,12 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useUpdateItem } from "./use-update-item.hook";
-import { shoppingListApi } from "../api/shopping-list.api";
+import { shoppingListApi } from "../../api/shopping-list.api";
 import type { ReactNode } from "react";
 import type { SuccessResponse } from "@repo/types";
 import type { ShoppingListItem } from "@repo/database";
 
-jest.mock("../api/shopping-list.api");
+jest.mock("../../api/shopping-list.api");
 
 const mockShoppingListApi = shoppingListApi as jest.Mocked<
   typeof shoppingListApi

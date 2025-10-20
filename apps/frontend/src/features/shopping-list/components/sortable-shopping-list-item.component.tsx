@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 type SortableShoppingListItemProps = {
   item: ShoppingListItem;
   onToggle: (id: string, completed: boolean) => void;
-  onRemove: (id: string) => void;
 };
 
 export function SortableShoppingListItem({
@@ -43,7 +42,7 @@ export function SortableShoppingListItem({
         <div
           {...attributes}
           {...listeners}
-          className="cursor-grab touch-none"
+          className="cursor-grab touch-none p-2"
           aria-label={t("shoppingList.dragHandleLabel", {
             itemName: item.name,
           })}

@@ -2,22 +2,19 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { handleError } from "@/shared/lib/error/handle-error";
-import { shoppingListApi } from "../api/shopping-list.api";
-import type { SuccessResponse } from "@repo/types";
-import type { UpdateShoppingListItemDto } from "@repo/schemas";
-import type { ShoppingListItem } from "@repo/database";
+import { shoppingListApi } from "../../api/shopping-list.api";
+import { SuccessResponse } from "@repo/types";
+import { ShoppingListItem } from "@repo/database";
 
-type UpdateItemVariables = Omit<UpdateShoppingListItemDto, "groupId">;
-
-export function useUpdateItem(groupId: string) {
+export function useRemoveItem(groupId: string) {
   const queryClient = useQueryClient();
   const queryKey = ["shopping-list", groupId];
 
   return useMutation({
-    mutationFn: (variables: UpdateItemVariables) =>
-      shoppingListApi.updateItem({ ...variables, groupId }),
+    mutationFn: (itemId: string) =>
+      shoppingListApi.removeItem({ groupId, itemId }),
 
-    onMutate: async (variables: UpdateItemVariables) => {
+    onMutate: async (itemIdToRemove: string) => {
       await queryClient.cancelQueries({ queryKey });
 
       const previousItems =
@@ -27,10 +24,8 @@ export function useUpdateItem(groupId: string) {
         return;
       }
 
-      const newItemsData = previousItems.data.map((item) =>
-        item.id === variables.itemId
-          ? ({ ...item, completed: variables.completed } as ShoppingListItem)
-          : item,
+      const newItemsData = previousItems.data.filter(
+        (item) => item.id !== itemIdToRemove,
       );
 
       queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey, {
@@ -40,12 +35,14 @@ export function useUpdateItem(groupId: string) {
 
       return { previousItems };
     },
+
     onError: (error, _variables, context) => {
       if (context?.previousItems) {
         queryClient.setQueryData(queryKey, context.previousItems);
       }
       handleError({ error, showToast: true });
     },
+
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey });
     },

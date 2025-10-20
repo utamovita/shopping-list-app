@@ -1,8 +1,8 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { ShoppingListView } from "./shopping-list-view.component";
 import { useShoppingListItems } from "@/features/shopping-list/hooks/use-shopping-list-items.hook";
-import { useRemoveItem } from "@/features/shopping-list/hooks/use-remove-item.hook";
-import { useUpdateItem } from "@/features/shopping-list/hooks/use-update-item.hook";
+import { useRemoveItem } from "@/features/shopping-list/subfeatures/remove-item/use-remove-item.hook";
+import { useUpdateItem } from "@/features/shopping-list/subfeatures/edit-item/use-update-item.hook";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import { SuccessResponse } from "@repo/types";
@@ -11,8 +11,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 
 jest.mock("@/features/shopping-list/hooks/use-shopping-list-items.hook");
-jest.mock("@/features/shopping-list/hooks/use-remove-item.hook");
-jest.mock("@/features/shopping-list/hooks/use-update-item.hook");
+jest.mock(
+  "@/features/shopping-list/subfeatures/remove-item/use-remove-item.hook",
+);
+jest.mock(
+  "@/features/shopping-list/subfeatures/edit-item/use-update-item.hook",
+);
 jest.mock("@/features/shopping-list/hooks/use-group-socket.hook");
 
 const mockUseShoppingListItems = useShoppingListItems as jest.Mock;
@@ -119,12 +123,12 @@ describe("ShoppingListView", () => {
     });
   });
 
-  it("should call removeItem when the delete button is clicked", async () => {
+  it("should call remove-item when the delete button is clicked", async () => {
     mockUseShoppingListItems.mockReturnValue({ data: mockItems });
     render(<ShoppingListView groupId="group-1" />, { wrapper: TestWrapper });
 
     const deleteButton = screen.getByRole("button", {
-      name: "shoppingList.removeItem_Milk",
+      name: "shoppingList.remove-item_Milk",
     });
     await userEvent.click(deleteButton);
 

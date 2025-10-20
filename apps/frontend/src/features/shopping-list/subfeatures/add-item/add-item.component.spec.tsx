@@ -1,12 +1,12 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
-import { AddItemForm } from "./add-item-form.component";
-import { useAddItem } from "../hooks/use-add-item.hook";
+import { AddItem } from "./add-item.component";
+import { useAddItem } from "./use-add-item.hook";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 
-jest.mock("../hooks/use-add-item.hook");
+jest.mock("./use-add-item.hook");
 
 const mockUseAddItem = useAddItem as jest.Mock;
 
@@ -36,7 +36,7 @@ describe("AddItemForm", () => {
   });
 
   it("should render the form elements correctly", () => {
-    render(<AddItemForm groupId={groupId} />, { wrapper: TestWrapper });
+    render(<AddItem groupId={groupId} />, { wrapper: TestWrapper });
     expect(
       screen.getByPlaceholderText("shoppingList.addItemPlaceholder"),
     ).toBeInTheDocument();
@@ -44,7 +44,7 @@ describe("AddItemForm", () => {
   });
 
   it("should call mutate with correct arguments when form is submitted", async () => {
-    render(<AddItemForm groupId={groupId} />, { wrapper: TestWrapper });
+    render(<AddItem groupId={groupId} />, { wrapper: TestWrapper });
 
     const input = screen.getByPlaceholderText(
       "shoppingList.addItemPlaceholder",
@@ -67,7 +67,7 @@ describe("AddItemForm", () => {
       mutate: mockMutate,
       isPending: true,
     });
-    render(<AddItemForm groupId={groupId} />, { wrapper: TestWrapper });
+    render(<AddItem groupId={groupId} />, { wrapper: TestWrapper });
 
     expect(
       screen.getByPlaceholderText("shoppingList.addItemPlaceholder"),
@@ -76,7 +76,7 @@ describe("AddItemForm", () => {
   });
 
   it("should have no accessibility violations", async () => {
-    const { container } = render(<AddItemForm groupId={groupId} />, {
+    const { container } = render(<AddItem groupId={groupId} />, {
       wrapper: TestWrapper,
     });
     const results = await axe(container);
