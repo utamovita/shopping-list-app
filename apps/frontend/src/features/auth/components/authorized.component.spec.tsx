@@ -28,7 +28,7 @@ describe("Authorized Component", () => {
   describe("when user is NOT authenticated", () => {
     beforeEach(() => {
       mockUseAuthStore.mockImplementation((selector) =>
-        selector({ token: null }),
+        selector({ accessToken: null }),
       );
     });
 
@@ -56,7 +56,7 @@ describe("Authorized Component", () => {
   describe("when user IS authenticated", () => {
     beforeEach(() => {
       mockUseAuthStore.mockImplementation((selector) =>
-        selector({ token: "fake-jwt-token" }),
+        selector({ accessToken: "fake-jwt-token" }),
       );
     });
 

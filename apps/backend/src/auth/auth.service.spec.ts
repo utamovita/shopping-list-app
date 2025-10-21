@@ -1,4 +1,5 @@
 import { ConflictException, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as bcrypt from 'bcrypt';
@@ -18,11 +19,27 @@ describe('AuthService', () => {
     user: {
       findUnique: jest.fn(),
       create: jest.fn(),
+      update: jest.fn(),
     },
   };
 
   const mockJwtService = {
     signAsync: jest.fn(),
+  };
+
+  const mockConfigService = {
+    getOrThrow: jest.fn((key: string) => {
+      if (key === 'JWT_SECRET' || key === 'JWT_REFRESH_SECRET') {
+        return 'test-secret';
+      }
+      if (key === 'JWT_ACCESS_EXPIRES_IN') {
+        return '15m';
+      }
+      if (key === 'JWT_REFRESH_EXPIRES_IN') {
+        return '30d';
+      }
+      return null;
+    }),
   };
 
   beforeEach(async () => {
@@ -31,6 +48,7 @@ describe('AuthService', () => {
         AuthService,
         { provide: PrismaService, useValue: mockPrismaService },
         { provide: JwtService, useValue: mockJwtService },
+        { provide: ConfigService, useValue: mockConfigService },
       ],
     }).compile();
 
@@ -46,7 +64,7 @@ describe('AuthService', () => {
   });
 
   describe('register', () => {
-    it('should successfully create a user and return an access token', async () => {
+    it('should successfully create a user and return tokens', async () => {
       const dto = {
         email: 'test@example.com',
         username: 'Test User',
@@ -62,7 +80,10 @@ describe('AuthService', () => {
       mockPrismaService.user.findUnique.mockResolvedValue(null);
       (bcrypt.hash as jest.Mock).mockResolvedValue(hashedPassword);
       mockPrismaService.user.create.mockResolvedValue(createdUser);
-      mockJwtService.signAsync.mockResolvedValue('test_token');
+
+      mockJwtService.signAsync
+        .mockResolvedValueOnce('test_access_token')
+        .mockResolvedValueOnce('test_refresh_token');
 
       const result = await service.register(dto);
 
@@ -73,7 +94,11 @@ describe('AuthService', () => {
           passwordHash: hashedPassword,
         },
       });
-      expect(result).toEqual({ access_token: 'test_token' });
+
+      expect(result).toEqual({
+        accessToken: 'test_access_token',
+        refreshToken: 'test_refresh_token',
+      });
     });
 
     it('should throw a ConflictException if email already exists', async () => {
@@ -89,13 +114,16 @@ describe('AuthService', () => {
   });
 
   describe('login', () => {
-    it('should return an access token for valid credentials', async () => {
+    it('should return tokens for valid credentials', async () => {
       const dto = { email: 'test@example.com', password: 'password123' };
       const user = createMockUser({ passwordHash: 'hashedPassword' });
 
       mockPrismaService.user.findUnique.mockResolvedValue(user);
       (bcrypt.compare as jest.Mock).mockResolvedValue(true);
-      mockJwtService.signAsync.mockResolvedValue('test_token');
+
+      mockJwtService.signAsync
+        .mockResolvedValueOnce('test_access_token')
+        .mockResolvedValueOnce('test_refresh_token');
 
       const result = await service.login(dto);
 
@@ -103,7 +131,10 @@ describe('AuthService', () => {
         dto.password,
         user.passwordHash,
       );
-      expect(result).toEqual({ access_token: 'test_token' });
+      expect(result).toEqual({
+        accessToken: 'test_access_token',
+        refreshToken: 'test_refresh_token',
+      });
     });
 
     it('should throw an UnauthorizedException for an incorrect password', async () => {

@@ -11,6 +11,8 @@ export const API_PATHS = {
     login: "/auth/login",
     register: "/auth/register",
     profile: "/auth/profile",
+    refresh: "/auth/refresh",
+    logout: "/auth/logout",
   },
   groups: "/groups",
   shoppingList: (groupId: string) => `/groups/${groupId}/items`,

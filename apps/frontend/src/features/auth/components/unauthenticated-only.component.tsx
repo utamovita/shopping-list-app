@@ -13,7 +13,7 @@ export function UnauthenticatedOnly({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const token = useAuthStore((state) => state.token);
+  const token = useAuthStore((state) => state.accessToken);
   const isMounted = useIsMounted();
 
   useEffect(() => {

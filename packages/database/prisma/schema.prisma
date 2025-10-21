@@ -12,13 +12,14 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String?
-  passwordHash String?
-  provider     String   @default("credentials")
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String   @id @default(cuid())
+  email            String   @unique
+  name             String?
+  passwordHash     String?
+  refreshTokenHash String?
+  provider         String   @default("credentials")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   memberships     GroupMembership[]
   notifications   Notification[]

@@ -4,7 +4,7 @@ import { useAuthStore } from "@/shared/store/auth.store";
 import { invitationsApi } from "@/features/groups/api/invitations.api";
 
 export function useReceivedInvitations() {
-  const token = useAuthStore((state) => state.token);
+  const token = useAuthStore((state) => state.accessToken);
   return useQuery({
     queryKey: ["invitations", "received", token],
     queryFn: invitationsApi.getReceived,

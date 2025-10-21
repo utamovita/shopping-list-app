@@ -5,7 +5,7 @@ import { useAuthStore } from "@/shared/store/auth.store";
 import { shoppingListApi } from "../api/shopping-list.api";
 
 export function useShoppingListItems(groupId: string) {
-  const token = useAuthStore((state) => state.token);
+  const token = useAuthStore((state) => state.accessToken);
 
   return useQuery({
     queryKey: ["shopping-list", groupId],

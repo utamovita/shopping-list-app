@@ -15,7 +15,7 @@ type AuthType = "login" | "register";
 type FormSchema = LoginDto | RegisterDto;
 
 export function useAuthMutation(type: AuthType) {
-  const setToken = useAuthStore((state) => state.setToken);
+  const setTokens = useAuthStore((state) => state.setTokens);
   const router = useRouter();
   const { t } = useTranslation();
 
@@ -26,8 +26,10 @@ export function useAuthMutation(type: AuthType) {
         : authService.register(values as RegisterDto);
     },
     onSuccess: (response) => {
-      if (response.data.access_token) {
-        setToken(response.data.access_token);
+      const { accessToken, refreshToken } = response.data;
+
+      if (accessToken && refreshToken) {
+        setTokens({ accessToken, refreshToken });
         if (response.message) {
           toast.success(t(response.message));
         }

@@ -14,13 +14,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import type { AuthResponseType } from '@repo/schemas';
 import type { SuccessResponse, UserProfile } from '@repo/types';
 
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './guard/jwt-auth.guard';
+import { JwtRefreshGuard } from './guard/jwt-refresh.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -37,11 +37,9 @@ export class AuthController {
     status: 409,
     description: 'Conflict. User with this email already exists.',
   })
-  async register(
-    @Body() registerUserDto: RegisterUserDto,
-  ): Promise<SuccessResponse<AuthResponseType>> {
-    const user = await this.authService.register(registerUserDto);
-    return { success: true, data: user, message: 'success.register' };
+  async register(@Body() registerUserDto: RegisterUserDto) {
+    const tokens = await this.authService.register(registerUserDto);
+    return { success: true, data: tokens, message: 'success.register' };
   }
 
   @HttpCode(HttpStatus.OK)
@@ -52,11 +50,28 @@ export class AuthController {
     status: 401,
     description: 'Unauthorized. Invalid credentials.',
   })
-  async login(
-    @Body() loginUserDto: LoginUserDto,
-  ): Promise<SuccessResponse<AuthResponseType>> {
-    const token = await this.authService.login(loginUserDto);
-    return { success: true, data: token, message: 'success.login' };
+  async login(@Body() loginUserDto: LoginUserDto) {
+    const tokens = await this.authService.login(loginUserDto);
+    return { success: true, data: tokens, message: 'success.login' };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('logout')
+  @HttpCode(HttpStatus.OK)
+  async logout(@Request() req: { user: { sub: string } }) {
+    await this.authService.logout(req.user.sub);
+    return { success: true, data: null };
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  async refreshToken(
+    @Request() req: { user: { sub: string; refreshToken: string } },
+  ) {
+    const { sub, refreshToken } = req.user;
+    const tokens = await this.authService.refreshToken(sub, refreshToken);
+    return { success: true, data: tokens };
   }
 
   @UseGuards(JwtAuthGuard)

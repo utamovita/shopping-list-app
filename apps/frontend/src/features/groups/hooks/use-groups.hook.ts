@@ -5,7 +5,7 @@ import { groupsApi } from "../api/groups.api";
 import { useAuthStore } from "@/shared/store/auth.store";
 
 export function useGroups() {
-  const token = useAuthStore((state) => state.token);
+  const token = useAuthStore((state) => state.accessToken);
 
   return useQuery({
     queryKey: ["groups", token],
