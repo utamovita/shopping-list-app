@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { shoppingListApi } from "../../api/shopping-list.api";
 import { handleError } from "@/shared/lib/error/handle-error";
 import type { ShoppingListItem } from "@repo/database";
+import type { SuccessResponse } from "@repo/types";
 
 type ReorderVariables = {
   optimisticItems: ShoppingListItem[];
@@ -19,17 +20,25 @@ export function useReorderItems(groupId: string) {
     onMutate: async ({ optimisticItems }: ReorderVariables) => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousItems =
-        queryClient.getQueryData<ShoppingListItem[]>(queryKey);
+      const previousItemsResponse =
+        queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
 
-      queryClient.setQueryData<ShoppingListItem[]>(queryKey, optimisticItems);
+      if (previousItemsResponse) {
+        queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
+          queryKey,
+          {
+            ...previousItemsResponse,
+            data: optimisticItems,
+          },
+        );
+      }
 
-      return { previousItems };
+      return { previousItemsResponse };
     },
 
     onError: (_err, _variables, context) => {
-      if (context?.previousItems) {
-        queryClient.setQueryData(queryKey, context.previousItems);
+      if (context?.previousItemsResponse) {
+        queryClient.setQueryData(queryKey, context.previousItemsResponse);
       }
       handleError({
         error: new Error("Failed to reorder items"),

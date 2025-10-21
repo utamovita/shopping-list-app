@@ -3,7 +3,7 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { closestCenter, DndContext } from "@dnd-kit/core";
-import { useDnd } from "@/features/shopping-list/subfeatures/reorder-item/use-dnd.hook";
+import { useShoppingList } from "@/features/shopping-list/hooks/use-shopping-list.hook";
 
 type DndWrapperProps = {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ type DndWrapperProps = {
 };
 
 function DndWrapper({ children, groupId }: DndWrapperProps) {
-  const { sensors, items, handleDragEnd } = useDnd(groupId);
+  const { sensors, items, handleDragEnd } = useShoppingList(groupId);
 
   return (
     <DndContext

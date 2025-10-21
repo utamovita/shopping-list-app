@@ -1,18 +1,21 @@
-import { useDnd } from "@/features/shopping-list/subfeatures/reorder-item/use-dnd.hook";
 import { AlertFallback } from "@/shared/ui/alert";
 import { DndWrapper } from "@/features/shopping-list/subfeatures/reorder-item/dnd-wrapper.component";
-import { SortableShoppingListItem } from "@/features/shopping-list/components/sortable-shopping-list-item.component";
-import { useUpdateItem } from "@/features/shopping-list/subfeatures/edit-item/use-update-item.hook";
 import { useTranslation } from "react-i18next";
+import { useShoppingList } from "@/features/shopping-list/hooks/use-shopping-list.hook";
+import { ShoppingListItemComponent } from "./shopping-list-item.component";
+import { SpinnerOverlay } from "@/shared/ui/spinner";
 
-type ShoppingListViewProps = {
+type ShoppingListProps = {
   groupId: string;
 };
 
-function ShoppingList({ groupId }: ShoppingListViewProps) {
-  const { isError, items } = useDnd(groupId);
-  const { mutate: updateItem } = useUpdateItem(groupId);
+function ShoppingList({ groupId }: ShoppingListProps) {
+  const { isError, isLoading, items } = useShoppingList(groupId);
   const { t } = useTranslation("common");
+
+  if (isLoading) {
+    return <SpinnerOverlay variant="container" />;
+  }
 
   if (isError) {
     return <AlertFallback />;
@@ -24,13 +27,7 @@ function ShoppingList({ groupId }: ShoppingListViewProps) {
         <DndWrapper groupId={groupId}>
           <ul className="border border-b-0 rounded-md">
             {items.map((item) => (
-              <SortableShoppingListItem
-                key={item.id}
-                item={item}
-                onToggle={(itemId, completed) =>
-                  updateItem({ itemId, completed })
-                }
-              />
+              <ShoppingListItemComponent key={item.id} item={item} />
             ))}
           </ul>
         </DndWrapper>
