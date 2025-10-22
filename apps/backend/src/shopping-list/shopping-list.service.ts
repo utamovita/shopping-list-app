@@ -103,16 +103,25 @@ export class ShoppingListService {
   ) {
     await this.checkIfUserIsMember(groupId, userId);
 
+    const dataToUpdate = {
+      ...(updateDto.name !== undefined && { name: updateDto.name }),
+      ...(updateDto.quantity !== undefined && {
+        quantity: updateDto.quantity,
+      }),
+      ...(updateDto.completed !== undefined && {
+        completed: updateDto.completed,
+      }),
+    };
+
     const updatedItem = await this.prisma.shoppingListItem.update({
       where: { id: itemId, groupId: groupId },
-      data: {
-        completed: updateDto.completed,
-      },
+      data: dataToUpdate,
     });
 
     this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
     return updatedItem;
   }
+
   private async checkIfUserIsMember(groupId: string, userId: string) {
     const membership = await this.prisma.groupMembership.findUnique({
       where: {

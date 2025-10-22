@@ -7,6 +7,6 @@
     "eslint.config.mjs",
     "../../packages/types/src/**/*.ts",
     "../../packages/schemas/src/**/*.ts",
-    "../../packages/config/src/**/*.ts"
+    "../../packages/config/src/**/*.ts",
   ]
 }

@@ -36,11 +36,15 @@ export const shoppingListApi = {
   updateItem: async ({
     groupId,
     itemId,
-    completed,
-  }: UpdateShoppingListItemDto) => {
+    data,
+  }: {
+    groupId: string;
+    itemId: string;
+    data: Partial<Omit<UpdateShoppingListItemDto, "groupId" | "itemId">>;
+  }) => {
     const response = await apiClient.patch<ShoppingListItem>(
       `${API_PATHS.shoppingList(groupId)}/${itemId}`,
-      { completed },
+      data,
     );
     return response.data;
   },

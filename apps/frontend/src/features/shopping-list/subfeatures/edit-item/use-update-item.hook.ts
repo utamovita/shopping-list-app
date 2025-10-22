@@ -7,42 +7,44 @@ import type { SuccessResponse } from "@repo/types";
 import type { UpdateShoppingListItemDto } from "@repo/schemas";
 import type { ShoppingListItem } from "@repo/database";
 
-type UpdateItemVariables = Omit<UpdateShoppingListItemDto, "groupId">;
+type UpdateItemVariables = {
+  itemId: string;
+} & Partial<Omit<UpdateShoppingListItemDto, "groupId" | "itemId">>;
 
 export function useUpdateItem(groupId: string) {
   const queryClient = useQueryClient();
   const queryKey = ["shopping-list", groupId];
 
   return useMutation({
-    mutationFn: (variables: UpdateItemVariables) =>
-      shoppingListApi.updateItem({ ...variables, groupId }),
+    mutationFn: (variables: UpdateItemVariables) => {
+      const { itemId, ...data } = variables;
+      return shoppingListApi.updateItem({ groupId, itemId, data });
+    },
 
     onMutate: async (variables: UpdateItemVariables) => {
       await queryClient.cancelQueries({ queryKey });
 
-      const previousItems =
+      const previousItemsResponse =
         queryClient.getQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey);
 
-      if (!previousItems) {
-        return;
+      if (!previousItemsResponse) {
+        return { previousItemsResponse: null };
       }
 
-      const newItemsData = previousItems.data.map((item) =>
-        item.id === variables.itemId
-          ? ({ ...item, completed: variables.completed } as ShoppingListItem)
-          : item,
+      const newItemsData = previousItemsResponse.data.map((item) =>
+        item.id === variables.itemId ? { ...item, ...variables } : item,
       );
 
       queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(queryKey, {
-        ...previousItems,
+        ...previousItemsResponse,
         data: newItemsData,
       });
 
-      return { previousItems };
+      return { previousItemsResponse };
     },
     onError: (error, _variables, context) => {
-      if (context?.previousItems) {
-        queryClient.setQueryData(queryKey, context.previousItems);
+      if (context?.previousItemsResponse) {
+        queryClient.setQueryData(queryKey, context.previousItemsResponse);
       }
       handleError({ error, showToast: true });
     },

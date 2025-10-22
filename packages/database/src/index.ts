@@ -1,4 +1,4 @@
-import { PrismaClient } from "../prisma/generated/client";
+import { PrismaClient, Prisma } from "../prisma/generated/client";
 
 import type {
   User,
@@ -13,7 +13,7 @@ const prisma = new PrismaClient();
 
 export default prisma;
 
-export { PrismaClient };
+export { PrismaClient, Prisma };
 
 export type {
   User,

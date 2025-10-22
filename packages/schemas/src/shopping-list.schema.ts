@@ -11,7 +11,9 @@ export const shoppingListItemParamsSchema = z.object({
 });
 
 export const updateShoppingListItemBodySchema = z.object({
-  completed: z.boolean(),
+  name: z.string().min(1).optional(),
+  quantity: z.number().int().positive().optional(),
+  completed: z.boolean().optional(),
 });
 
 export const updateShoppingListItemSchema = shoppingListItemParamsSchema.extend(

@@ -21,10 +21,10 @@ const mockItems: SuccessResponse<ShoppingListItem[]> = {
       name: "Milk",
       quantity: 1,
       completed: false,
+      order: 0,
       groupId: "group-1",
       addedBy: "user-1",
       createdAt: new Date(),
-      order: 0,
     },
     {
       id: "2",
@@ -139,7 +139,9 @@ describe("useUpdateItem", () => {
     expect(mockShoppingListApi.updateItem).toHaveBeenCalledWith({
       groupId,
       itemId,
-      completed: true,
+      data: {
+        completed: true,
+      },
     });
   });
 });
