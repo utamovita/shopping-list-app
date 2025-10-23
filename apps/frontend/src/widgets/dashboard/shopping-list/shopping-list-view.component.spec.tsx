@@ -133,7 +133,7 @@ describe("ShoppingListView", () => {
     await userEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(mockRemoveItem).toHaveBeenCalledWith("1");
+      expect(mockRemoveItem).toHaveBeenCalledWith(mockItems.data[0]);
     });
   });
 

@@ -60,7 +60,9 @@
     "noItems": "This list is still empty. Add the first product!",
     "removeItem": "Remove item",
     "dragHandleLabel": "Drag to reorder item '{{itemName}}'",
-    "selectQuantity": "Select quantity"
+    "selectQuantity": "Select quantity",
+    "itemRemovedMsg": "Removed '{{itemName}}'",
+    "undo": "Undo"
   },
   "invitation": {
     "mainTitle": "Invitations",

@@ -60,7 +60,9 @@
     "noItems": "Ta lista jest jeszcze pusta. Dodaj pierwszy produkt!",
     "removeItem": "Usuń {{itemName}}",
     "dragHandleLabel": "Przeciągnij, aby zmienić kolejność elementu '{{itemName}}'",
-    "selectQuantity": "Wybierz ilość"
+    "selectQuantity": "Wybierz ilość",
+    "itemRemovedMsg": "Usunięto '{{itemName}}'",
+    "undo": "Cofnij"
   },
   "invitation": {
     "mainTitle": "Zaproszenia",

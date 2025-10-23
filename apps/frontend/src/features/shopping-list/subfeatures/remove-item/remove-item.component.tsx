@@ -18,7 +18,7 @@ function RemoveItem({ item }: RemoveItemProps) {
       variant="ghost"
       size="icon"
       role={"button"}
-      onClick={() => onRemove(item.id)}
+      onClick={() => onRemove(item)}
       aria-label={t("shoppingList.remove-item", { itemName: item.name })}
       onPointerDown={(e) => e.stopPropagation()}
     >

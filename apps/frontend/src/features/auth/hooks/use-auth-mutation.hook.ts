@@ -37,7 +37,7 @@ export function useAuthMutation(type: AuthType) {
       }
     },
     onError: (error) => {
-      handleError({ error });
+      handleError({ error, showToast: true });
     },
   });
 }

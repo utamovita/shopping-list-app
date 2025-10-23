@@ -1,5 +1,7 @@
 import { OnEvent } from '@nestjs/event-emitter';
 import {
+  ConnectedSocket,
+  MessageBody,
   OnGatewayConnection,
   OnGatewayDisconnect,
   SubscribeMessage,
@@ -47,6 +49,24 @@ export class EventsGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @OnEvent(EVENT_NAME.shoppingListUpdated)
   handleShoppingListUpdate(groupId: string) {
     this.server.to(groupId).emit(EVENT_NAME.shoppingListUpdated, { groupId });
+  }
+
+  @SubscribeMessage(EVENT_NAME.itemSoftDelete)
+  handleItemSoftDelete(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: { itemId: string; groupId: string },
+  ) {
+    const { itemId, groupId } = payload;
+    client.to(groupId).emit(EVENT_NAME.itemSoftDeleted, { itemId, groupId });
+  }
+
+  @SubscribeMessage(EVENT_NAME.itemRestore)
+  handleItemRestore(
+    @ConnectedSocket() client: Socket,
+    @MessageBody() payload: { itemId: string; groupId: string },
+  ) {
+    const { itemId, groupId } = payload;
+    client.to(groupId).emit(EVENT_NAME.itemRestored, { itemId, groupId });
   }
 
   private logStatus() {
