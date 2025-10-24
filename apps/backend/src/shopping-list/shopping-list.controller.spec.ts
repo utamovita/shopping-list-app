@@ -13,7 +13,7 @@ describe('ShoppingListController', () => {
   const mockShoppingListService = {
     getItems: jest.fn(),
     addItem: jest.fn(),
-    removeItem: jest.fn(),
+    removeItems: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -40,14 +40,44 @@ describe('ShoppingListController', () => {
     expect(controller).toBeDefined();
   });
 
+  const mockItems = [
+    {
+      id: 'item-1',
+      name: 'Milk',
+      quantity: 1,
+      order: 0,
+      groupId: 'group-123',
+      addedBy: 'user-123',
+      completed: false,
+      createdAt: new Date(),
+    },
+    {
+      id: 'item-2',
+      name: 'Bread',
+      quantity: 1,
+      order: 0,
+      groupId: 'group-123',
+      addedBy: 'user-123',
+      completed: false,
+      createdAt: new Date(),
+    },
+    {
+      id: 'item-3',
+      name: 'Cheese',
+      quantity: 1,
+      order: 0,
+      groupId: 'group-123',
+      addedBy: 'user-123',
+      completed: false,
+      createdAt: new Date(),
+    },
+  ];
   const mockUser = createMockUser({ id: 'user-123' });
   const mockRequest = { user: mockUser };
   const groupId = 'group-123';
-  const itemId = 'item-123';
 
   describe('getItems', () => {
     it('should call service.getItems with correct params and return items', async () => {
-      const mockItems = [{ id: 'item-1', name: 'Milk' }];
       mockShoppingListService.getItems.mockResolvedValue(mockItems);
 
       const result = await controller.getItems({ groupId }, mockRequest);
@@ -72,12 +102,16 @@ describe('ShoppingListController', () => {
 
   describe('removeItem', () => {
     it('should call service.remove-item with correct params', async () => {
-      mockShoppingListService.removeItem.mockResolvedValue(undefined);
+      mockShoppingListService.removeItems.mockResolvedValue(undefined);
+      const removeItemIds = mockItems.map((item) => item.id);
+      await controller.removeItems(
+        groupId,
+        { itemIds: removeItemIds },
+        mockRequest,
+      );
 
-      await controller.removeItem({ groupId, itemId }, mockRequest);
-
-      expect(service.removeItem).toHaveBeenCalledWith(
-        itemId,
+      expect(service.removeItems).toHaveBeenCalledWith(
+        removeItemIds,
         groupId,
         mockUser.id,
       );

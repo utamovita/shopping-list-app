@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   createShoppingListItemSchema,
+  removeShoppingListItemsSchema,
   reorderShoppingListSchema,
   shoppingListItemParamsSchema,
   updateShoppingListItemBodySchema,
@@ -54,3 +55,13 @@ export class ShoppingListItemParamsDto extends createZodDto(
 export class ReorderShoppingListDto extends createZodDto(
   reorderShoppingListSchema,
 ) {}
+
+export class RemoveShoppingListItemsDto extends createZodDto(
+  removeShoppingListItemsSchema,
+) {
+  @ApiProperty({
+    example: ['cuid1', 'cuid2'],
+    description: 'An array of shopping list item IDs to remove',
+  })
+  itemIds!: string[];
+}

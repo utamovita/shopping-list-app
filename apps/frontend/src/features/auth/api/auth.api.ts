@@ -4,7 +4,6 @@ import {
   type RegisterDto,
   AuthResponseType,
 } from "@repo/schemas";
-import type { InternalAxiosRequestConfig } from "axios";
 import { API_PATHS } from "@repo/config";
 
 export const authApi = {
@@ -18,8 +17,12 @@ export const authApi = {
     return apiClient.post<null>(API_PATHS.auth.logout, {});
   },
   refresh: async (refreshToken: string) => {
-    return apiClient.post<AuthResponseType>(API_PATHS.auth.refresh, {}, {
-      headers: { Authorization: `Bearer ${refreshToken}` },
-    } as InternalAxiosRequestConfig);
+    return apiClient.post<AuthResponseType>(
+      API_PATHS.auth.refresh,
+      {},
+      {
+        headers: { Authorization: `Bearer ${refreshToken}` },
+      },
+    );
   },
 };

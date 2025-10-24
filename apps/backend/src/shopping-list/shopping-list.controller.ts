@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -24,6 +23,7 @@ import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
 
 import {
   CreateShoppingListItemDto,
+  RemoveShoppingListItemsDto,
   ReorderShoppingListDto,
   ShoppingListItemParamsDto,
   UpdateShoppingListItemDto,
@@ -95,15 +95,16 @@ export class ShoppingListController {
     return { success: true, data: newItem };
   }
 
-  @Delete(':itemId')
-  @HttpCode(HttpStatus.NO_CONTENT)
-  async removeItem(
-    @Param() params: ShoppingListItemParamsDto,
+  @Post('remove')
+  @ApiOperation({ summary: 'Remove one or more items from a shopping list' })
+  async removeItems(
+    @Param('groupId') groupId: string,
+    @Body() removeItemsDto: RemoveShoppingListItemsDto,
     @Request() req: { user: UserProfile },
   ) {
-    await this.shoppingListService.removeItem(
-      params.itemId,
-      params.groupId,
+    await this.shoppingListService.removeItems(
+      removeItemsDto.itemIds,
+      groupId,
       req.user.id,
     );
   }

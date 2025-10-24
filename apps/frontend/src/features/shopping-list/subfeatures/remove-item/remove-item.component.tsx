@@ -2,16 +2,15 @@ import { Button } from "@/shared/ui/button";
 import { Trash2 } from "lucide-react";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { useRemoveItem } from "@/features/shopping-list/subfeatures/remove-item/use-remove-item.hook";
 import type { ShoppingListItem } from "@repo/database";
 
 type RemoveItemProps = {
   item: ShoppingListItem;
+  onRemove: (item: ShoppingListItem) => void;
 };
 
-function RemoveItem({ item }: RemoveItemProps) {
+function RemoveItem({ item, onRemove }: RemoveItemProps) {
   const { t } = useTranslation("common");
-  const { mutate: onRemove } = useRemoveItem(item.groupId);
 
   return (
     <Button

@@ -82,18 +82,22 @@ export class ShoppingListService {
     return { success: true };
   }
 
-  async removeItem(itemId: string, groupId: string, userId: string) {
+  async removeItems(itemIds: string[], groupId: string, userId: string) {
     await this.checkIfUserIsMember(groupId, userId);
 
-    const deletedItem = await this.prisma.shoppingListItem.delete({
+    const result = await this.prisma.shoppingListItem.deleteMany({
       where: {
-        id: itemId,
+        id: {
+          in: itemIds,
+        },
         groupId: groupId,
       },
     });
 
-    this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
-    return deletedItem;
+    if (result.count > 0) {
+      this.eventEmitter.emit(EVENT_NAME.shoppingListUpdated, groupId);
+    }
+    return result;
   }
   async updateItem(
     itemId: string,

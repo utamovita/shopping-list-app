@@ -20,9 +20,13 @@ type FormValues = {
 
 type ShoppingListItemProps = {
   item: ShoppingListItem;
+  onRemove: (item: ShoppingListItem) => void;
 };
 
-export const ShoppingListItemComponent = ({ item }: ShoppingListItemProps) => {
+export const ShoppingListItemComponent = ({
+  item,
+  onRemove,
+}: ShoppingListItemProps) => {
   const { t } = useTranslation("common");
 
   const [isEditing, setIsEditing] = useState(false);
@@ -157,7 +161,7 @@ export const ShoppingListItemComponent = ({ item }: ShoppingListItemProps) => {
           </div>
 
           <EditItem onEdit={() => setIsEditing(true)} itemName={item.name} />
-          <RemoveItem item={item} />
+          <RemoveItem item={item} onRemove={onRemove} />
         </>
       )}
     </li>

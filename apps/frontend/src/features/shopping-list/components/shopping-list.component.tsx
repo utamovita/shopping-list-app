@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useShoppingList } from "@/features/shopping-list/hooks/use-shopping-list.hook";
 import { ShoppingListItemComponent } from "./shopping-list-item.component";
 import { SpinnerOverlay } from "@/shared/ui/spinner";
+import { useRemoveItem } from "@/features/shopping-list/subfeatures/remove-item/use-remove-item.hook";
 
 type ShoppingListProps = {
   groupId: string;
@@ -12,6 +13,7 @@ type ShoppingListProps = {
 function ShoppingList({ groupId }: ShoppingListProps) {
   const { isError, isLoading, items } = useShoppingList(groupId);
   const { t } = useTranslation("common");
+  const { mutate: onRemove } = useRemoveItem(groupId);
 
   if (isLoading) {
     return <SpinnerOverlay variant="container" />;
@@ -27,7 +29,11 @@ function ShoppingList({ groupId }: ShoppingListProps) {
         <DndWrapper groupId={groupId}>
           <ul className="border border-b-0 rounded-md">
             {items.map((item) => (
-              <ShoppingListItemComponent key={item.id} item={item} />
+              <ShoppingListItemComponent
+                key={item.id}
+                item={item}
+                onRemove={onRemove}
+              />
             ))}
           </ul>
         </DndWrapper>

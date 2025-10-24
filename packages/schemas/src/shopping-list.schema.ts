@@ -20,6 +20,10 @@ export const updateShoppingListItemSchema = shoppingListItemParamsSchema.extend(
   updateShoppingListItemBodySchema.shape,
 );
 
+export const removeShoppingListItemsSchema = z.object({
+  itemIds: z.array(z.string()).min(1),
+});
+
 export type CreateShoppingListItemDto = z.infer<
   typeof createShoppingListItemSchema
 >;

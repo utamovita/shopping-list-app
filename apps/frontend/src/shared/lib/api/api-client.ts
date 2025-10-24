@@ -1,6 +1,10 @@
 import { env } from "@/shared/lib/env";
 import { ErrorResponse, SuccessResponse } from "@repo/types";
-import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
+import axios, {
+  AxiosError,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { useAuthStore } from "@/shared/store/auth.store";
 import { AuthResponseType } from "@repo/schemas";
 import { API_PATHS } from "@repo/config";
@@ -115,7 +119,7 @@ export const apiClient = {
   get: <T>(url: string, params?: object) =>
     axiosInstance.get<SuccessResponse<T>>(url, { params }),
 
-  post: <T>(url: string, data: unknown, config?: InternalAxiosRequestConfig) =>
+  post: <T>(url: string, data: unknown, config?: AxiosRequestConfig) =>
     axiosInstance.post<SuccessResponse<T>>(url, data, config),
 
   patch: <T>(url: string, data: unknown) =>

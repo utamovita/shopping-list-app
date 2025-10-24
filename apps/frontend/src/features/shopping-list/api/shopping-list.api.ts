@@ -3,7 +3,6 @@ import { API_PATHS } from "@repo/config";
 import type { ShoppingListItem } from "@repo/database";
 import {
   CreateShoppingListItemDto,
-  ShoppingListItemParams,
   UpdateShoppingListItemDto,
 } from "@repo/schemas";
 
@@ -27,9 +26,16 @@ export const shoppingListApi = {
     );
     return response.data;
   },
-  removeItem: async ({ groupId, itemId }: ShoppingListItemParams) => {
-    const response = await apiClient.delete<void>(
-      `${API_PATHS.shoppingList(groupId)}/${itemId}`,
+  removeItems: async ({
+    groupId,
+    itemIds,
+  }: {
+    groupId: string;
+    itemIds: string[];
+  }) => {
+    const response = await apiClient.post<void>(
+      `${API_PATHS.shoppingList(groupId)}/remove`,
+      { itemIds },
     );
     return response.data;
   },

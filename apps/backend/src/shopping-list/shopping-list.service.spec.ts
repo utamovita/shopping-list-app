@@ -19,7 +19,7 @@ describe('ShoppingListService', () => {
     shoppingListItem: {
       create: jest.fn(),
       findMany: jest.fn(),
-      delete: jest.fn(),
+      deleteMany: jest.fn(),
       aggregate: jest.fn(),
     },
   };
@@ -56,7 +56,27 @@ describe('ShoppingListService', () => {
 
   const userId = 'user-123';
   const groupId = 'group-123';
-  const itemId = 'item-123';
+
+  const mockItems = [
+    {
+      id: 'item-1',
+      name: 'Milk',
+      quantity: 1,
+      groupId,
+    },
+    {
+      id: 'item-2',
+      name: 'Bread',
+      quantity: 1,
+      groupId,
+    },
+    {
+      id: 'item-3',
+      name: 'Cheese',
+      quantity: 1,
+      groupId,
+    },
+  ] as const;
 
   describe('addItem', () => {
     it('should add an item if user is a member (happy path)', async () => {
@@ -134,16 +154,24 @@ describe('ShoppingListService', () => {
     });
   });
 
-  describe('removeItem', () => {
+  describe('removeItems', () => {
     it('should remove an item and emit an event if user is a member', async () => {
       mockPrismaService.groupMembership.findUnique.mockResolvedValue({});
-      mockPrismaService.shoppingListItem.delete.mockResolvedValue({});
-
-      await service.removeItem(itemId, groupId, userId);
-
-      expect(prisma.shoppingListItem.delete).toHaveBeenCalledWith({
-        where: { id: itemId, groupId: groupId },
+      mockPrismaService.shoppingListItem.deleteMany.mockResolvedValue({
+        count: 1,
       });
+
+      await service.removeItems([mockItems[0].id], groupId, userId);
+
+      expect(prisma.shoppingListItem.deleteMany).toHaveBeenCalledWith({
+        where: {
+          id: {
+            in: [mockItems[0].id],
+          },
+          groupId,
+        },
+      });
+
       expect(eventEmitter.emit).toHaveBeenCalledWith(
         EVENT_NAME.shoppingListUpdated,
         groupId,
@@ -153,9 +181,9 @@ describe('ShoppingListService', () => {
     it('should throw ForbiddenException if user is not a member', async () => {
       mockPrismaService.groupMembership.findUnique.mockResolvedValue(null);
 
-      await expect(service.removeItem(itemId, groupId, userId)).rejects.toThrow(
-        ForbiddenException,
-      );
+      await expect(
+        service.removeItems([mockItems[0].id], groupId, userId),
+      ).rejects.toThrow(ForbiddenException);
       expect(eventEmitter.emit).not.toHaveBeenCalled();
     });
   });

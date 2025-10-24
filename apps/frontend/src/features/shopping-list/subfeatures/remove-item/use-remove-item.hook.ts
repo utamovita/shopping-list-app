@@ -9,35 +9,34 @@ import { useTranslation } from "react-i18next";
 import { socket } from "@/shared/lib/socket";
 import { EVENT_NAME } from "@repo/config";
 
-const UNDO_DELAY = 2000;
-const REMOVE_TOAST_ID = "remove-item-toast";
+const UNDO_DELAY = 3000;
+const REMOVE_TOAST_ID = "remove-items-toast";
 
 export function useRemoveItem(groupId: string) {
   const queryClient = useQueryClient();
   const { t } = useTranslation("common");
   const queryKey = ["shopping-list", groupId];
 
-  const timersMapRef = useRef(new Map<string, NodeJS.Timeout>());
-  const lastRemovedItemRef = useRef<ShoppingListItem | null>(null);
+  const removalTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const itemsToRemoveRef = useRef<ShoppingListItem[]>([]);
+  const itemToUndoRef = useRef<ShoppingListItem | null>(null);
 
-  const restoreItemToCache = useCallback(
-    (itemToRestore: ShoppingListItem) => {
+  const restoreItemsToCache = useCallback(
+    (itemsToRestore: ShoppingListItem[]) => {
       queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
         queryKey,
         (oldData) => {
           if (!oldData) return oldData;
-
-          const itemExists = oldData.data.some(
-            (item) => item.id === itemToRestore.id,
+          const existingIds = new Set(oldData.data.map((item) => item.id));
+          const newItems = itemsToRestore.filter(
+            (item) => !existingIds.has(item.id),
           );
-          if (itemExists) return oldData;
+          if (newItems.length === 0) return oldData;
 
           return {
             ...oldData,
-            data: [...oldData.data, itemToRestore].sort(
-              (a, b) =>
-                new Date(a.createdAt).getTime() -
-                new Date(b.createdAt).getTime(),
+            data: [...oldData.data, ...newItems].sort(
+              (a, b) => a.order - b.order,
             ),
           };
         },
@@ -47,20 +46,26 @@ export function useRemoveItem(groupId: string) {
   );
 
   const deleteMutation = useMutation({
-    mutationFn: (item: ShoppingListItem) =>
-      shoppingListApi.removeItem({ groupId, itemId: item.id }),
-    onError: (error, itemFailedToRemove) => {
-      restoreItemToCache(itemFailedToRemove);
+    mutationFn: (items: ShoppingListItem[]) =>
+      shoppingListApi.removeItems({
+        groupId,
+        itemIds: items.map((item) => item.id),
+      }),
+    onError: (error, itemsFailedToRemove) => {
+      restoreItemsToCache(itemsFailedToRemove);
       handleError({ error, showToast: true });
     },
   });
 
   const initiateRemove = (itemToRemove: ShoppingListItem) => {
-    if (timersMapRef.current.has(itemToRemove.id)) {
-      clearTimeout(timersMapRef.current.get(itemToRemove.id)!);
+    if (removalTimerRef.current) {
+      clearTimeout(removalTimerRef.current);
     }
 
-    lastRemovedItemRef.current = itemToRemove;
+    if (!itemsToRemoveRef.current.some((i) => i.id === itemToRemove.id)) {
+      itemsToRemoveRef.current.push(itemToRemove);
+    }
+    itemToUndoRef.current = itemToRemove;
 
     queryClient.setQueryData<SuccessResponse<ShoppingListItem[]>>(
       queryKey,
@@ -78,52 +83,45 @@ export function useRemoveItem(groupId: string) {
       groupId,
     });
 
-    const timerId = setTimeout(() => {
-      deleteMutation.mutate(itemToRemove);
-      timersMapRef.current.delete(itemToRemove.id);
-      if (lastRemovedItemRef.current?.id === itemToRemove.id) {
-        lastRemovedItemRef.current = null;
+    removalTimerRef.current = setTimeout(() => {
+      if (itemsToRemoveRef.current.length > 0) {
+        deleteMutation.mutate([...itemsToRemoveRef.current]);
+        itemsToRemoveRef.current = [];
+        itemToUndoRef.current = null;
+        toast.dismiss(REMOVE_TOAST_ID);
       }
     }, UNDO_DELAY);
 
-    timersMapRef.current.set(itemToRemove.id, timerId);
+    const count = itemsToRemoveRef.current.length;
+    console.log(removalTimerRef);
+    console.log(itemsToRemoveRef);
+    console.log(itemToRemove);
+    console.log(itemToUndoRef);
 
+    console.log(count);
     toast.success(
       t("shoppingList.itemRemovedMsg", { itemName: itemToRemove.name }),
       {
         id: REMOVE_TOAST_ID,
-        duration: UNDO_DELAY,
+        duration: UNDO_DELAY - 500,
+        dismissible: true,
         action: {
           label: t("shoppingList.undo"),
           onClick: () => {
-            const itemToRestore = lastRemovedItemRef.current;
+            const itemToRestore = itemToUndoRef.current;
             if (!itemToRestore) return;
 
-            const timerToClear = timersMapRef.current.get(itemToRestore.id);
-            if (timerToClear) {
-              clearTimeout(timerToClear);
-              timersMapRef.current.delete(itemToRestore.id);
-            }
-
-            restoreItemToCache(itemToRestore);
-
+            restoreItemsToCache([itemToRestore]);
             socket.emit(EVENT_NAME.itemRestore, {
               itemId: itemToRestore.id,
               groupId,
             });
 
-            lastRemovedItemRef.current = null;
+            itemsToRemoveRef.current = itemsToRemoveRef.current.filter(
+              (item) => item.id !== itemToRestore.id,
+            );
+            itemToUndoRef.current = null;
           },
-        },
-        onDismiss: () => {
-          if (lastRemovedItemRef.current?.id === itemToRemove.id) {
-            lastRemovedItemRef.current = null;
-          }
-        },
-        onAutoClose: () => {
-          if (lastRemovedItemRef.current?.id === itemToRemove.id) {
-            lastRemovedItemRef.current = null;
-          }
         },
       },
     );
